@@ -12,7 +12,7 @@ namespace iEmployee.WebApi.Controllers
     public class EmployeeController : ControllerBase
     {
         //[Route("{id}")]
-        //[HttpGet]
+        //[HttpGet]ojj
         //public Task<EditUserModel> Get(Guid id)
         //{
         //    return Query(p => p.OfType<GetUserQuery>()).Execute(id);
