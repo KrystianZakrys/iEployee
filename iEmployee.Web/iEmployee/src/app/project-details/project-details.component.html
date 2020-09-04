@@ -1,0 +1,20 @@
+<div *ngIf="project; else elseBlock">
+    <h1>Project details {{ project.projectName }}</h1>
+    <button mat-stroked-button color="primary" (click)="goBack()">Back</button>
+    <button mat-stroked-button color="warn">Delete</button>
+   
+    <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Project name</mat-label>
+          <input matInput [(ngModel)]="project.projectName" placeholder="Project name" >
+        </mat-form-field>
+    </p>
+   
+    <div>
+        <h2>Employee projects:</h2>
+        <mat-list>
+            <mat-list-item> Assigned user <button mat-icon-button color="warn" (click)="unassignProject(id)"> <mat-icon>close</mat-icon></button></mat-list-item>
+        </mat-list>
+    </div>
+</div>
+<ng-template #elseBlock>    <h1>Project not found.</h1></ng-template>

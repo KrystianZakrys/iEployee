@@ -1,0 +1,112 @@
+<h1>Employees</h1>
+<button mat-stroked-button color="primary" routerLink="/employee/add">Add Employee</button>
+
+<!--
+    Filtering
+-->
+<mat-accordion>
+    <mat-expansion-panel (opened)="filteringOpen = true"
+                         (closed)="filteringOpen = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Filtering
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <p>
+            <mat-form-field appearance="legacy">
+              <mat-label>First name</mat-label>
+              <input matInput #firstName placeholder="First name" >
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="legacy">
+              <mat-label>Last name</mat-label>
+              <input matInput #lastName placeholder="Last name" >
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="legacy">
+                <mat-label>Birth date</mat-label>
+                <input matInput [matDatepicker]="picker" #birthDate>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </p>
+        <p>        
+            <mat-form-field appearance="legacy">
+                <mat-label>Position</mat-label>
+                <mat-select #position>
+                  <mat-option  value="0">pos1</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </p>
+        <p>        
+            <mat-form-field appearance="legacy">
+                <mat-label>Project</mat-label>
+                <mat-select #project>
+                  <mat-option  value="0">proj1</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </p>
+      </div>
+      <button mat-stroked-button color="primary">Filter</button>
+    </mat-expansion-panel>
+</mat-accordion>
+
+
+<!-- 
+    Data table
+-->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First name</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.firstName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last name</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.lastName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="sex">
+        <th mat-header-cell *matHeaderCellDef>Sex</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.sex }}</td>
+    </ng-container>
+    <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef>Birth date</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.birthDate }}</td>
+    </ng-container>
+    <ng-container matColumnDef="addressCountry">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.addressCountry }}</td>
+    </ng-container>
+    <ng-container matColumnDef="addressCity">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.addressCity }}</td>
+    </ng-container>
+    <ng-container matColumnDef="addressStreet">
+        <th mat-header-cell *matHeaderCellDef>Street</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.addressStreet }}</td>
+    </ng-container>
+    <ng-container matColumnDef="addressZipCode">
+        <th mat-header-cell *matHeaderCellDef>Zipcode</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.addressZipCode }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let employee">
+            <button mat-stroked-button color="primary" routerLink="/employee/details/{{employee.id}}">Edit</button>
+            <button mat-stroked-button color="basic" routerLink="/employee/projects/{{employee.id}}">Projects</button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" >        
+    </tr>
+</table> 
+<mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
