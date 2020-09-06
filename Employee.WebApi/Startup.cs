@@ -10,6 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MediatR;
+using iEmployee.CommandQuery.Query.Employees;
+using iEmployee.Domain.Employees;
+using iEmployee.CommandQuery.Query.Employees.GetEmployees;
+using iEmployee.CommandQuery;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace iEmployee.WebApi
 {
@@ -26,6 +33,8 @@ namespace iEmployee.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<iEmployeeContext>();
+            services.AddMediatR(typeof(GetEmployeesQuery).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

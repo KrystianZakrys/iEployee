@@ -11,12 +11,12 @@ namespace iEmployee.CommandQuery.Query
     /// </summary>
     /// <typeparam name="TResult">The type of the result.</typeparam>
     /// <typeparam name="TCriteria">The type of the criteria.</typeparam>
-    public abstract class BaseQuery<TResult, TCriteria>
+    public abstract class BaseQuery<TResult>
     {
         protected readonly iEmployeeContext Context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseQuery{TResult, TCriteria}"/> class.
+        /// Initializes a new instance of the <see cref="BaseQuery{TResult}"/> class.
         /// </summary>
         /// <param name="context">The bask context.</param>
         protected BaseQuery(iEmployeeContext context)
@@ -29,6 +29,6 @@ namespace iEmployee.CommandQuery.Query
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns></returns>
-        public abstract Task<TResult> Execute(TCriteria criteria);
+        public abstract Task<TResult> Execute();
     }
 }

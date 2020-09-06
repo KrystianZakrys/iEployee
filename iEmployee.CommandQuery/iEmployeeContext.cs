@@ -6,6 +6,7 @@ using iEmployee.Domain;
 using iEmployee.Domain.Employees;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Options;
 
 namespace iEmployee.CommandQuery
 {
@@ -16,6 +17,11 @@ namespace iEmployee.CommandQuery
         public DbSet<Position> Positions { get; set; }
         public DbSet<JobHistory> JobHistories { get; set; }
         public DbSet<Manager> Managers { get; set; }
+
+        public iEmployeeContext(DbContextOptions options): base(options)
+        {
+            
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
