@@ -6,3 +6,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 table{
     width: 100%;
 }
+a{
+    color: white !important;
+    font-size: 10pt;
+    margin: 10px;
+    background-color: lightblue;
+    border-radius: 25rem;
+    padding: 5px 15px;
+    float: right
+}
+.navigation{
+    float: right;
+    width: 100%;
+}
