@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
-import { EMPLOYEES }  from '../employeesMock';
 import { Location } from '@angular/common'
 import { EmployeeService }  from '../employee.service';
 

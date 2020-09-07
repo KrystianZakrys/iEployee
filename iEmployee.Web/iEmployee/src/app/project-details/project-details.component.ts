@@ -14,11 +14,12 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProject();
+
   }
 
   getProject(): void{
     const id = this.route.snapshot.paramMap.get('id');
-    this.projectService.getProject(id).subscribe(x => this.project = x);
+    this.projectService.getProject(id).subscribe(x => {this.project = x;});
   }
 
   goBack(): void{

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace iEmployee.CommandQuery.Query.Employees.GetEmployees
 {
-    public class GetEmployeesQueryHandler : IQueryHandler<GetEmployeesQuery, List<Employee>>
+    public class GetEmployeesQueryHandler : IQueryHandler<GetEmployeesQuery, IEnumerable<Employee>>
     {
         private readonly iEmployeeContext db;
 
@@ -19,9 +19,9 @@ namespace iEmployee.CommandQuery.Query.Employees.GetEmployees
             this.db = db;
         }
 
-        public async Task<List<Employee>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Employee>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
         {
-            return db.Employees.ToList();
+            return await db.Employees.ToListAsync();
         }
     }
 }

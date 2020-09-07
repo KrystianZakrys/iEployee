@@ -13,5 +13,10 @@ namespace iEmployee.Domain
         public String Name { get; protected set; }
         
         public ICollection<EmployeeProject> Employees { get; protected set; }
+
+        public Project(String name)
+        {
+            this.Name = name;
+        }
     }
 }

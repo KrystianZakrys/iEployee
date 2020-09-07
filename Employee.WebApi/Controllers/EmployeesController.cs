@@ -10,9 +10,13 @@ using iEmployee.Domain.Employees;
 using iEmployee.CommandQuery.Query.Employees;
 using MediatR;
 using System.Threading;
+using iEmployee.CommandQuery.Query.Employees.GetEmployee;
+using Microsoft.AspNetCore.Cors;
+using iEmployee.CommandQuery.Command;
 
 namespace iEmployee.WebApi.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -31,63 +35,30 @@ namespace iEmployee.WebApi.Controllers
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
             => this.Ok(await this.mediator.Send(new GetEmployeesQuery(), CancellationToken.None));
 
-        //// GET: api/Employees/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Employee>> GetEmployee(Guid id)
-        //{
-        //    var employee = await this.context.Employees.FindAsync(id);
+        // GET: api/Employees/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Employee>> GetEmployee(Guid id)
+            => this.Ok(await this.mediator.Send(new GetEmployeeQuery() { Id = id }, CancellationToken.None));
 
-        //    if (employee == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    return employee;
-        //}
+        // PUT: api/Employees/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEmployee(Guid id, Employee employee)
+        {
+            if (id != employee.Id)
+            {
+                return BadRequest();
+            }
 
-        //// PUT: api/Employees/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutEmployee(Guid id, Employee employee)
-        //{
-        //    if (id != employee.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+            //return Ok(await this.mediator.Send(new UpdateEmployeeCommand(employee),CancellationToken.None));
 
-        //    this.context.Entry(employee).State = EntityState.Modified;
+            return NoContent();
+        }
 
-        //    try
-        //    {
-        //        await this.context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!EmployeeExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //// POST: api/Employees
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
-        //{
-        //    this.context.Employees.Add(employee);
-        //    await this.context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
-        //}
+        // POST: api/Employees
+        [HttpPost]
+        public async Task<ActionResult<Employee>> PostEmployee([FromBody] EmployeeSaveModel employee)
+            =>  this.Ok(await this.mediator.Send(new AddEmployeeCommand(employee), CancellationToken.None));
 
         //// DELETE: api/Employees/5
         //[HttpDelete("{id}")]

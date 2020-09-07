@@ -6,7 +6,7 @@ using iEmployee.Infrastructure.Query;
 
 namespace iEmployee.CommandQuery.Query.Employees
 {
-    public class GetEmployeesQuery : IQuery<List<Employee>>
+    public class GetEmployeesQuery : IQuery<IEnumerable<Employee>>
     {
     }
 }

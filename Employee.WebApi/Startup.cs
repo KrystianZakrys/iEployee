@@ -17,6 +17,7 @@ using iEmployee.CommandQuery.Query.Employees.GetEmployees;
 using iEmployee.CommandQuery;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace iEmployee.WebApi
 {
@@ -35,6 +36,7 @@ namespace iEmployee.WebApi
             services.AddControllers();
             services.AddDbContext<iEmployeeContext>();
             services.AddMediatR(typeof(GetEmployeesQuery).GetTypeInfo().Assembly);
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,11 +52,14 @@ namespace iEmployee.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+     
+
         }
     }
 }

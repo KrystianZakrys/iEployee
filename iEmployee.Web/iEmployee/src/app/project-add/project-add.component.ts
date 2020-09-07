@@ -18,7 +18,7 @@ export class ProjectAddComponent implements OnInit {
     this.location.back();
   }
 
-  submit(): void{
-    this.location.back();
+  submit(projectName: string): void{
+    this.projectService.addProject({name: projectName} as Project).subscribe(x => this.location.back());
   }
 }

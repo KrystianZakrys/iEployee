@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
-import { EMPLOYEES } from '../employeesMock';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../employee.service';
@@ -31,10 +30,10 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   assignToProject(): void{
-    console.log(this.employee.firstName + ' '+ this.employee.lastName + ' assigned to project');
+    console.log(this.employee.FirstName + ' '+ this.employee.LastName + ' assigned to project');
   }
 
   unassignProject(id): void{
-    console.log(this.employee.firstName + ' '+ this.employee.lastName + ' unassigned from project')
+    console.log(this.employee.FirstName + ' '+ this.employee.LastName + ' unassigned from project')
   }
 }

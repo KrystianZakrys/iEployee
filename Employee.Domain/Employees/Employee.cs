@@ -17,5 +17,15 @@ namespace iEmployee.Domain.Employees
         public Address Address { get; protected set; }
         public Manager Manager { get; protected set; }
         public ICollection<EmployeeProject> Projects { get; protected set;}
+
+        public Employee() { }
+        public Employee(String firstName, String lastName, Address address, DateTime birthDate, SexEnum sex)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Address = address;
+            this.BirthDate = birthDate;
+            this.Sex = sex;
+        }
     }
 }

@@ -4,7 +4,7 @@
     <p>
         <mat-form-field appearance="legacy">
           <mat-label>First name</mat-label>
-          <input matInput #firstName placeholder="First name" >
+          <input matInput  #firstName placeholder="First name" >
         </mat-form-field>
     </p>
     <p>
@@ -25,7 +25,7 @@
     <p>
         <mat-form-field appearance="legacy">
             <mat-label>Birth date</mat-label>
-            <input matInput [matDatepicker]="picker" #employee.birthDate>
+            <input matInput [matDatepicker]="picker" #birthDate >
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -54,4 +54,4 @@
           <input matInput #addressZipCode placeholder="ZipCode" >
         </mat-form-field>
     </p>
-    <button mat-stroked-button color="primary" (click)="submit()">Save</button>
+    <button mat-stroked-button color="primary" (click)="submit(firstName.value, lastName.value, sex.value, birthDate.value, addressCountry.value, addressCity.value, addressStreet.value, addressZipCode.value)">Save</button>

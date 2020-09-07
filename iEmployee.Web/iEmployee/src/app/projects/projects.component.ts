@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project }  from '../project';
 import { ProjectService } from '../project.service';
 import { Observable } from 'rxjs';
-import { PROJECTS } from '../projectsMock';
+
 
 @Component({
   selector: 'app-projects',
@@ -10,7 +10,7 @@ import { PROJECTS } from '../projectsMock';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'projectName','actions'];
+  displayedColumns: string[] = [ 'name','actions'];
   dataSource: Project[];
   constructor(private projectService: ProjectService) { }
 

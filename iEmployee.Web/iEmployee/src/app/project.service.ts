@@ -7,7 +7,10 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProjectService {
-  private projectsUrl = `api/projects`;
+  private projectsUrl = `http://localhost:60811/api/Projects`;
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +34,12 @@ export class ProjectService {
       pipe(
         catchError(this.handleError<Project>(`getProject id=${id}`))
       );
+  }
+
+  addProject(project: Project): Observable<Project>{
+    return this.http.post<Project>(this.projectsUrl, project, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<Project>('addProject'))
+    );
   }
 }

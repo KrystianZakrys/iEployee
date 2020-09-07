@@ -26,8 +26,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectAddComponent } from './project-add/project-add.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     MatListModule,
     MatIconModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService,{dataEncapsulation: false})
+   // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService,{dataEncapsulation: false})
   ],
   providers: [],
   bootstrap: [AppComponent]

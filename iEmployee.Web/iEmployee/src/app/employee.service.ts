@@ -8,7 +8,11 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private employeesUrl = `api/employees`;
+  private employeesUrl = `http://localhost:60811/api/Employees`;
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(private http: HttpClient) { }
 
   handleError<T>(operation = 'operation',result?: T){
@@ -31,6 +35,13 @@ export class EmployeeService {
       pipe(
         catchError(this.handleError<Employee>(`getEmployee id=${id}`))
       );
+  }
+
+  addEmployee(employee: Employee): Observable<Employee>{
+    return this.http.post<Employee>(this.employeesUrl, employee, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<Employee>('addEmployee'))
+    );
   }
 
 }

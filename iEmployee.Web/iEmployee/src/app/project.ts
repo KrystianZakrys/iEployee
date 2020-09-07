@@ -1,5 +1,7 @@
+import { Employee } from './employee';
 
 export interface Project{
-    id: string;
-    projectName: string;
+    id?: string;
+    employees?: Employee[];
+    name: string;
 }
