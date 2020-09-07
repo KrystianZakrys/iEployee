@@ -10,6 +10,6 @@ namespace iEmployee.Domain.Employees
         public String LastName { get; set; }
         public String Sex { get; set; }
         public DateTime BirthDate { get; set; }
-        public Address Address { get; set; }
+        public AddressSaveModel Address { get; set; }
     }
 }

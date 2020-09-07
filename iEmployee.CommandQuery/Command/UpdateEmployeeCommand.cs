@@ -12,7 +12,7 @@ namespace iEmployee.CommandQuery.Command
     {
         public String FirstName { get; }
         public String LastName { get; }
-        public Address Address { get; }
+        public AddressSaveModel Address { get; }
         public DateTime BirthDate { get; }
         public SexEnum Sex { get; }
 

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace iEmployee.Domain.Employees
 {
@@ -27,5 +28,7 @@ namespace iEmployee.Domain.Employees
             this.BirthDate = birthDate;
             this.Sex = sex;
         }
+
+        
     }
 }

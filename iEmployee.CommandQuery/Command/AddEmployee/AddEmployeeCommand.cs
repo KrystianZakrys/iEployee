@@ -14,7 +14,7 @@ namespace iEmployee.CommandQuery.Command
     {
         public String FirstName { get; }
         public String LastName { get; }
-        public Address Address { get; }
+        public AddressSaveModel Address { get; }
         public DateTime BirthDate { get; }
         public SexEnum Sex { get; }
 
@@ -27,7 +27,7 @@ namespace iEmployee.CommandQuery.Command
             Int32.TryParse(employee.Sex, out int sex);
             this.Sex = (SexEnum)sex;
         }
-        public AddEmployeeCommand(String firstName, String lastName, Address address, DateTime birthDate, SexEnum sex)
+        public AddEmployeeCommand(String firstName, String lastName, AddressSaveModel address, DateTime birthDate, SexEnum sex)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
