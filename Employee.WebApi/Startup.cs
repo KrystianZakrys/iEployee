@@ -18,6 +18,8 @@ using iEmployee.CommandQuery;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Swashbuckle;
+using Microsoft.OpenApi.Models;
 
 namespace iEmployee.WebApi
 {
@@ -37,6 +39,10 @@ namespace iEmployee.WebApi
             services.AddDbContext<iEmployeeContext>();
             services.AddMediatR(typeof(GetEmployeesQuery).GetTypeInfo().Assembly);
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "iEmployee API" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,8 +64,12 @@ namespace iEmployee.WebApi
             {
                 endpoints.MapControllers();
             });
-     
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "iEmployee API");
+            });
         }
     }
 }
