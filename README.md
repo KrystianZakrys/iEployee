@@ -22,12 +22,12 @@ Basically it's simple crud project that imitates real commercial user architectu
 
 
 ## To-Do
-- [ ] Add Repository pattern to database access
-- [ ] Implement business logic in Entities
-- [ ] Create ViewModel for each Entity that it could be used in CQRS and Web API
+- [x] Add Repository pattern to database access
+- [ ] Implement business logic in Entities (for example Assigning Employee to Project)
+- [x] Create ViewModel for each Entity that it could be used in CQRS and Web API
 - [ ] In Web part separate components for modules
 - [ ] Use Reactive Forms in Angular
-- [ ] Fix angular model mapping from json to interfaces/classes
+- [x] Fix angular model mapping from json to interfaces/classes
 - [ ] Add comments and documentation
 - [ ] Write some unit tests
 

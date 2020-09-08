@@ -15,8 +15,8 @@ namespace iEmployee.Infrastructure.Repositories
         Task<Employee> GetEmployee(Guid employeeId);
         Task<bool> AddEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployee(Guid employeeId);
-        Task<bool> UpdateEmployee(Guid employeeId, Employee employee);        
-
+        Task<bool> UpdateEmployee(Guid employeeId, Employee employee);
+        Task<IEnumerable<Employee>> GetEmployeesByManagerId(Guid managerId);
     }
     public class EmployeesRepository : IEmployeesRepository
     {
@@ -60,5 +60,11 @@ namespace iEmployee.Infrastructure.Repositories
             await this.dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Employee>> GetEmployeesByManagerId(Guid managerId)
+        {
+            return await this.dbContext.Employees.Where(x => x.Manager.Id.Equals(managerId)).ToListAsync();
+        }
+
     }
 }

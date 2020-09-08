@@ -39,5 +39,12 @@ namespace iEmployee.Domain.Employees
             this.Sex = employeeData.Sex;
             this.Address = employeeData.Address;
         }
+
+        public void AssignEmployeeProject(Project project)
+        {
+            var employeeProject = EmployeeProject.Create(this, project);
+            this.Projects = new List<EmployeeProject>();
+            this.Projects.Add(employeeProject);
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading;
 using Microsoft.AspNetCore.Cors;
 using iEmployee.CommandQuery.Command;
 using iEmployee.Contracts;
+using iEmployee.CommandQuery.Command.Employees;
 
 namespace iEmployee.WebApi.Controllers
 {
@@ -53,5 +54,9 @@ namespace iEmployee.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<EmployeeSaveModel>> DeleteEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteEmployeeCommand(id), CancellationToken.None));
+
+        [HttpPut("{employeeId}/{projectId}")]
+        public async Task<IActionResult> AssignToProject(Guid employeeId, Guid projectId)
+            => this.Ok(await this.mediator.Send(new AssignToProjectCommand(employeeId, projectId), CancellationToken.None));
     }
 }

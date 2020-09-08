@@ -23,7 +23,5 @@ namespace iEmployee.CommandQuery.Query
             var positon = await this.positionsRepository.GetPosition(request.Id);
             return new PositionSaveModel() { Id = positon.Id, Name = positon.Name, Code = positon.Code};
         }
-
-
     }
 }

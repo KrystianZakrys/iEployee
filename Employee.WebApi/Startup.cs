@@ -40,6 +40,7 @@ namespace iEmployee.WebApi
             services.AddScoped<IEmployeesRepository,EmployeesRepository>();
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
             services.AddScoped<IPositionsRepository, PositionsRepository>();
+            services.AddScoped<IManagersRepository, ManagersRepository>();
 
             services.AddMediatR(typeof(GetEmployeesQuery).GetTypeInfo().Assembly);
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
