@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using iEmployee.CommandQuery;
 using iEmployee.Domain.Employees;
-using iEmployee.CommandQuery.Query.Employees;
+using iEmployee.CommandQuery.Query;
 using MediatR;
 using System.Threading;
-using iEmployee.CommandQuery.Query.Employees.GetEmployee;
 using Microsoft.AspNetCore.Cors;
 using iEmployee.CommandQuery.Command;
+using iEmployee.Contracts;
 
 namespace iEmployee.WebApi.Controllers
 {
@@ -21,64 +21,37 @@ namespace iEmployee.WebApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        //private readonly iEmployeeContext context;
         private readonly IMediator mediator;
 
         public EmployeesController( IMediator mediator)
         {
-            //this.context = context;
             this.mediator = mediator;
         }
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeSaveModel>>> GetEmployees()
             => this.Ok(await this.mediator.Send(new GetEmployeesQuery(), CancellationToken.None));
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(Guid id)
+        public async Task<ActionResult<EmployeeSaveModel>> GetEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new GetEmployeeQuery() { Id = id }, CancellationToken.None));
 
 
         // PUT: api/Employees/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(Guid id, Employee employee)
-        {
-            if (id != employee.Id)
-            {
-                return BadRequest();
-            }
-
-            //return Ok(await this.mediator.Send(new UpdateEmployeeCommand(employee),CancellationToken.None));
-
-            return NoContent();
-        }
+        public async Task<IActionResult> PutEmployee(Guid id, EmployeeSaveModel employee)
+            => this.Ok(await this.mediator.Send(new UpdateEmployeeCommand(id, employee), CancellationToken.None));
 
         // POST: api/Employees
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee([FromBody] EmployeeSaveModel employee)
+        public async Task<ActionResult<EmployeeSaveModel>> PostEmployee([FromBody] EmployeeSaveModel employee)
             =>  this.Ok(await this.mediator.Send(new AddEmployeeCommand(employee), CancellationToken.None));
 
-        //// DELETE: api/Employees/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<Employee>> DeleteEmployee(Guid id)
-        //{
-        //    var employee = await this.context.Employees.FindAsync(id);
-        //    if (employee == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    this.context.Employees.Remove(employee);
-        //    await this.context.SaveChangesAsync();
-
-        //    return employee;
-        //}
-
-        //private bool EmployeeExists(Guid id)
-        //{
-        //    return this.context.Employees.Any(e => e.Id == id);
-        //}
+        // DELETE: api/Employees/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<EmployeeSaveModel>> DeleteEmployee(Guid id)
+            => this.Ok(await this.mediator.Send(new DeleteEmployeeCommand(id), CancellationToken.None));
     }
 }

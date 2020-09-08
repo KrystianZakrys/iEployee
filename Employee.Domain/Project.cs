@@ -18,5 +18,14 @@ namespace iEmployee.Domain
         {
             this.Name = name;
         }
+
+        public static Project Create(string name)
+        {
+            return new Project(name);
+        }
+        public void Update(Project projectData)
+        {
+            this.Name = projectData.Name;
+        }
     }
 }

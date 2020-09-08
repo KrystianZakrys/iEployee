@@ -25,7 +25,7 @@ namespace iEmployee.CommandQuery
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=EmployeeDb;Trusted_Connection=True;");
+           
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

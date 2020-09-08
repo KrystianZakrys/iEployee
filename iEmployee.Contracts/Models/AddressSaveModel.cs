@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace iEmployee.Domain
+namespace iEmployee.Contracts
 {
     public class AddressSaveModel
     {

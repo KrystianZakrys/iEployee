@@ -17,18 +17,23 @@ export class EmployeeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployee();
+    
   }
 
 
   getEmployee(): void{
     const id = this.route.snapshot.paramMap.get('id');
-    this.employeeService.getEmployee(id).subscribe(x => this.employee = x);
+    this.employeeService.getEmployee(id).subscribe(x => {this.employee = x; console.log(this.employee);});
   }
 
   goBack(): void{
     this.location.back();
   }
 
+  deleteEmployee(): void{
+    this.employeeService.deleteEmployee(this.employee.id).subscribe(x => this.goBack());
+  }
+  
   assignToProject(): void{
     console.log(this.employee.FirstName + ' '+ this.employee.LastName + ' assigned to project');
   }

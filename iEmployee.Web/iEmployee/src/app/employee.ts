@@ -1,16 +1,19 @@
+import { EmployeeAddComponent } from './employee-add/employee-add.component';
 
 export interface Employee{
-    Id?: string;
-    FirstName: string;
-    LastName: string;
-    Sex: number;
-    BirthDate: string;
-    Address: Address;
+    firstName: string;
+    lastName: string;
+    sex: number;
+    birthDate: string;
+    address: Address;
+    manager: string;
+    projects: string;
+    id?: string;
 }
 
 export interface Address{
-    Country: string;
-    City: string;
-    Street: string;
-    ZipCode: string;
+    country: string;
+    city: string;
+    street: string;
+    zipCode: string;
 }

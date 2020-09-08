@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using iEmployee.Infrastructure.Command;
-using iEmployee.Domain.Employees;
+using iEmployee.Contracts;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using iEmployee.Domain;
 namespace iEmployee.CommandQuery.Command
 {
-    public class AddEmployeeCommand : CommandBase<Employee>
+    public class AddEmployeeCommand : CommandBase<bool>
     {
         public String FirstName { get; }
         public String LastName { get; }

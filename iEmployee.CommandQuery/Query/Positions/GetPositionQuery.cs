@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iEmployee.CommandQuery.Query.Projects
+namespace iEmployee.CommandQuery.Query
 {
-    public class GetProjectQuery : IQuery<ProjectSaveModel>
+    public class GetPositionQuery : IQuery<PositionSaveModel>
     {
         public Guid Id { get; set; }
     }

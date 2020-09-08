@@ -7,21 +7,30 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using iEmployee.Contracts;
+using iEmployee.Infrastructure.Repositories;
 
 namespace iEmployee.CommandQuery.Query.Projects
 {
-    public class GetProjectsQueryHandler : IQueryHandler<GetProjectsQuery, IEnumerable<Project>>
+    public class GetProjectsQueryHandler : IQueryHandler<GetProjectsQuery, IEnumerable<ProjectSaveModel>>
     {
-        private readonly iEmployeeContext db;
+        private readonly IProjectsRepository projectsRepository;
 
-        public GetProjectsQueryHandler(iEmployeeContext db)
+        public GetProjectsQueryHandler(IProjectsRepository projectsRepository)
         {
-            this.db = db;
+            this.projectsRepository = projectsRepository;
         }
 
-        public async Task<IEnumerable<Project>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProjectSaveModel>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
         {
-            return await db.Projects.ToListAsync();
+            var projects = await projectsRepository.GetProjects();
+            var projectsModels = projects.Select(x => new ProjectSaveModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }
+            );
+            return projectsModels;
         }
     }
 }

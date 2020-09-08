@@ -27,8 +27,9 @@ Basically it's simple crud project that imitates real commercial user architectu
 - [ ] Create ViewModel for each Entity that it could be used in CQRS and Web API
 - [ ] In Web part separate components for modules
 - [ ] Use Reactive Forms in Angular
+- [ ] Fix angular model mapping from json to interfaces/classes
+- [ ] Add comments and documentation
 - [ ] Write some unit tests
-
 
 ## Authors
 

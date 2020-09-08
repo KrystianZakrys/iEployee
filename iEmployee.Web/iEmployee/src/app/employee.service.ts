@@ -44,4 +44,11 @@ export class EmployeeService {
     );
   }
 
+  deleteEmployee(employee: Employee | string): Observable<Employee>{
+    const id = typeof employee === 'string'? employee : employee.Id;
+    const url = `${this.employeesUrl}/${id}`;
+    return this.http.delete<Employee>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Employee>('deleteEmployee'))
+    );
+  }
 }

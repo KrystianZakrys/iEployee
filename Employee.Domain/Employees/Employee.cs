@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
+using iEmployee.Contracts;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace iEmployee.Domain.Employees
 {
@@ -18,17 +15,29 @@ namespace iEmployee.Domain.Employees
         public Address Address { get; protected set; }
         public Manager Manager { get; protected set; }
         public ICollection<EmployeeProject> Projects { get; protected set;}
-
+        
         public Employee() { }
-        public Employee(String firstName, String lastName, Address address, DateTime birthDate, SexEnum sex)
+
+        public static Employee Create(string firstName, string lastName, SexEnum sex, DateTime birthDate, Address address)
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Address = address;
-            this.BirthDate = birthDate;
-            this.Sex = sex;
+            Employee employee = new Employee()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Sex = sex,
+                BirthDate = birthDate,
+                Address = address
+            };            
+            return employee;
         }
 
-        
+        public void Update(Employee employeeData)
+        {
+            this.FirstName = employeeData.FirstName;
+            this.LastName = employeeData.LastName;
+            this.BirthDate = employeeData.BirthDate;
+            this.Sex = employeeData.Sex;
+            this.Address = employeeData.Address;
+        }
     }
 }

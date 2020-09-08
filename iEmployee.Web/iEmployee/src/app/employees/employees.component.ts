@@ -23,4 +23,8 @@ export class EmployeesComponent implements OnInit {
   getEmployees(): void{
     this.employeeService.getEmployees().subscribe(x => this.dataSource = x);
   }
+
+  deleteEmployee(id: string): void{
+    this.employeeService.deleteEmployee(id).subscribe(x => this.dataSource.filter(y => y.Id !== x.id));
+  }
 }

@@ -1,13 +1,13 @@
 ﻿using iEmployee.Domain;
 using iEmployee.Infrastructure.Command;
-using iEmployee.Infrastructure.Models;
+using iEmployee.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iEmployee.CommandQuery.Command.AddProject
+namespace iEmployee.CommandQuery.Command
 {
-    public class AddProjectCommand : CommandBase<Project>
+    public class AddProjectCommand : CommandBase<bool>
     {
         public String Name { get; set; }
         public AddProjectCommand(ProjectSaveModel project)

@@ -13,9 +13,9 @@ namespace iEmployee.Infrastructure.Repositories
     {
         Task<IEnumerable<Employee>> GetEmployees();
         Task<Employee> GetEmployee(Guid employeeId);
-        void AddEmployeeAsync(Employee employee);
-        void DeleteEmployee(Guid employeeId);
-        void UpdateStudent(Guid employeeId, Employee employee);        
+        Task<bool> AddEmployeeAsync(Employee employee);
+        Task<bool> DeleteEmployee(Guid employeeId);
+        Task<bool> UpdateEmployee(Guid employeeId, Employee employee);        
 
     }
     public class EmployeesRepository : IEmployeesRepository
@@ -27,16 +27,19 @@ namespace iEmployee.Infrastructure.Repositories
             this.dbContext = dbContext;
         }
 
-        public void AddEmployeeAsync(Employee employee)
+        public async Task<bool> AddEmployeeAsync(Employee employee)
         {
-
-            this.dbContext.Employees.AddAsync(employee);
+            await this.dbContext.Employees.AddAsync(employee);
+            this.dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public void DeleteEmployee(Guid employeeId)
+        public async Task<bool> DeleteEmployee(Guid employeeId)
         {
             Employee employee = this.dbContext.Employees.Find(employeeId);
             this.dbContext.Employees.Remove(employee);
+            await this.dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Employee> GetEmployee(Guid employeeId)
@@ -49,11 +52,13 @@ namespace iEmployee.Infrastructure.Repositories
             return await this.dbContext.Employees.ToListAsync();
         }
 
-        public void UpdateStudent(Guid employeeId, Employee employeeModel)
+        public async Task<bool> UpdateEmployee(Guid employeeId, Employee employeeModel)
         {
-            var employee = this.dbContext.Employees.Find(employeeId);
-            employee = employeeModel;            
-            dbContext.SaveChanges();
+            var employee =  this.dbContext.Employees.Find(employeeId);
+            employee.Update(employeeModel);
+            this.dbContext.Employees.Update(employee);
+            await this.dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

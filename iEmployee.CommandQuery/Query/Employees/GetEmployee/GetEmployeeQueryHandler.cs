@@ -7,21 +7,37 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using iEmployee.Contracts;
+using iEmployee.Infrastructure.Repositories;
 
-namespace iEmployee.CommandQuery.Query.Employees.GetEmployee
+namespace iEmployee.CommandQuery.Query
 {
-    public class GetEmployeeQueryHandler : IQueryHandler<GetEmployeeQuery, Employee>
+    public class GetEmployeeQueryHandler : IQueryHandler<GetEmployeeQuery, EmployeeSaveModel>
     {
-        private readonly iEmployeeContext db;
+        private readonly IEmployeesRepository employeesRepository;
 
-        public GetEmployeeQueryHandler(iEmployeeContext db)
+        public GetEmployeeQueryHandler(IEmployeesRepository employeesRepository)
         {
-            this.db = db;
+            this.employeesRepository = employeesRepository;
         }
 
-        public async Task<Employee> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
+        public async Task<EmployeeSaveModel> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
-            return await this.db.Employees.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+            var employee = await this.employeesRepository.GetEmployee(request.Id);
+            return new EmployeeSaveModel()
+            {
+                Id = employee.Id,
+                Address = new AddressSaveModel() { 
+                    City = employee.Address?.City, 
+                    Country = employee.Address?.Country, 
+                    Street = employee.Address?.Street, 
+                    ZipCode = employee.Address?.ZipCode 
+                },
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Sex = employee.Sex.ToString(),
+                BirthDate = employee.BirthDate
+            };
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace iEmployee.Domain.Employees
+namespace iEmployee.Contracts
 {
     public enum SexEnum
     {
