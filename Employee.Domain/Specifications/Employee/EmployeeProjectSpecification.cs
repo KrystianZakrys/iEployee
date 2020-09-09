@@ -12,14 +12,15 @@ namespace iEmployee.Domain.Specifications
     public class EmployeeProjectSpecification : Specification<Employee>
     {
         private readonly Guid employeeProjectId;
-
+        private readonly Expression<Func<EmployeeProject, bool>> projectExpression;
         public EmployeeProjectSpecification(Guid employeeProjectId)
         {
             this.employeeProjectId = employeeProjectId;
+            //this.projectExpression = (project => project.ProjectId == this.employeeProjectId);
         }
         public override Expression<Func<Employee, bool>> ToExpression()
         {
-            return e => e.Projects.Select(y => y.ProjectId).Contains(employeeProjectId);
+            return e => e.Projects.Where(p => p.ProjectId == this.employeeProjectId).Any();
         }
     }
 }

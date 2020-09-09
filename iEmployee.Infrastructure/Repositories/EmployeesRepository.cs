@@ -50,7 +50,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<Employee> GetEmployee(Guid employeeId)
         {
-            return await this.dbContext.Employees.Include(x=> x.Projects).FirstOrDefaultAsync(x => x.Id  == employeeId);
+            return await this.dbContext.Employees.Include(x=> x.Projects).Include(x => x.JobHistories).FirstOrDefaultAsync(x => x.Id  == employeeId);
         }
 
         public async Task<IEnumerable<Employee>> GetEmployees()
@@ -74,14 +74,32 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<IEnumerable<Employee>> GetEmployees(EmployeeCriteria employeeCriteria)
         {
-            var specifiCationBuilder = new EmployeeSpecificationBuilder(employeeCriteria)
+            var specifiCationBuilder = new EmployeeExpressionBuilder(employeeCriteria)
                 .AddFirstNameSpecification()
                 .AddLastNameSpecification()
-                .AddBirtDateSpecification()
-                .AddProjectSpecification()
-                .AddPositionSpecification();           
-            
-            return await this.dbContext.Employees.Where(specifiCationBuilder.GetExpression()).ToListAsync();
+                .AddBirtDateSpecification();
+            //.AddProjectSpecification()
+            //.AddPositionSpecification();                       
+
+            var employees = this.dbContext.Employees.Where(specifiCationBuilder.GetExpression());
+            employees = AddExpresionsToEmployeeExpression(employees, employeeCriteria);
+            return await employees.ToListAsync();
+        }
+
+        private IQueryable<Employee> AddExpresionsToEmployeeExpression(IQueryable<Employee> employees, EmployeeCriteria employeeCriteria)
+        {
+            if (employeeCriteria.ProjectId.HasValue)
+            {
+                Expression<Func<Employee, bool>> projectExpression = e => e.Projects.Any(p => p.ProjectId == employeeCriteria.ProjectId.Value);
+                employees = employees.Where(projectExpression);
+            }
+
+            if (employeeCriteria.PositionId.HasValue)
+            {
+                Expression<Func<Employee, bool>> positionExpression = e => e.JobHistories.Any(jh => jh.EndDate.HasValue == false && jh.PositionId == employeeCriteria.PositionId.Value);
+                employees = employees.Where(positionExpression);
+            }
+            return employees;
         }
     }
 }

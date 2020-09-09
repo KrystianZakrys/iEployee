@@ -8,12 +8,12 @@ using System.Text;
 
 namespace iEmployee.Domain.Specifications
 {
-    public class EmployeeSpecificationBuilder
+    public class EmployeeExpressionBuilder
     {
         private readonly List<Specification<Employee>> employeeSpecifications;
         private readonly EmployeeCriteria employeeCriteria;
 
-        public EmployeeSpecificationBuilder(EmployeeCriteria employeeCriteria)
+        public EmployeeExpressionBuilder(EmployeeCriteria employeeCriteria)
         {
             this.employeeCriteria = employeeCriteria;
             this.employeeSpecifications = new List<Specification<Employee>>();
@@ -27,11 +27,11 @@ namespace iEmployee.Domain.Specifications
             this.employeeSpecifications.ForEach(x => {
                 startSpecification = startSpecification.And(x);
             });
-            result = startSpecification.ToExpression();
+            result = startSpecification.ToExpression();            
             return result;
         }
 
-        public EmployeeSpecificationBuilder AddFirstNameSpecification()
+        public EmployeeExpressionBuilder AddFirstNameSpecification()
         {
             if (!String.IsNullOrEmpty(this.employeeCriteria.FirstName))
             {
@@ -40,7 +40,7 @@ namespace iEmployee.Domain.Specifications
             }
             return this;
         }
-        public EmployeeSpecificationBuilder AddLastNameSpecification()
+        public EmployeeExpressionBuilder AddLastNameSpecification()
         {
             if (!String.IsNullOrEmpty(this.employeeCriteria.LastName))
             {
@@ -50,7 +50,7 @@ namespace iEmployee.Domain.Specifications
             return this;
         }
 
-        public EmployeeSpecificationBuilder AddBirtDateSpecification()
+        public EmployeeExpressionBuilder AddBirtDateSpecification()
         {
             if (this.employeeCriteria.MaxBirthDate.HasValue && this.employeeCriteria.MinBirthDate.HasValue)
             {
@@ -59,7 +59,7 @@ namespace iEmployee.Domain.Specifications
             }
             return this;
         }
-        public EmployeeSpecificationBuilder AddProjectSpecification()
+        public EmployeeExpressionBuilder AddProjectSpecification()
         {
             if (employeeCriteria.ProjectId.HasValue)
             {
@@ -69,7 +69,7 @@ namespace iEmployee.Domain.Specifications
             return this;
         }
 
-        public EmployeeSpecificationBuilder AddPositionSpecification()
+        public EmployeeExpressionBuilder AddPositionSpecification()
         {
             if (employeeCriteria.PositionId.HasValue)
             {

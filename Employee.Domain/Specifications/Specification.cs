@@ -38,7 +38,7 @@ namespace iEmployee.Domain.Specifications
 
             var parameter = Expression.Parameter(typeof(T));
             var expressionBody = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
-            expressionBody = (BinaryExpression)new ParameterReplacer(parameter).Visit(expressionBody);
+            expressionBody = (BinaryExpression) new ParameterReplacer(parameter).Visit(expressionBody);
             return Expression.Lambda<Func<T, bool>>(expressionBody, parameter);
         }
 
