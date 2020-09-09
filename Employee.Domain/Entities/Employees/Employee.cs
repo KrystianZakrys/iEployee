@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using iEmployee.Contracts;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -15,7 +16,7 @@ namespace iEmployee.Domain.Employees
         public Address Address { get; protected set; }
         public Manager Manager { get; protected set; }
         public ICollection<EmployeeProject> Projects { get; protected set;}
-        
+        public ICollection<JobHistory> JobHistories { get; protected set; } 
         public Employee() { }
 
         public static Employee Create(string firstName, string lastName, SexEnum sex, DateTime birthDate, Address address)
@@ -38,13 +39,36 @@ namespace iEmployee.Domain.Employees
             this.BirthDate = employeeData.BirthDate;
             this.Sex = employeeData.Sex;
             this.Address = employeeData.Address;
+            this.Manager = employeeData.Manager;
+            this.Projects = employeeData.Projects;
+            this.JobHistories = employeeData.JobHistories;
         }
 
         public void AssignEmployeeProject(Project project)
         {
             var employeeProject = EmployeeProject.Create(this, project);
-            this.Projects = new List<EmployeeProject>();
             this.Projects.Add(employeeProject);
+        }
+
+        public void UnassignEmployeeProject(Project project)
+        {
+            var employeeProject = this.Projects.Where(x => x.ProjectId == project.Id).FirstOrDefault();
+            this.Projects.Remove(employeeProject);
+        }
+        public void ChangePosition(Position position, DateTime startDate, Decimal salary, DateTime? endDate = null)
+        {
+
+            var jobHistoryEntry = JobHistory.Create(startDate, salary, this, position, endDate);
+            if (this.JobHistories != null)
+            {
+                this.JobHistories.Where(x => x.EndDate.HasValue == false).ToList().ForEach(x => x.AddEndDate(DateTime.Now));
+            }
+            else
+            {
+                this.JobHistories = new List<JobHistory>();
+            }
+               
+            this.JobHistories.Add(jobHistoryEntry);
         }
     }
 }

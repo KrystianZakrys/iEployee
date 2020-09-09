@@ -8,6 +8,7 @@ It's educational project for learning purposes to obtain knowledge about
 * Entity Framework Core
 * Repository Pattern
 * Angular CLI & RXJS
+* Specification Pattern
 
 Basically it's simple crud project that imitates real commercial user architecture.
 
@@ -23,7 +24,8 @@ Basically it's simple crud project that imitates real commercial user architectu
 
 ## To-Do
 - [x] Add Repository pattern to database access
-- [ ] Implement business logic in Entities (for example Assigning Employee to Project)
+- [ ] Fix Specification pattern issue on "Select in select" thingy
+- [x] Implement business logic in Entities (for example Assigning Employee to Project)
 - [x] Create ViewModel for each Entity that it could be used in CQRS and Web API
 - [ ] In Web part separate components for modules
 - [ ] Use Reactive Forms in Angular

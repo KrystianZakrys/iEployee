@@ -32,6 +32,15 @@ namespace iEmployee.CommandQuery
             modelBuilder.Entity<Employee>().OwnsOne(x => x.Address);
             modelBuilder.Entity<Manager>().ToTable("Managers");
             modelBuilder.Entity<Manager>().HasMany(x => x.Suboridnates).WithOne(x => x.Manager);
+
+            modelBuilder.Entity<EmployeeProject>().HasKey(x => new { x.EmployeeId, x.ProjectId });
+            modelBuilder.Entity<EmployeeProject>().HasOne(x => x.Project).WithMany(p => p.Employees).HasForeignKey(x => x.ProjectId);
+            modelBuilder.Entity<EmployeeProject>().HasOne(x => x.Employee).WithMany(e => e.Projects).HasForeignKey(x => x.EmployeeId);
+
+
+            modelBuilder.Entity<JobHistory>().HasKey(x => new { x.EmployeeId, x.PositionId });
+            modelBuilder.Entity<JobHistory>().HasOne(x => x.Position).WithMany(p => p.JobHistories).HasForeignKey(x => x.PositionId);
+            modelBuilder.Entity<JobHistory>().HasOne(x => x.Employee).WithMany(e => e.JobHistories).HasForeignKey(x => x.EmployeeId);
         }
     }
 }

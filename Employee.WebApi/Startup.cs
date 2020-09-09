@@ -35,7 +35,8 @@ namespace iEmployee.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<iEmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<iEmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                b => b.MigrationsAssembly("iEmployee.CommandQuery")));
 
             services.AddScoped<IEmployeesRepository,EmployeesRepository>();
             services.AddScoped<IProjectsRepository, ProjectsRepository>();

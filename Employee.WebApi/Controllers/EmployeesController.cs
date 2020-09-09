@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Cors;
 using iEmployee.CommandQuery.Command;
 using iEmployee.Contracts;
 using iEmployee.CommandQuery.Command.Employees;
+using iEmployee.Contracts.Models;
+using iEmployee.Contracts.Criteria;
 
 namespace iEmployee.WebApi.Controllers
 {
@@ -55,8 +57,21 @@ namespace iEmployee.WebApi.Controllers
         public async Task<ActionResult<EmployeeSaveModel>> DeleteEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteEmployeeCommand(id), CancellationToken.None));
 
-        [HttpPut("{employeeId}/{projectId}")]
+        [HttpPut("assign/{employeeId}/{projectId}")]
         public async Task<IActionResult> AssignToProject(Guid employeeId, Guid projectId)
             => this.Ok(await this.mediator.Send(new AssignToProjectCommand(employeeId, projectId), CancellationToken.None));
+
+        [HttpPut("unassign/{employeeId}/{projectId}")]
+        public async Task<IActionResult> UnassignFromProject(Guid employeeId, Guid projectId)
+          => this.Ok(await this.mediator.Send(new UnassignFromProjectCommand(employeeId, projectId), CancellationToken.None));
+
+        [HttpPost("changePos/{employeeId}")]
+        public async Task<IActionResult> ChangeEmployeePosition(Guid employeeId, [FromBody] JobHistorySaveModel jobHistorySaveModel)
+           => this.Ok(await this.mediator.Send(new ChangeEmployeePositionCommand(employeeId, jobHistorySaveModel), CancellationToken.None));
+
+        [Route("Find")]
+        [HttpGet]
+        public async Task<ActionResult<EmployeeSaveModel>> Find([FromQuery] EmployeeCriteria employeeCriteria)
+            => this.Ok(await this.mediator.Send(new FindEmployeeQuery(employeeCriteria), CancellationToken.None));
     }
 }

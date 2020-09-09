@@ -42,7 +42,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<Project> GetProject(Guid projectId)
         {
-            return await this.dbContext.Projects.FindAsync(projectId);
+            return await this.dbContext.Projects.Include(x => x.Employees).ThenInclude(x => x.Employee).FirstOrDefaultAsync(x => x.Id == projectId);
         }
 
         public async Task<IEnumerable<Project>> GetProjects()

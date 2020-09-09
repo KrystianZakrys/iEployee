@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using iEmployee.CommandQuery;
+using iEmployee.Contracts.Criteria;
+using iEmployee.Domain;
 using iEmployee.Domain.Employees;
+using iEmployee.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace iEmployee.Infrastructure.Repositories
@@ -13,6 +18,7 @@ namespace iEmployee.Infrastructure.Repositories
     {
         Task<IEnumerable<Employee>> GetEmployees();
         Task<Employee> GetEmployee(Guid employeeId);
+        Task<IEnumerable<Employee>> GetEmployees(EmployeeCriteria employeeCriteria);
         Task<bool> AddEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployee(Guid employeeId);
         Task<bool> UpdateEmployee(Guid employeeId, Employee employee);
@@ -44,7 +50,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<Employee> GetEmployee(Guid employeeId)
         {
-            return await this.dbContext.Employees.FindAsync(employeeId);
+            return await this.dbContext.Employees.Include(x=> x.Projects).FirstOrDefaultAsync(x => x.Id  == employeeId);
         }
 
         public async Task<IEnumerable<Employee>> GetEmployees()
@@ -66,5 +72,16 @@ namespace iEmployee.Infrastructure.Repositories
             return await this.dbContext.Employees.Where(x => x.Manager.Id.Equals(managerId)).ToListAsync();
         }
 
+        public async Task<IEnumerable<Employee>> GetEmployees(EmployeeCriteria employeeCriteria)
+        {
+            var specifiCationBuilder = new EmployeeSpecificationBuilder(employeeCriteria)
+                .AddFirstNameSpecification()
+                .AddLastNameSpecification()
+                .AddBirtDateSpecification()
+                .AddProjectSpecification()
+                .AddPositionSpecification();           
+            
+            return await this.dbContext.Employees.Where(specifiCationBuilder.GetExpression()).ToListAsync();
+        }
     }
 }

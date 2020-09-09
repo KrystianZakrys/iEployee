@@ -24,7 +24,17 @@ namespace iEmployee.CommandQuery.Query.Projects
         public async Task<ProjectSaveModel> Handle(GetProjectQuery request, CancellationToken cancellationToken)
         {
             var project = await this.projectsRepository.GetProject(request.Id);
-            return new ProjectSaveModel() { Id = project.Id, Name = project.Name };
+            List<EmployeeSaveModel> employeeSaveModels = new List<EmployeeSaveModel>();
+            project.Employees.ToList().ForEach(x => { 
+                    employeeSaveModels.Add(new EmployeeSaveModel() {
+                            FirstName = x.Employee.FirstName,
+                            LastName = x.Employee.LastName,
+                            Id = x.Employee.Id
+                        }
+                    ); 
+                }
+            );
+            return new ProjectSaveModel() { Id = project.Id, Name = project.Name, Employees = employeeSaveModels };
         }
 
 
