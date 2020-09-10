@@ -55,7 +55,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            return await this.dbContext.Employees.ToListAsync();
+            return await this.dbContext.Employees.Include(x => x.JobHistories).ThenInclude(j => j.Position).Include(x => x.Manager).ToListAsync();
         }
 
         public async Task<bool> UpdateEmployee(Guid employeeId, Employee employeeModel)
@@ -81,12 +81,13 @@ namespace iEmployee.Infrastructure.Repositories
             //.AddProjectSpecification()
             //.AddPositionSpecification();                       
 
-            var employees = this.dbContext.Employees.Where(specifiCationBuilder.GetExpression());
-            employees = AddExpresionsToEmployeeExpression(employees, employeeCriteria);
+            var employees = this.dbContext.Employees.Include(x => x.JobHistories)
+                .ThenInclude(j => j.Position).Include(x => x.Manager).ThenInclude(m => m.Employee).Where(specifiCationBuilder.GetExpression());
+            employees = AddExpresionsnWithSubexpressions(employees, employeeCriteria);
             return await employees.ToListAsync();
         }
 
-        private IQueryable<Employee> AddExpresionsToEmployeeExpression(IQueryable<Employee> employees, EmployeeCriteria employeeCriteria)
+        private IQueryable<Employee> AddExpresionsnWithSubexpressions(IQueryable<Employee> employees, EmployeeCriteria employeeCriteria)
         {
             if (employeeCriteria.ProjectId.HasValue)
             {

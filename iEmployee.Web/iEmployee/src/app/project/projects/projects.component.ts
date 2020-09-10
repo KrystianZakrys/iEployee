@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Project }  from '../project';
-import { ProjectService } from '../project.service';
+import { Project }  from '../../project';
+import { ProjectService } from '../../project.service';
 import { Observable } from 'rxjs';
 
 
@@ -20,6 +20,6 @@ export class ProjectsComponent implements OnInit {
 
   getProjects(): void{
     this.projectService.getProjects()
-     .subscribe(x => this.dataSource = x);
+     .subscribe(x => {this.dataSource = x;});
   }
 }

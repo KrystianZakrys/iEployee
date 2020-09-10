@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iEmployee.Contracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 namespace iEmployee.Contracts
@@ -11,5 +12,8 @@ namespace iEmployee.Contracts
         public String Sex { get; set; }
         public DateTime BirthDate { get; set; }
         public AddressSaveModel Address { get; set; }
+        public String ManagerName { get; set; }
+        public PositionSaveModel? Position { get; set; }
+
     }
 }
