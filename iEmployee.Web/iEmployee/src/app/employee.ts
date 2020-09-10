@@ -1,14 +1,13 @@
-import { EmployeeAddComponent } from './employee-add/employee-add.component';
 
 export interface Employee{
+    address: Address;
+    birthDate: string;
     firstName: string;
+    managerName: string;
+    id?: string;
     lastName: string;
     sex: number;
-    birthDate: string;
-    address: Address;
-    manager: string;
-    projects: string;
-    id?: string;
+    position: Position;
 }
 
 export interface Address{
@@ -16,4 +15,16 @@ export interface Address{
     city: string;
     street: string;
     zipCode: string;
+}
+
+export interface Position{
+    id? : string;
+    code: string;
+    name: string;
+}
+
+export interface JobHistory{
+    salary: number;
+    employeeId: string;
+    positionId: string;
 }

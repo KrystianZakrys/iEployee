@@ -29,7 +29,14 @@ namespace iEmployee.CommandQuery.Query
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Sex = x.Sex.ToString(),
-                BirthDate = x.BirthDate
+                BirthDate = x.BirthDate,
+                ManagerName = x.Manager != null ? x.Manager.Employee.FirstName + ' ' + x.Manager.Employee.LastName : "",
+                Position = x.JobHistories != null && x.JobHistories.Any(j => j.EmployeeId == x.Id && j.EndDate == null) ? new PositionSaveModel()
+                {
+                    Code = x.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Code,
+                    Id = x.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Id,
+                    Name = x.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Name
+                } : null
             }
             );
             return employeeModels;
