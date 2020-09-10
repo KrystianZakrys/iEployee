@@ -7,13 +7,16 @@ table{
     width: 100%;
 }
 a{
-    color: white !important;
+    color: White !important;
     font-size: 10pt;
-    margin: 10px;
-    background-color: lightblue;
+    margin: 10px;    
     border-radius: 25rem;
+    border-right: white 1px solid;
     padding: 5px 15px;
     float: right
+}
+a:hover{
+    background-color: #0055bb;
 }
 .navigation{
     float: right;
