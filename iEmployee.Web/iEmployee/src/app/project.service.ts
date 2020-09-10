@@ -3,6 +3,7 @@ import { Project } from './project';
 import { HttpClient, HttpHeaders }  from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Employee } from './employee';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +41,22 @@ export class ProjectService {
     return this.http.post<Project>(this.projectsUrl, project, this.httpOptions)
     .pipe(
       catchError(this.handleError<Project>('addProject'))
+    );
+  }
+
+  getNotAssignedProjects(id: string): Observable<Project[]>{
+    const url = `${this.projectsUrl}/NotAssigned/${id}`;
+    return this.http.get<Project[]>(url)
+    .pipe(
+      catchError(this.handleError<Project[]>('getNotAssignedProjects',[]))
+    );
+  }
+
+  getProjectEmployees(id: string): Observable<Employee[]>{
+    const url = `${this.projectsUrl}/Employees/${id}`;
+    return this.http.get<Employee[]>(url)
+    .pipe(
+      catchError(this.handleError<Employee[]>('getProjectEmployees',[]))
     );
   }
 }

@@ -16,6 +16,7 @@ using iEmployee.Contracts;
 using iEmployee.CommandQuery.Command.Employees;
 using iEmployee.Contracts.Models;
 using iEmployee.Contracts.Criteria;
+using iEmployee.CommandQuery.Query.Projects;
 
 namespace iEmployee.WebApi.Controllers
 {
@@ -73,5 +74,10 @@ namespace iEmployee.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<EmployeeSaveModel>> Find([FromQuery] EmployeeCriteria employeeCriteria)
             => this.Ok(await this.mediator.Send(new FindEmployeeQuery(employeeCriteria), CancellationToken.None));
+
+        // GET: api/Employee/Projects/5
+        [HttpGet("Projects/{id}")]
+        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetEmployeeProjects(Guid id)
+            => this.Ok(await this.mediator.Send(new GetEmployeeProjectsQuery() { EmployeeId = id }, CancellationToken.None));
     }
 }

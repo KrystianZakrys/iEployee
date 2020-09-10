@@ -26,7 +26,7 @@ namespace iEmployee.Infrastructure.Repositories
         public async Task<bool> AddJobHistory(JobHistory jobHistory)
         {
             await this.dbContext.JobHistories.AddAsync(jobHistory);
-            this.dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
             return true;
         }
 

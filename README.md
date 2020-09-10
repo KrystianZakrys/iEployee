@@ -23,18 +23,20 @@ Basically it's simple crud project that imitates real commercial user architectu
 
 
 ## To-Do
+- [ ] Add Forms Validation and Messages/Popups what eva
+- [ ] Change all forms to reactive forms
+- [ ] Separate Form Model from Data Model
+- [ ] Refactor/ clear code to be somehow maintainable
+- [ ] Add comments and documentation
+- [ ] Write some unit tests
 - [x] Add Repository pattern to database access
 - [x] Fix Specification pattern issue on "Select in select" thingy = Workaround by just creating wheres
 - [x] Implement business logic in Entities (for example Assigning Employee to Project)
 - [x] Create ViewModel for each Entity that it could be used in CQRS and Web API
 - [x] In Web part separate components for modules
 - [x] Use Reactive Forms in Angular
-- [ ] Turn off complex primary key on job histories because cannot add multiple ...
-- [ ] Separate Form Model from Data Model
+- [x] Turn off complex primary key on job histories because cannot add multiple ...
 - [x] Fix angular model mapping from json to interfaces/classes
-- [ ] Refactor/ clear code to be somehow maintainable
-- [ ] Add comments and documentation
-- [ ] Write some unit tests
 
 ## Authors
 

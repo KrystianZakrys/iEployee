@@ -13,6 +13,10 @@
     <Compile Remove="Migrations\20200903120232_EmployeeManagerRelationFix2.Designer.cs" />
     <Compile Remove="Migrations\20200903120353_EmployeeManagerRelationFix2.cs" />
     <Compile Remove="Migrations\20200903120353_EmployeeManagerRelationFix2.Designer.cs" />
+    <Compile Remove="Migrations\20200910172611_FixJobHistoryKey.cs" />
+    <Compile Remove="Migrations\20200910172611_FixJobHistoryKey.Designer.cs" />
+    <Compile Remove="Migrations\20200910173853_FixJobHistoryKey.cs" />
+    <Compile Remove="Migrations\20200910173853_FixJobHistoryKey.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

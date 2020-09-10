@@ -17,7 +17,7 @@ namespace iEmployee.Infrastructure.Repositories
         Task<bool> AddPositionAsync(Position position);
         Task<bool> DeletePosition(Guid positionId);
         Task<bool> UpdatePosition(Guid positionId, Position position);
-
+        Task<IEnumerable<Position>> GetNotAssignedPosition(Guid employeeId);
     }
     public class PositionsRepository : IPositionsRepository
     {
@@ -30,7 +30,7 @@ namespace iEmployee.Infrastructure.Repositories
         public async Task<bool> AddPositionAsync(Position position)
         {
             await this.dbContext.Positions.AddAsync(position);
-            this.dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
             return true;
         }
 
@@ -40,6 +40,12 @@ namespace iEmployee.Infrastructure.Repositories
             this.dbContext.Positions.Remove(position);
             await this.dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<Position>> GetNotAssignedPosition(Guid employeeId)
+        {
+            var except = this.dbContext.Positions.Include(x => x.JobHistories).Where(x => x.JobHistories.Where(j => j.EmployeeId == employeeId && j.EndDate == null).Any());
+            return await this.dbContext.Positions.Include(x => x.JobHistories).Except(except).ToListAsync();
         }
 
         public async Task<Position> GetPosition(Guid positionId)

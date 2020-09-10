@@ -3,11 +3,11 @@ export interface Employee{
     address: Address;
     birthDate: string;
     firstName: string;
-    managerName: string;
+    managerName?: string;
     id?: string;
     lastName: string;
     sex: number;
-    position: Position;
+    position?: Position;
 }
 
 export interface Address{

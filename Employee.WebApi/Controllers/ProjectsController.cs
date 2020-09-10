@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using iEmployee.Contracts;
 using iEmployee.CommandQuery.Command;
+using iEmployee.CommandQuery.Query;
 
 namespace iEmployee.WebApi.Controllers
 {
@@ -50,5 +51,16 @@ namespace iEmployee.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteProject(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteProjectCommand(id), CancellationToken.None));
+
+        // GET: api/Projects/Employee/5
+        [HttpGet("NotAssigned/{id}")]
+        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetNotAssignedProjects(Guid id)
+            => this.Ok(await this.mediator.Send(new GetNotAssignedProjectQuery() { EmployeeId = id }, CancellationToken.None));
+
+        // GET: api/Projects/Employee/5
+        [HttpGet("Employees/{projectId}")]
+        public async Task<ActionResult<IEnumerable<EmployeeSaveModel>>> GetProjectEmployees(Guid projectId)
+            => this.Ok(await this.mediator.Send(new GetProjectEmployeesQuery() { ProjectId = projectId }, CancellationToken.None));
+
     }
 }

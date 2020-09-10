@@ -27,4 +27,11 @@ export class PositionService {
         catchError(this.handleError<Position[]>('getPositions',[]))
       );
   }
+
+  getNotAssignedPositions(id: string): Observable<Position[]>{
+    return this.http.get<Position[]>(`${this.positionsUrl}/NotAssigned/${id}`)
+      .pipe(
+        catchError(this.handleError<Position[]>('getPositions',[]))
+      );
+  }
 }

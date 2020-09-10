@@ -43,7 +43,7 @@ namespace iEmployee.WebApi
             services.AddScoped<IPositionsRepository, PositionsRepository>();
             services.AddScoped<IManagersRepository, ManagersRepository>();
 
-            services.AddMediatR(typeof(GetEmployeesQuery).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetProjectEmployeesQuery).GetTypeInfo().Assembly);
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
             services.AddSwaggerGen(swagger =>
             {

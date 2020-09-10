@@ -25,3 +25,11 @@ a:hover{
 .float-right{
     float:right;
 }
+
+button{
+    margin: 5px 5px 15px 0px ;
+}
+
+.text-button{
+    margin: 5px 5px 5px 15px !important;
+}

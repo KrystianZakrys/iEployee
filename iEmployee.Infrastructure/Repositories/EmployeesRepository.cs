@@ -23,6 +23,7 @@ namespace iEmployee.Infrastructure.Repositories
         Task<bool> DeleteEmployee(Guid employeeId);
         Task<bool> UpdateEmployee(Guid employeeId, Employee employee);
         Task<IEnumerable<Employee>> GetEmployeesByManagerId(Guid managerId);
+        Task<IEnumerable<Employee>> GetEmployeesForProject(Guid projectId);
     }
     public class EmployeesRepository : IEmployeesRepository
     {
@@ -36,7 +37,7 @@ namespace iEmployee.Infrastructure.Repositories
         public async Task<bool> AddEmployeeAsync(Employee employee)
         {
             await this.dbContext.Employees.AddAsync(employee);
-            this.dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
             return true;
         }
 
@@ -50,7 +51,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<Employee> GetEmployee(Guid employeeId)
         {
-            return await this.dbContext.Employees.Include(x=> x.Projects).Include(x => x.JobHistories).FirstOrDefaultAsync(x => x.Id  == employeeId);
+            return await this.dbContext.Employees.Include(x => x.Projects).Include(x => x.JobHistories).ThenInclude(j => j.Position).FirstOrDefaultAsync(x => x.Id  == employeeId);
         }
 
         public async Task<IEnumerable<Employee>> GetEmployees()
@@ -60,7 +61,7 @@ namespace iEmployee.Infrastructure.Repositories
 
         public async Task<bool> UpdateEmployee(Guid employeeId, Employee employeeModel)
         {
-            var employee =  this.dbContext.Employees.Find(employeeId);
+            var employee =  await this.dbContext.Employees.Include(x => x.JobHistories).Where(x => x.Id == employeeId).FirstOrDefaultAsync();
             employee.Update(employeeModel);
             this.dbContext.Employees.Update(employee);
             await this.dbContext.SaveChangesAsync();
@@ -101,6 +102,14 @@ namespace iEmployee.Infrastructure.Repositories
                 employees = employees.Where(positionExpression);
             }
             return employees;
+        }
+
+        public async Task<IEnumerable<Employee>> GetEmployeesForProject(Guid projectId)
+        {
+            return await this.dbContext.Employees.Include(e => e.Projects).ThenInclude(p => p.Project)
+                .Include(x => x.JobHistories).ThenInclude(j => j.Position)
+                .Include(x => x.Manager)
+                .Where(e => e.Projects.Select(p => p.ProjectId).Contains(projectId)).ToListAsync();
         }
     }
 }

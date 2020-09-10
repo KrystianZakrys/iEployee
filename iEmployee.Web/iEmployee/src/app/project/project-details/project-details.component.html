@@ -11,9 +11,14 @@
     </p>
    
     <div>
-        <h2>Employee projects:</h2>
+        <h2>Project employees:</h2>
         <mat-list>
-            <mat-list-item> Assigned user <button mat-icon-button color="warn" (click)="unassignProject(id)"> <mat-icon>close</mat-icon></button></mat-list-item>
+            <mat-list-item *ngFor='let employee of employees;'><b>{{employee.firstName+' '+employee.lastName}}</b>  {{employee.position?.name}}
+                <button class="text-button"  mat-icon-button color="warn" (click)="unassignProject(employee.id)">
+                    Unassign 
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-list-item>
         </mat-list>
     </div>
 </div>

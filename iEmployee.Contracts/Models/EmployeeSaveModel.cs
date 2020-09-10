@@ -14,6 +14,7 @@ namespace iEmployee.Contracts
         public AddressSaveModel Address { get; set; }
         public String ManagerName { get; set; }
         public PositionSaveModel? Position { get; set; }
+        public List<ProjectSaveModel> Projects { get; set; }
 
     }
 }

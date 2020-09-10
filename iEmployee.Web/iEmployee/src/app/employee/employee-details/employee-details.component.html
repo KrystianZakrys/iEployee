@@ -19,8 +19,8 @@
         <mat-form-field appearance="legacy">
             <mat-label>Sex</mat-label>
             <mat-select formControlName="sex">
-              <mat-option  value="0">Male</mat-option>
-              <mat-option  value="1">Female</mat-option>
+              <mat-option value="0">Male</mat-option>
+              <mat-option value="1">Female</mat-option>
             </mat-select>
         </mat-form-field>
     </p>
@@ -58,24 +58,30 @@
           <input matInput formControlName="zipCode" placeholder="ZipCode" >
         </mat-form-field>
       </p>
+    </div>
+    <div class="navigation">
+      <button class="float-right"  mat-stroked-button color="basic" (click)="updateEmployee()">Update employee</button>      
+      <!-- <button class="float-right"  mat-stroked-button color="basic" (click)="makeManager()">Make manager</button>       -->
     </div>   
   <div>
     <h3>Position</h3>
-    <p>        
+    <p>     
+      
       <mat-form-field appearance="legacy">
-          <mat-label>Position</mat-label>
-          <mat-select formControlName="position">
-              <mat-option value="">Select position...</mat-option>
-              <mat-option *ngFor="let position of positions;"  value="{{position.id}}">{{position.name}}</mat-option>
+          <mat-label ><span *ngIf='this.employeeForm.get("position").value == null'>Select position...</span>
+             {{this.employeeForm.get("position").value?.name}}
+          </mat-label>
+          <mat-select [value]='this.employeeForm.get("position").value?.name' formControlName="position">
+              <mat-option value="">Select position... </mat-option>
+              <mat-option *ngFor="let item of positions;"  value="{{item.id}}">{{item.name}}</mat-option>
           </mat-select>
         </mat-form-field>
   </p>
   </div>
   <div class="navigation">
-    <button class="float-right"  mat-stroked-button color="basic" (click)="updateEmployee()">Update employee</button>
     <button class="float-right"  mat-stroked-button color="basic" (click)="changePosition()">Change position</button>
   </div>
-
+</form>
     <div>
       <br/> <br/>
       <hr/>
@@ -83,20 +89,21 @@
         <p>        
           <mat-form-field appearance="legacy">
               <mat-label>Project</mat-label>
-              <mat-select formControlName="project">
-                  <mat-option value="">Select position...</mat-option>
+              <mat-select [formControl]="project">
+                  <mat-option value="">Select project...</mat-option>
                   <mat-option *ngFor="let project of projects;"  value="{{project.id}}">{{project.name}}</mat-option>
               </mat-select>
             </mat-form-field>
       </p>
         <button mat-stroked-button color="primary" (click)="assignToProject()">Assign to project</button>
         <mat-list>
-            <mat-list-item *ngFor="let project of employee.projects"> 
+            <mat-list-item *ngFor="let project of employeeProjects"> 
                 {{project.name}}
-               <button mat-icon-button color="warn" (click)="unassignProject(id)"> <mat-icon>close</mat-icon></button>
+               <button class="text-button" title='Unassign employee from project.' mat-icon-button color="warn" (click)="unassignProject(project.id)">Unassign <mat-icon>close</mat-icon></button>
               </mat-list-item>
         </mat-list>
     </div>
-  </form>
+
 </div>
 <ng-template #elseBlock>    <h1>Employee not found.</h1></ng-template>
+<ng-template #elseBlockPosition><span>Position</span> </ng-template>

@@ -30,7 +30,7 @@ namespace iEmployee.Infrastructure.Repositories
         public async Task<bool> AddManagerAsync(Manager manager)
         {
             await this.dbContext.Managers.AddAsync(manager);
-            this.dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
             return true;
         }
 
