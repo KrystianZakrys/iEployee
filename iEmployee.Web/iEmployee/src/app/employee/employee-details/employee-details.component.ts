@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee, JobHistory } from '../../employee';
 import { Location, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { EmployeeService } from '../../employee.service';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+
 import { ProjectService } from 'src/app/project.service';
 import { PositionService } from '../../position.service'
 import { Project } from '../../project';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { EmployeeService } from '../../employee.service';
+import { Employee, JobHistory } from '../../employee';
 
 @Component({
   selector: 'app-employee-details',
@@ -21,6 +21,7 @@ export class EmployeeDetailsComponent implements OnInit {
   employee: Employee;
 
   employeeForm: FormGroup;
+  zipCodePattern = "^[0-9]{2}(-[0-9]{3})?$";
   project: FormControl;
 
   employeeProjects: Project[];
@@ -39,19 +40,19 @@ export class EmployeeDetailsComponent implements OnInit {
 
   buildForm(): void{
     this.employeeForm = this.formBuilder.group({
-      id:'',
-      managerName:'',
-      position: this.employee.position != null? this.employee.position?.id:'Select position... ',
-      projects:'',
-      firstName:'',
-      lastName:'',
-      birthDate: '',
-      sex:'',
+      id:[''],
+      managerName:[''],
+      position: [this.employee.position != null? this.employee.position?.id:'Select position... '],
+      projects:[''],
+      firstName:['', [Validators.required, Validators.maxLength(25)]],
+      lastName:['', [Validators.required, Validators.maxLength(25)]],
+      birthDate: [''],
+      sex:[''],
       address: this.formBuilder.group({
-        country:'',
-        city:'',
-        street:'',
-        zipCode:''
+        country:['', Validators.required],
+        city:['', Validators.required],
+        street:['', Validators.required],
+        zipCode:['', [Validators.required, Validators.pattern(this.zipCodePattern)]]
       })
     });
 
@@ -90,11 +91,12 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   
   updateEmployee(): void{
-    this.employeeService.updateEmployee(this.employeeForm.getRawValue(), this.employee.id).subscribe(x => console.log(x));
+    if(this.employeeForm.valid)
+      this.employeeService.updateEmployee(this.employeeForm.getRawValue(), this.employee.id).subscribe();
   }
 
   makeManager(): void{
-    console.error('DISPLAY MODAL WITH FORM');
+    console.warn('Method not implemented');
   }
 
   changePosition(): void{
@@ -120,4 +122,5 @@ export class EmployeeDetailsComponent implements OnInit {
       this.getProjectsDictionary(this.employee.id);
     });
   }
+
 }

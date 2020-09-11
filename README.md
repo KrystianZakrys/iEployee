@@ -9,10 +9,12 @@ It's educational project for learning purposes to obtain knowledge about
 * Repository Pattern
 * Angular CLI & RXJS
 * Specification Pattern
+* Angular Material
 
 Basically it's simple crud project that imitates real commercial user architecture.
 
-
+## Conclusion
+What's next? What can i do better?
 
 ## Built With
 
@@ -23,12 +25,14 @@ Basically it's simple crud project that imitates real commercial user architectu
 
 
 ## To-Do
-- [ ] Add Forms Validation and Messages/Popups what eva
-- [ ] Change all forms to reactive forms
-- [ ] Separate Form Model from Data Model
-- [ ] Refactor/ clear code to be somehow maintainable
+- [ ] !!! Modify position changing form
+- [ ] Write some unit tests Backend/Frontend - weekend
+- [ ] Refactor/ clear code to be somehow maintainable - weekend
 - [ ] Add comments and documentation
-- [ ] Write some unit tests
+- [ ] ??? Separate Form Model from Data Model in Angular
+- [x] Add Forms Validation and Messages/Popups what eva
+- [x] Make Angular Component for validation errors and messages
+- [x] Change all forms to reactive forms
 - [x] Add Repository pattern to database access
 - [x] Fix Specification pattern issue on "Select in select" thingy = Workaround by just creating wheres
 - [x] Implement business logic in Entities (for example Assigning Employee to Project)

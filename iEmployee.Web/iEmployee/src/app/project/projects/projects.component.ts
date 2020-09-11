@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 export class ProjectsComponent implements OnInit {
   displayedColumns: string[] = [ 'name','actions'];
   dataSource: Project[];
+  errorMessages: string[];
+  successMessages: string[];
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {

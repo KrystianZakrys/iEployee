@@ -13,45 +13,77 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iEmployee.WebApi.Controllers
 {
+    /// <summary>
+    /// Positions API Controller.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase"/>
     [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class PositionsController : ControllerBase
     {
         private readonly IMediator mediator;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediator">Injected MediatR</param>
         public PositionsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        // GET: api/Projects
+        /// <summary>
+        /// Gets projects list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetProjects()
+        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetPositions()
             => this.Ok(await this.mediator.Send(new GetPositionsQuery(), CancellationToken.None));
 
-        // GET: api/Positions/5
+        /// <summary>
+        /// Gets project 
+        /// </summary>
+        /// <param name="id">project identifier</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<PositionSaveModel>> GetProject(Guid id)
+        public async Task<ActionResult<PositionSaveModel>> GetPosition(Guid id)
             => this.Ok(await this.mediator.Send(new GetPositionQuery() { Id = id }, CancellationToken.None));
 
-        // POST: api/Positions
+        /// <summary>
+        /// Adds project
+        /// </summary>
+        /// <param name="project">project data model</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<PositionSaveModel>> PostProject([FromBody] PositionSaveModel project)
+        public async Task<ActionResult<PositionSaveModel>> PostPosition([FromBody] PositionSaveModel project)
             => this.Ok(await this.mediator.Send(new AddPositionCommand(project), CancellationToken.None));
 
-        // PUT: api/Positions/5
+        /// <summary>
+        /// Updates project
+        /// </summary>
+        /// <param name="id">project identifier</param>
+        /// <param name="project">project updated data model</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> PutProject(Guid id, PositionSaveModel project)
+        public async Task<ActionResult<bool>> PutPosition(Guid id, PositionSaveModel project)
             => this.Ok(await this.mediator.Send(new UpdatePositionCommand(id, project), CancellationToken.None));
 
-        // DELETE: api/Positions/5
+        /// <summary>
+        /// Deletes project
+        /// </summary>
+        /// <param name="id">project identifier</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteProject(Guid id)
+        public async Task<ActionResult<bool>> DeletePosition(Guid id)
             => this.Ok(await this.mediator.Send(new DeletePositionCommand(id), CancellationToken.None));
-        // GET: api/Positions/Employee/5
+        
+        /// <summary>
+        /// Gets positions actually not assigned to specified employee
+        /// </summary>
+        /// <param name="id">employee identifier</param>
+        /// <returns></returns>
         [HttpGet("NotAssigned/{id}")]
-        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetNotAssignedProjects(Guid id)
+        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetNotAssignedPositions(Guid id)
             => this.Ok(await this.mediator.Send(new GetNotAssignedPositionsQuery(){ EmployeeId = id }, CancellationToken.None));
     }
 }

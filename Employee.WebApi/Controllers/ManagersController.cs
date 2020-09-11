@@ -13,39 +13,66 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iEmployee.WebApi.Controllers
 {
+    /// <summary>
+    /// Managers API Controller.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase"/>
     [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class ManagersController : ControllerBase
     {
         private readonly IMediator mediator;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediator">Injected MediatR</param>
         public ManagersController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        // GET: api/Projects
+        /// <summary>
+        /// Gets managers list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManagerSaveModel>>> GetManagers()
             => this.Ok(await this.mediator.Send(new GetManagersQuery(), CancellationToken.None));
 
-        // GET: api/Projects/5
+        /// <summary>
+        /// Get manager
+        /// </summary>
+        /// <param name="id">manager identifier</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ManagerSaveModel>> GetManager(Guid id)
             => this.Ok(await this.mediator.Send(new GetManagerQuery() { Id = id }, CancellationToken.None));
 
-        // POST: api/Projects
+        /// <summary>
+        /// Adds manager
+        /// </summary>
+        /// <param name="manager">manager data model</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ManagerSaveModel>> PostManager([FromBody] ManagerSaveModel project)
-            => this.Ok(await this.mediator.Send(new AddManagerCommand(project), CancellationToken.None));
+        public async Task<ActionResult<ManagerSaveModel>> PostManager([FromBody] ManagerSaveModel manager)
+            => this.Ok(await this.mediator.Send(new AddManagerCommand(manager), CancellationToken.None));
 
-        // PUT: api/Projects/5
+        /// <summary>
+        /// Updates manager
+        /// </summary>
+        /// <param name="id">manager identifier</param>
+        /// <param name="manager">manager updated data model</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> PutManager(Guid id, ManagerSaveModel project)
-            => this.Ok(await this.mediator.Send(new UpdateManagerCommand(id, project), CancellationToken.None));
+        public async Task<ActionResult<bool>> PutManager(Guid id, ManagerSaveModel manager)
+            => this.Ok(await this.mediator.Send(new UpdateManagerCommand(id, manager), CancellationToken.None));
 
-        //DELETE: api/Projects/5
+        /// <summary>
+        /// Deletes manager
+        /// </summary>
+        /// <param name="id">manager identifier</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteManager(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteManagerCommand(id), CancellationToken.None));

@@ -1,3 +1,21 @@
 <button mat-stroked-button color="primary" (click)="goBack()">Back</button>
-<h1>{{employee.firstName | uppercase}}'s projects</h1>
-LISTA PROJEKTÓW
+<div *ngIf="employee; else elseBlock">
+    <p>        
+        <mat-form-field appearance="legacy">
+            <mat-label>Project</mat-label>
+            <mat-select [formControl]="project">
+                <mat-option value="">Select project...</mat-option>
+                <mat-option *ngFor="let project of projectsDictionary;"  value="{{project.id}}">{{project.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </p>
+      <button mat-stroked-button color="primary" (click)="assignToProject()">Assign to project</button>
+    <h1>{{employee.firstName | uppercase}}'s projects</h1>
+    <mat-list>
+        <mat-list-item *ngFor="let project of projects"> 
+            {{project.name}}
+        <button class="text-button" title='Unassign employee from project.' mat-icon-button color="warn" (click)="unassignProject(project.id)">Unassign <mat-icon>close</mat-icon></button>
+        </mat-list-item>
+    </mat-list>
+</div>
+<ng-template #elseBlock>    <h1>Employee not found.</h1></ng-template>

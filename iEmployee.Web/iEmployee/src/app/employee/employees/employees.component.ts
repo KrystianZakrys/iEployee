@@ -34,12 +34,12 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterForm = this.formBuilder.group({
-      firstName:'',
-      lastName:'',
-      minBirthDate: '',
-      maxBirthDate: '',
-      position: '',
-      project: ''
+      firstName:[''],
+      lastName:[''],
+      minBirthDate: [''],
+      maxBirthDate: [''],
+      position: [''],
+      project: ['']
     });
 
     this.getEmployees();

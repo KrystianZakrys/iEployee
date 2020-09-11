@@ -1,0 +1,19 @@
+
+<div class='information-container'>
+    <div class='success-message' *ngIf="this.successMessages">
+        <button mat-icon-button (click)='closesuccessMessages()' style="float: right">
+            <mat-icon>close</mat-icon>
+        </button>
+        <div class="example-button-container" style="overflow-wrap: anywhere;">       
+             <p *ngFor="let message of this.successMessages">{{message}}</p>
+        </div>
+    </div>
+    <div class='error-information-message' *ngIf="this.errorMessages">
+        <button mat-icon-button (click)='closeerrorMessages()' style="float: right">
+            <mat-icon>close</mat-icon>
+        </button>
+        <div class="example-button-container" style="overflow-wrap: anywhere;">       
+             <p *ngFor="let message of this.errorMessages">{{message}}</p>
+        </div>
+    </div>
+</div>

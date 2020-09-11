@@ -1,57 +1,42 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { projectRoutes  } from './project.route';
-
-import { ProjectDetailsComponent } from './project-details/project-details.component';
-import { ProjectAddComponent } from './project-add/project-add.component';
-import { ProjectsComponent } from './projects/projects.component';
-
+import { ErrorMessagesComponent } from './/error-messages/error-messages.component';
+import { InformationMessagesComponent } from './information-messages/information-messages.component';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
 import { MatSelectModule }  from '@angular/material/select';
 import { MatDatepickerModule }  from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
-import { ReactiveFormsModule }  from '@angular/forms';
-import { MessagesModule } from '../messages/messages.module';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    ProjectDetailsComponent,
-    ProjectAddComponent,
-    ProjectsComponent    
-  ],
+  declarations: [ErrorMessagesComponent, InformationMessagesComponent],
   imports: [
     CommonModule,
+    MatButtonModule,
+    MatIconModule,
     MatSliderModule,
     MatTableModule,
     MatPaginatorModule,
     MatInputModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatButtonModule,
-    FormsModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule,
     MatExpansionModule,
-    MatIconModule,
-    RouterModule.forChild(projectRoutes),
-    ReactiveFormsModule,
-    MessagesModule,
-    HttpClientModule
+    MatListModule
   ],
-  providers: [HttpClientModule]
+  exports:[
+    ErrorMessagesComponent,
+    InformationMessagesComponent
+  ]
 })
-export class ProjectModule { }
+export class MessagesModule { }

@@ -1,0 +1,26 @@
+<div class="error-message" *ngIf="this.control?.touched && this.control?.errors != null">
+    <div *ngIf="this.control.errors?.minlength">
+        {{this.propertyName}} should be longer than {{this.control.errors?.minlength.requiredLength}}.
+    </div>  
+    <div *ngIf="this.control.errors?.maxlength">
+    {{this.propertyName}}  should be shorter than {{this.control.errors?.maxlength.requiredLength}}.
+    </div>  
+    <div *ngIf="this.control.errors?.required">
+      {{this.propertyName}} is required.
+    </div>  
+    <div *ngIf="this.control.errors?.min">
+      {{this.propertyName}} should be greater than or equal to {{this.control.errors?.min.min}}.
+    </div>  
+    <div *ngIf="this.control.errors?.max">
+        {{this.propertyName}} should be lesser than or equal to {{this.control.errors?.max.max}}.
+    </div>  
+    <div *ngIf="this.control.errors?.requiredTrue">
+      {{this.propertyName}} is required.
+    </div>  
+    <div *ngIf="this.control.errors?.email">
+      {{this.propertyName}} is not correct email address.
+    </div>  
+    <div *ngIf="this.control.errors?.pattern">
+      {{this.propertyName}} has wrong format [{{this.propertyFormat}}].
+    </div>  
+</div>

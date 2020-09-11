@@ -4,7 +4,7 @@ import { Employee, Address } from '../../employee';
 import { Location, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../../employee.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/project.service';
 import { PositionService } from '../../position.service'
 import { Project } from '../../project';
@@ -18,16 +18,37 @@ import { Project } from '../../project';
 export class EmployeeAddComponent implements OnInit {
   positions: Position[];
   projects: Project[];
-  @Input() employee: Employee;
+
+  employeeForm: FormGroup;
+  zipCodePattern = "^[0-9]{2}(-[0-9]{3})?$";
+  employee: Employee;
 
   constructor(private employeeService: EmployeeService, 
     private route: ActivatedRoute,
      private location: Location, 
      private datePipe: DatePipe,
      private positionService: PositionService,
-     private projectService: ProjectService) { }
+     private projectService: ProjectService,
+     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.buildForm();
+  }
+  buildForm(): void{
+    this.employeeForm = this.formBuilder.group({
+      firstName:['', [Validators.required, Validators.maxLength(25)]],
+      lastName:['', [Validators.required, Validators.maxLength(25)]],
+      birthDate: [''],
+      sex:[''],
+      address: this.formBuilder.group({
+        country:['', Validators.required],
+        city:['', Validators.required],
+        street:['', Validators.required],
+        zipCode:['', [Validators.required, Validators.pattern(this.zipCodePattern)]]
+      })
+    });
+
+
   }
 
   goBack(): void{
@@ -40,9 +61,8 @@ export class EmployeeAddComponent implements OnInit {
     this.projectService.getProjects().subscribe(x => {this.projects = x}); 
   }
 
-  submit(firstName: string, lastName: string, sex: number, birthDate: Date, addressCountry: string, addressCity: string, addressStreet: string, addressZipCode: string): void{
-    const address: Address = {country: addressCountry, city: addressCity, street:addressStreet, zipCode:  addressZipCode};
-    this.employee = {firstName: firstName, lastName: lastName,sex: sex, birthDate: this.datePipe.transform(birthDate,'yyyy-MM-dd'),address: address,managerName:"",position:null};   
-    this.employeeService.addEmployee(this.employee).subscribe(x => this.location.back());
+  submit(): void{ 
+    if(this.employeeForm.valid)
+      this.employeeService.addEmployee(this.employeeForm.getRawValue()).subscribe(x => this.location.back());
   }
 }

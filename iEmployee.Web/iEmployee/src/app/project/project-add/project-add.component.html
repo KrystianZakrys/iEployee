@@ -4,9 +4,9 @@
     <p>
         <mat-form-field appearance="legacy">
           <mat-label>Project name</mat-label>
-          <input matInput #projectName placeholder="Project name" >
+          <input matInput [formControl]='projectName' placeholder="Project name" >
         </mat-form-field>
     </p>
-   <!-- <h2>Assign users</h2>
-    -->
-    <button mat-stroked-button color="primary" (click)="submit(projectName.value)">Save</button>
+    <app-error-messages [propertyName]="'Project name'" [control]="projectName"></app-error-messages>  
+
+    <button mat-stroked-button color="primary" (click)="submit()" [disabled]="!this.projectName.valid">Save</button>

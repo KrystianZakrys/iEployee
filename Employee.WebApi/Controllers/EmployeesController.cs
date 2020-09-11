@@ -20,6 +20,10 @@ using iEmployee.CommandQuery.Query.Projects;
 
 namespace iEmployee.WebApi.Controllers
 {
+    /// <summary>
+    /// Employee API Controller.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase"/>
     [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
@@ -27,57 +31,107 @@ namespace iEmployee.WebApi.Controllers
     {
         private readonly IMediator mediator;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediator">Injected MediatR</param>
         public EmployeesController( IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        // GET: api/Employees
+        /// <summary>
+        /// Gets employees list.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeSaveModel>>> GetEmployees()
             => this.Ok(await this.mediator.Send(new GetEmployeesQuery(), CancellationToken.None));
 
-        // GET: api/Employees/5
+        /// <summary>
+        /// Get employee data
+        /// </summary>
+        /// <param name="id">Employee identifier</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeSaveModel>> GetEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new GetEmployeeQuery() { Id = id }, CancellationToken.None));
 
-
-        // PUT: api/Employees/5
+        /// <summary>
+        /// Updates employee data
+        /// </summary>
+        /// <param name="id">Employee identifier</param>
+        /// <param name="employee">Employee updated model</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(Guid id, EmployeeSaveModel employee)
             => this.Ok(await this.mediator.Send(new UpdateEmployeeCommand(id, employee), CancellationToken.None));
-
-        // POST: api/Employees
+    
+        /// <summary>
+        /// Adds new employee 
+        /// </summary>
+        /// <param name="employee">Employee model</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<EmployeeSaveModel>> PostEmployee([FromBody] EmployeeSaveModel employee)
             =>  this.Ok(await this.mediator.Send(new AddEmployeeCommand(employee), CancellationToken.None));
 
-        // DELETE: api/Employees/5
+        /// <summary>
+        /// Deletes employee
+        /// </summary>
+        /// <param name="id">Employee identifier</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<EmployeeSaveModel>> DeleteEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteEmployeeCommand(id), CancellationToken.None));
 
+        /// <summary>
+        /// Assigns employee to project
+        /// </summary>
+        /// <param name="employeeId">Employee identifier</param>
+        /// <param name="projectId">Project identifier</param>
+        /// <returns></returns>
         [HttpPut("assign/{employeeId}/{projectId}")]
         public async Task<IActionResult> AssignToProject(Guid employeeId, Guid projectId)
             => this.Ok(await this.mediator.Send(new AssignToProjectCommand(employeeId, projectId), CancellationToken.None));
 
+        /// <summary>
+        /// Unassigns employee from project
+        /// </summary>
+        /// <param name="employeeId">Employee identifier</param>
+        /// <param name="projectId">Project identifier</param>
+        /// <returns></returns>
         [HttpPut("unassign/{employeeId}/{projectId}")]
         public async Task<IActionResult> UnassignFromProject(Guid employeeId, Guid projectId)
           => this.Ok(await this.mediator.Send(new UnassignFromProjectCommand(employeeId, projectId), CancellationToken.None));
 
+        /// <summary>
+        /// Changes employee position
+        /// </summary>
+        /// <param name="employeeId">Employee identifier</param>
+        /// <param name="jobHistorySaveModel">position save model</param>
+        /// <returns></returns>
         [HttpPost("changePos/{employeeId}")]
         public async Task<IActionResult> ChangeEmployeePosition(Guid employeeId, [FromBody] JobHistorySaveModel jobHistorySaveModel)
            => this.Ok(await this.mediator.Send(new ChangeEmployeePositionCommand(employeeId, jobHistorySaveModel), CancellationToken.None));
 
+        /// <summary>
+        /// Gets employees list filtered by criteria
+        /// </summary>
+        /// <param name="employeeCriteria">Criteria values</param>
+        /// <returns></returns>
         [Route("Find")]
         [HttpGet]
         public async Task<ActionResult<EmployeeSaveModel>> Find([FromQuery] EmployeeCriteria employeeCriteria)
             => this.Ok(await this.mediator.Send(new FindEmployeeQuery(employeeCriteria), CancellationToken.None));
 
-        // GET: api/Employee/Projects/5
-        [HttpGet("Projects/{id}")]
-        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetEmployeeProjects(Guid id)
-            => this.Ok(await this.mediator.Send(new GetEmployeeProjectsQuery() { EmployeeId = id }, CancellationToken.None));
+        /// <summary>
+        /// Gets projects for employee
+        /// </summary>
+        /// <param name="id">Employee identifier</param>
+        /// <returns></returns>
+        [HttpGet("Projects/{employeeId}")]
+        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetEmployeeProjects(Guid employeeId)
+            => this.Ok(await this.mediator.Send(new GetEmployeeProjectsQuery() { EmployeeId = employeeId }, CancellationToken.None));
     }
 }

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { EmployeeModule } from './employee/employee.module';
 import { ProjectModule } from './project/project.module';
+import { MessagesModule } from './messages/messages.module';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,10 @@ import { ProjectModule } from './project/project.module';
     BrowserAnimationsModule,
     HttpClientModule,
     EmployeeModule,
-    ProjectModule
+    ProjectModule,
+    MessagesModule
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

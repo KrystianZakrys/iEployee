@@ -59,4 +59,11 @@ export class ProjectService {
       catchError(this.handleError<Employee[]>('getProjectEmployees',[]))
     );
   }
+
+  updateProject(id: string, project: Project): Observable<Project>{
+    return this.http.put<Project>(`${this.projectsUrl}/${id}`, project, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<Project>(`updateProject id=${id}`))
+    );
+  }
 }

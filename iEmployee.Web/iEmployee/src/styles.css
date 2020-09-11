@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* //You can add global styles to this file, and also import other style files */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -32,4 +32,42 @@ button{
 
 .text-button{
     margin: 5px 5px 5px 15px !important;
+}
+.error-message{
+    background-color: #dd5555;
+    border-radius: 1rem;
+    padding: 10px 10px 10px 20px;
+    margin: -10px 0px 15px 0px;
+    color: white;
+    font-weight: bold;
+}
+
+.information-container{
+    width: 50%;
+    position: absolute;
+    float: left;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+.error-information-message{
+    background-color: #dd5555;
+    padding: 20px;
+    position: relative;
+    border-radius: 1rem;
+    color: white;
+    font-weight: bold;
+    font-size: 11pt;
+    margin: 10px;
+}
+.success-message{
+    position: absolute;
+    background-color: #00dd55;
+    padding: 20px;
+    position: relative;
+    border-radius: 1rem;
+    color: white;
+    font-weight: bold;
+    font-size: 11pt;
+    margin: 10px;
 }
