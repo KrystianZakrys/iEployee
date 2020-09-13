@@ -25,11 +25,11 @@ What's next? What can i do better?
 
 
 ## To-Do
-- [ ] !!! Modify position changing form
-- [ ] Write some unit tests Backend/Frontend - weekend
+- [ ] Modify position changing form NEED REBUILDING
 - [ ] Refactor/ clear code to be somehow maintainable - weekend
-- [ ] Add comments and documentation
 - [ ] ??? Separate Form Model from Data Model in Angular
+- [ ] Write some unit tests Backend/Frontend - weekend
+- [x] Add comments and documentation
 - [x] Add Forms Validation and Messages/Popups what eva
 - [x] Make Angular Component for validation errors and messages
 - [x] Change all forms to reactive forms

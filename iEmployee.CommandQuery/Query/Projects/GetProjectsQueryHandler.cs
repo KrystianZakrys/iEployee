@@ -12,7 +12,10 @@ using iEmployee.Infrastructure.Repositories;
 
 namespace iEmployee.CommandQuery.Query.Projects
 {
-    public class GetProjectsQueryHandler : IQueryHandler<GetProjectsQuery, IEnumerable<ProjectSaveModel>>
+    /// <summary>
+    /// Query handler for <see cref="GetProjectsQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetProjectsQueryHandler : IQueryHandler<GetProjectsQuery, IEnumerable<ProjectDTO>>
     {
         private readonly IProjectsRepository projectsRepository;
 
@@ -20,11 +23,16 @@ namespace iEmployee.CommandQuery.Query.Projects
         {
             this.projectsRepository = projectsRepository;
         }
-
-        public async Task<IEnumerable<ProjectSaveModel>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetProjectEmployeesQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>project DTO list</returns>
+        public async Task<IEnumerable<ProjectDTO>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
         {
             var projects = await projectsRepository.GetProjects();
-            var projectsModels = projects.Select(x => new ProjectSaveModel()
+            var projectsModels = projects.Select(x => new ProjectDTO()
                 {
                     Id = x.Id,
                     Name = x.Name

@@ -7,6 +7,7 @@ using iEmployee.Domain.Employees;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Options;
+using System.Reflection.Metadata;
 
 namespace iEmployee.CommandQuery
 {
@@ -41,6 +42,26 @@ namespace iEmployee.CommandQuery
             modelBuilder.Entity<JobHistory>().HasKey(x => new { x.Id, x.EmployeeId, x.PositionId });
             modelBuilder.Entity<JobHistory>().HasOne(x => x.Position).WithMany(p => p.JobHistories).HasForeignKey(x => x.PositionId);
             modelBuilder.Entity<JobHistory>().HasOne(x => x.Employee).WithMany(e => e.JobHistories).HasForeignKey(x => x.EmployeeId);
+
+            //Fill database with sample data
+
+            modelBuilder.Entity<Position>().HasData(new Position[]
+            {
+                Position.Create("Developer","D"),
+                Position.Create("Fullstack","F"),
+                Position.Create("Patron","P"),
+                Position.Create("Inspector","I"),
+                Position.Create("Architect","A"),
+                Position.Create("Tester","T"),
+            });
+
+            modelBuilder.Entity<Project>().HasData(new Project[]
+            {
+                Project.Create(".NET CRUD"),
+                Project.Create("Java Mastering Classes"),
+                Project.Create("DRINKING COFFER"),
+                Project.Create("Mobile app"),
+            });
         }
     }
 }

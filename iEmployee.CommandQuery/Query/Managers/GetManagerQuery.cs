@@ -6,8 +6,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetManagerQuery : IQuery<ManagerSaveModel>
+    /// <summary>
+    /// Query for manager implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetManagerQuery : IQuery<ManagerDTO>
     {
+        /// <summary>
+        /// Manager identifier
+        /// </summary>
         public Guid Id { get; set; }
     }
 }

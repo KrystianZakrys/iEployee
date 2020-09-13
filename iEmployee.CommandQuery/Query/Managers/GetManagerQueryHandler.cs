@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetManagerQueryHandler : IQueryHandler<GetManagerQuery, ManagerSaveModel>
+    /// <summary>
+    /// Query handler for <see cref="GetManagerQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetManagerQueryHandler : IQueryHandler<GetManagerQuery, ManagerDTO>
     {
         private readonly IManagersRepository managersRepository;
         public GetManagerQueryHandler(IManagersRepository managersRepository)
@@ -18,10 +21,16 @@ namespace iEmployee.CommandQuery.Query
             this.managersRepository = managersRepository;
         }
 
-        public async Task<ManagerSaveModel> Handle(GetManagerQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetManagerQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>manager DTO</returns>
+        public async Task<ManagerDTO> Handle(GetManagerQuery request, CancellationToken cancellationToken)
         {
             var manager = await this.managersRepository.GetManager(request.Id);
-            return new ManagerSaveModel() { EmployeeId = manager.Employee.Id, RoomNumber = manager.RoomNumber,
+            return new ManagerDTO() { EmployeeId = manager.Employee.Id, RoomNumber = manager.RoomNumber,
                 ManagerId = manager.Id, Suboridnates = manager.Suboridnates.Select(x => x.Id).ToList() };
         }
     }

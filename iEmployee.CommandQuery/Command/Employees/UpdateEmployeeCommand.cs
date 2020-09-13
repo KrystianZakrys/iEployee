@@ -8,16 +8,19 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Command
 {
+    /// <summary>
+    /// Command updates employee entity
+    /// </summary>
     public class UpdateEmployeeCommand : CommandBase<bool>
     {
         public Guid EmployeeId { get; set; }
         public String FirstName { get; }
         public String LastName { get; }
-        public AddressSaveModel Address { get; }
+        public AddressDTO Address { get; }
         public DateTime BirthDate { get; }
         public SexEnum Sex { get; }
 
-        public UpdateEmployeeCommand(Guid id, EmployeeSaveModel employee)
+        public UpdateEmployeeCommand(Guid id, EmployeeDTO employee)
         {
             this.EmployeeId = id;
             this.FirstName = employee.FirstName;

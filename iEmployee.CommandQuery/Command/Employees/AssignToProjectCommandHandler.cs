@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Command.Employees
 {
+    /// <summary>
+    /// Command handler for <see cref="AssignToProjectCommand"/> implementing <see cref="ICommandHandler{TCommand, TResult}"/>
+    /// </summary>
     public class AssignToProjectCommandHandler : ICommandHandler<AssignToProjectCommand, bool>
     {
         public IEmployeesRepository employeesRepository;
@@ -18,6 +21,13 @@ namespace iEmployee.CommandQuery.Command.Employees
             this.employeesRepository = employeesRepository;
             this.projectsRepository = projectsRepository;
         }
+        /// <summary>
+        /// Handler for command 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <seealso cref="AssignToProjectCommand"/>
+        /// <returns></returns>
         public async Task<bool> Handle(AssignToProjectCommand request, CancellationToken cancellationToken)
         {
             var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);

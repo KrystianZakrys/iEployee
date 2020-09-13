@@ -7,8 +7,14 @@ using iEmployee.Infrastructure.Query;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetEmployeeQuery : IQuery<EmployeeSaveModel>
+    /// <summary>
+    /// Query for employee implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetEmployeeQuery : IQuery<EmployeeDTO>
     {
+        /// <summary>
+        /// Employee identifier
+        /// </summary>
         public Guid Id { get; set; }
     }
 }

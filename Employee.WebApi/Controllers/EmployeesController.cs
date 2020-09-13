@@ -45,7 +45,7 @@ namespace iEmployee.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeSaveModel>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
             => this.Ok(await this.mediator.Send(new GetEmployeesQuery(), CancellationToken.None));
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">Employee identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeSaveModel>> GetEmployee(Guid id)
+        public async Task<ActionResult<EmployeeDTO>> GetEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new GetEmployeeQuery() { Id = id }, CancellationToken.None));
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="employee">Employee updated model</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(Guid id, EmployeeSaveModel employee)
+        public async Task<IActionResult> PutEmployee(Guid id, EmployeeDTO employee)
             => this.Ok(await this.mediator.Send(new UpdateEmployeeCommand(id, employee), CancellationToken.None));
     
         /// <summary>
@@ -73,7 +73,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="employee">Employee model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<EmployeeSaveModel>> PostEmployee([FromBody] EmployeeSaveModel employee)
+        public async Task<ActionResult<EmployeeDTO>> PostEmployee([FromBody] EmployeeDTO employee)
             =>  this.Ok(await this.mediator.Send(new AddEmployeeCommand(employee), CancellationToken.None));
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">Employee identifier</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<EmployeeSaveModel>> DeleteEmployee(Guid id)
+        public async Task<ActionResult<EmployeeDTO>> DeleteEmployee(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteEmployeeCommand(id), CancellationToken.None));
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="jobHistorySaveModel">position save model</param>
         /// <returns></returns>
         [HttpPost("changePos/{employeeId}")]
-        public async Task<IActionResult> ChangeEmployeePosition(Guid employeeId, [FromBody] JobHistorySaveModel jobHistorySaveModel)
+        public async Task<IActionResult> ChangeEmployeePosition(Guid employeeId, [FromBody] JobHistoryDTO jobHistorySaveModel)
            => this.Ok(await this.mediator.Send(new ChangeEmployeePositionCommand(employeeId, jobHistorySaveModel), CancellationToken.None));
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [Route("Find")]
         [HttpGet]
-        public async Task<ActionResult<EmployeeSaveModel>> Find([FromQuery] EmployeeCriteria employeeCriteria)
+        public async Task<ActionResult<EmployeeDTO>> Find([FromQuery] EmployeeCriteria employeeCriteria)
             => this.Ok(await this.mediator.Send(new FindEmployeeQuery(employeeCriteria), CancellationToken.None));
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">Employee identifier</param>
         /// <returns></returns>
         [HttpGet("Projects/{employeeId}")]
-        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetEmployeeProjects(Guid employeeId)
+        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetEmployeeProjects(Guid employeeId)
             => this.Ok(await this.mediator.Send(new GetEmployeeProjectsQuery() { EmployeeId = employeeId }, CancellationToken.None));
     }
 }

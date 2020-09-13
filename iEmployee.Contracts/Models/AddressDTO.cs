@@ -4,7 +4,10 @@ using System.Text;
 
 namespace iEmployee.Contracts
 {
-    public class AddressSaveModel
+    /// <summary>
+    /// Adress entity data transfer object
+    /// </summary>
+    public class AddressDTO
     {
         public String Country { get; set; }
         public String City { get; set; }

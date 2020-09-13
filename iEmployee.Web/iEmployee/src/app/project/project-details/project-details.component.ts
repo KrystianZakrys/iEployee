@@ -61,4 +61,8 @@ export class ProjectDetailsComponent implements OnInit {
       this.getEmployees(this.project.id);
     });
   }
+
+  deleteProject(): void{
+    this.projectService.deleteProject(this.project.id).subscribe(x =>{this.goBack()});
+  }
 }

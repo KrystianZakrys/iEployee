@@ -7,10 +7,13 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Command
 {
+    /// <summary>
+    /// Command for adding project <seealso cref="CommandBase{bool}"/>
+    /// </summary>
     public class AddProjectCommand : CommandBase<bool>
     {
         public String Name { get; set; }
-        public AddProjectCommand(ProjectSaveModel project)
+        public AddProjectCommand(ProjectDTO project)
         {
             this.Name = project.Name;
         }

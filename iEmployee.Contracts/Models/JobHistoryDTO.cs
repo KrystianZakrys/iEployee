@@ -4,7 +4,10 @@ using System.Text;
 
 namespace iEmployee.Contracts.Models
 {
-    public class JobHistorySaveModel
+    /// <summary>
+    /// JobHistory entity data transfer object
+    /// </summary>
+    public class JobHistoryDTO
     {
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

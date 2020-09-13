@@ -39,7 +39,7 @@ namespace iEmployee.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetProjects()
+        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjects()
             => this.Ok(await this.mediator.Send(new GetProjectsQuery(), CancellationToken.None));
 
         /// <summary>
@@ -48,8 +48,28 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">Project identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProjectSaveModel>> GetProject(Guid id)
+        public async Task<ActionResult<ProjectDTO>> GetProject(Guid id)
             => this.Ok(await this.mediator.Send(new GetProjectQuery() { Id = id }, CancellationToken.None));
+
+
+        /// <summary>
+        /// Gets projects not assigned to specified employee
+        /// </summary>
+        /// <param name="id">employee identifier</param>
+        /// <returns></returns>
+        [HttpGet("NotAssigned/{id}")]
+        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetNotAssignedProjects(Guid id)
+            => this.Ok(await this.mediator.Send(new GetNotAssignedProjectQuery() { EmployeeId = id }, CancellationToken.None));
+
+        /// <summary>
+        /// Gets employees list for specified project
+        /// </summary>
+        /// <param name="projectId">project identifier</param>
+        /// <returns></returns>
+        [HttpGet("Employees/{projectId}")]
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetProjectEmployees(Guid projectId)
+            => this.Ok(await this.mediator.Send(new GetProjectEmployeesQuery() { ProjectId = projectId }, CancellationToken.None));
+
 
         /// <summary>
         /// Adds project
@@ -57,7 +77,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">Project data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ProjectSaveModel>> PostProject([FromBody] ProjectSaveModel project)
+        public async Task<ActionResult<ProjectDTO>> PostProject([FromBody] ProjectDTO project)
             => this.Ok(await this.mediator.Send(new AddProjectCommand(project), CancellationToken.None));
 
         /// <summary>
@@ -67,7 +87,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">project updated data model</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> PutProject(Guid id, ProjectSaveModel project)
+        public async Task<ActionResult<bool>> PutProject(Guid id, ProjectDTO project)
             => this.Ok(await this.mediator.Send(new UpdateProjectCommand(id, project), CancellationToken.None));
         
         /// <summary>
@@ -78,24 +98,5 @@ namespace iEmployee.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteProject(Guid id)
             => this.Ok(await this.mediator.Send(new DeleteProjectCommand(id), CancellationToken.None));
-
-        /// <summary>
-        /// Gets projects not assigned to specified employee
-        /// </summary>
-        /// <param name="id">employee identifier</param>
-        /// <returns></returns>
-        [HttpGet("NotAssigned/{id}")]
-        public async Task<ActionResult<IEnumerable<ProjectSaveModel>>> GetNotAssignedProjects(Guid id)
-            => this.Ok(await this.mediator.Send(new GetNotAssignedProjectQuery() { EmployeeId = id }, CancellationToken.None));
-
-        /// <summary>
-        /// Gets employees list for specified project
-        /// </summary>
-        /// <param name="projectId">project identifier</param>
-        /// <returns></returns>
-        [HttpGet("Employees/{projectId}")]
-        public async Task<ActionResult<IEnumerable<EmployeeSaveModel>>> GetProjectEmployees(Guid projectId)
-            => this.Ok(await this.mediator.Send(new GetProjectEmployeesQuery() { ProjectId = projectId }, CancellationToken.None));
-
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from '../../employee';
+import { Employee, Position } from '../../employee';
 import { Location, DatePipe } from '@angular/common'
 import { EmployeeService }  from '../../employee.service';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';

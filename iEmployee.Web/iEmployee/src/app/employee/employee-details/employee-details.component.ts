@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, Form } from '@angular/forms';
 
 import { ProjectService } from 'src/app/project.service';
 import { PositionService } from '../../position.service'
 import { Project } from '../../project';
 import { EmployeeService } from '../../employee.service';
-import { Employee, JobHistory } from '../../employee';
+import { Employee, JobHistory, Position} from '../../employee';
 
 @Component({
   selector: 'app-employee-details',
@@ -21,6 +21,7 @@ export class EmployeeDetailsComponent implements OnInit {
   employee: Employee;
 
   employeeForm: FormGroup;
+
   zipCodePattern = "^[0-9]{2}(-[0-9]{3})?$";
   project: FormControl;
 
@@ -41,8 +42,7 @@ export class EmployeeDetailsComponent implements OnInit {
   buildForm(): void{
     this.employeeForm = this.formBuilder.group({
       id:[''],
-      managerName:[''],
-      position: [this.employee.position != null? this.employee.position?.id:'Select position... '],
+      managerName:[''],      
       projects:[''],
       firstName:['', [Validators.required, Validators.maxLength(25)]],
       lastName:['', [Validators.required, Validators.maxLength(25)]],
@@ -53,15 +53,33 @@ export class EmployeeDetailsComponent implements OnInit {
         city:['', Validators.required],
         street:['', Validators.required],
         zipCode:['', [Validators.required, Validators.pattern(this.zipCodePattern)]]
+      }),
+      position: this.formBuilder.group({
+        id: [''],
+        code:[''],
+        salary:[''],
+        startDate:[''],
+        endDate:[''],
+        name:['']
       })
     });
 
     this.project = new FormControl('');
+    this.project.setValidators(Validators.required);
+
+    if(this.employee.position == null){
+      var position: Position = {name:"", code:"",salary:0,startDate: new Date(),endDate:new Date(),id:""};
+      this.employee.position = position;
+    }
+    (<FormGroup>this.employeeForm)
+    .patchValue(this.employee, {onlySelf: true});
   }
+   
 
   getPositionsDictionary(id: string): void{
     this.positionService.getNotAssignedPositions(id).subscribe(x => {this.positions = x;});
   }
+
   getProjectsDictionary(id: string): void{
     this.projectService.getNotAssignedProjects(id).subscribe(x => {this.projects = x}); 
   }
@@ -72,9 +90,8 @@ export class EmployeeDetailsComponent implements OnInit {
       this.getEmployeeProjects();
       this.getPositionsDictionary(id);
       this.getProjectsDictionary(id);
-      this.buildForm();
-      (<FormGroup>this.employeeForm)
-      .setValue(this.employee, {onlySelf: true});});
+      this.buildForm();    
+    });
   }
 
   getEmployeeProjects(): void{
@@ -100,7 +117,14 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   changePosition(): void{
-    var jobHistoryEntry : JobHistory = {employeeId: this.employee.id, positionId:this.employeeForm.get("position").value,salary: 1500};
+    var position = this.employeeForm.getRawValue().position;
+    var jobHistoryEntry : JobHistory = {
+        employeeId: this.employee.id,
+        positionId: position.id,
+        salary: position.salary,
+        startDate: position.startDate,
+        endDate: position.endDate
+      };
     this.employeeService.changePosition(this.employee.id, jobHistoryEntry)
     .subscribe(x => {
       this.getPositionsDictionary(this.employee.id);

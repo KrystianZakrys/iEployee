@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Command.Projects
 {
+    /// <summary>
+    /// Command handler for <see cref="UpdateProjectCommand"/> implementing <see cref="ICommandHandler{TCommand, TResult}"/>
+    /// </summary>
     public class UpdateProjectCommandHandler : ICommandHandler<UpdateProjectCommand, bool>
     {
         private readonly IProjectsRepository projectsRepository;
@@ -16,6 +19,13 @@ namespace iEmployee.CommandQuery.Command.Projects
         {
             this.projectsRepository = projectsRepository;
         }
+        /// <summary>
+        /// Handler for command 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <seealso cref="UpdateProjectCommand"/>
+        /// <returns></returns>
         public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
             var project = Project.Create(request.Name);

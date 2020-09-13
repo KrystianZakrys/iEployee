@@ -21,10 +21,15 @@ export interface Position{
     id? : string;
     code: string;
     name: string;
+    salary: number;
+    startDate: Date;
+    endDate?:Date;
 }
 
 export interface JobHistory{
     salary: number;
     employeeId: string;
     positionId: string;
+    startDate: Date;
+    endDate: Date;
 }

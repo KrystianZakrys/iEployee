@@ -6,13 +6,20 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Command
 {
+    /// <summary>
+    /// Command for updating position <seealso cref="CommandBase{bool}"/>
+    /// </summary>
     public class UpdatePositionCommand : CommandBase<bool>
     {
         public Guid PositionId { get; set; }
         public String Name { get; }
         public String Code { get; }
-
-        public UpdatePositionCommand(Guid id, PositionSaveModel position)
+        /// <summary>
+        /// Creates instance of class <see cref="UpdatePositionCommand"/>
+        /// </summary>
+        /// <param name="id">position identifier</param>
+        /// <param name="position">position data transfer object</param>
+        public UpdatePositionCommand(Guid id, PositionDTO position)
         {
             this.PositionId = id;
             this.Name = position.Name;

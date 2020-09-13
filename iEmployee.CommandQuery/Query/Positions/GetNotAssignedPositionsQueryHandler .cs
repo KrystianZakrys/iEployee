@@ -11,20 +11,28 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetNotAssignedPositionsQueryHandler : IQueryHandler<GetNotAssignedPositionsQuery, ICollection<PositionSaveModel>>
+    /// <summary>
+    /// Query handler for <see cref="GetNotAssignedPositionsQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetNotAssignedPositionsQueryHandler : IQueryHandler<GetNotAssignedPositionsQuery, ICollection<PositionDTO>>
     {
         private readonly IPositionsRepository positionsRepository;
         public GetNotAssignedPositionsQueryHandler(IPositionsRepository positionsRepository)
         {
             this.positionsRepository = positionsRepository;
         }
-
-        public async Task<ICollection<PositionSaveModel>> Handle(GetNotAssignedPositionsQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetNotAssignedPositionsQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>position DTO list</returns>
+        public async Task<ICollection<PositionDTO>> Handle(GetNotAssignedPositionsQuery request, CancellationToken cancellationToken)
         {
             var positions = await this.positionsRepository.GetNotAssignedPosition(request.EmployeeId);
-            var positionsSaveModels = new List<PositionSaveModel>();
+            var positionsSaveModels = new List<PositionDTO>();
             positions.ToList().ForEach(p => {
-                positionsSaveModels.Add(new PositionSaveModel()
+                positionsSaveModels.Add(new PositionDTO()
                 {
                    Code = p.Code,
                    Id = p.Id,

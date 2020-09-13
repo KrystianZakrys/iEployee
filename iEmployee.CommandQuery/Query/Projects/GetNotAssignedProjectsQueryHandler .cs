@@ -11,20 +11,28 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetNotAssignedProjectQueryHandler : IQueryHandler<GetNotAssignedProjectQuery, ICollection<ProjectSaveModel>>
+    /// <summary>
+    /// Query handler for <see cref="GetNotAssignedPositionsQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetNotAssignedProjectQueryHandler : IQueryHandler<GetNotAssignedProjectQuery, ICollection<ProjectDTO>>
     {
         private readonly IProjectsRepository projectsRepository;
         public GetNotAssignedProjectQueryHandler(IProjectsRepository projectsRepository)
         {
             this.projectsRepository = projectsRepository;
         }
-
-        public async Task<ICollection<ProjectSaveModel>> Handle(GetNotAssignedProjectQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetNotAssignedPositionsQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>project DTO list</returns>
+        public async Task<ICollection<ProjectDTO>> Handle(GetNotAssignedProjectQuery request, CancellationToken cancellationToken)
         {
             var projects = await this.projectsRepository.GetNotAssignedProjects(request.EmployeeId);
-            var projectSaveModels = new List<ProjectSaveModel>();
+            var projectSaveModels = new List<ProjectDTO>();
             projects.ToList().ForEach(p => {
-                projectSaveModels.Add(new ProjectSaveModel()
+                projectSaveModels.Add(new ProjectDTO()
                 {
                     Id = p.Id,
                     Name = p.Name

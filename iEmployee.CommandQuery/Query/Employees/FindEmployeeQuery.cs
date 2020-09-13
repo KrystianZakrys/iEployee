@@ -7,8 +7,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class FindEmployeeQuery : IQuery<IEnumerable<EmployeeSaveModel>>
+    /// <summary>
+    /// Query for employee search implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class FindEmployeeQuery : IQuery<IEnumerable<EmployeeDTO>>
     {
+        /// <summary>
+        /// Employee filtering criteria <see cref="EmployeeCriteria"/>
+        /// </summary>
         public EmployeeCriteria employeeCriteria { get; set; }
         public FindEmployeeQuery(EmployeeCriteria employeeCriteria)
         {

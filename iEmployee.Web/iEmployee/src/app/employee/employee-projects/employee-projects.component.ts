@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../../employee.service';
 import { Project } from 'src/app/project';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/project.service';
 
 @Component({
@@ -26,6 +26,7 @@ export class EmployeeProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.getEmployee();
     this.project = new FormControl('');
+    this.project.setValidators(Validators.required);
   }
   goBack(): void{
     this.location.back();

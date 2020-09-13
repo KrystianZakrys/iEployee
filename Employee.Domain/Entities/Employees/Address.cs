@@ -23,7 +23,7 @@ namespace iEmployee.Domain
             };
         }
 
-        public static Address CreateFromModel(AddressSaveModel model)
+        public static Address CreateFromModel(AddressDTO model)
         {
             return new Address()
             {

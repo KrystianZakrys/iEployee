@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Employee, Address } from '../../employee';
+import { Employee, Address, Position } from '../../employee';
 
 import { Location, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';

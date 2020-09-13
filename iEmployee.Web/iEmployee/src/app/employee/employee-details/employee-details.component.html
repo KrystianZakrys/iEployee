@@ -75,20 +75,50 @@
       <button class="float-right"  mat-stroked-button color="basic" (click)="updateEmployee()" [disabled]="!this.employeeForm.valid">Update employee</button>      
       <!-- <button class="float-right"  mat-stroked-button color="basic" (click)="makeManager()">Make manager</button>       -->
     </div>   
-  <div>
-    <h3>Position</h3>
-    <p>     
-      
-      <mat-form-field appearance="legacy">
-          <mat-label ><span *ngIf='this.employeeForm.get("position").value == null'>Select position...</span>
-             {{this.employeeForm.get("position").value?.name}}
-          </mat-label>
-          <mat-select [value]='this.employeeForm.get("position").value?.name' formControlName="position">
-              <mat-option value="">Select position... </mat-option>
-              <mat-option *ngFor="let item of positions;"  value="{{item.id}}">{{item.name}}</mat-option>
-          </mat-select>
+    <div>
+      <div formGroupName="position">
+        <h3>Position</h3>
+        <p>     {{this.employeeForm.get("position").get('name').value}}
+          <mat-form-field appearance="legacy">
+              <mat-label >
+                  Position
+              </mat-label>
+              <mat-select [value]='this.employeeForm.get("position").get("id").value' formControlName="id">
+                  <mat-option value="">Select position... </mat-option>
+                  <mat-option *ngFor="let item of positions;"  value="{{item.id}}">{{item.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>      
+      </p>
+      <app-error-messages [propertyName]="'Position'" [control]="this.employeeForm.get('position').get('id')"></app-error-messages>
+
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Salary</mat-label>
+          <input type="number" matInput formControlName="salary" placeholder="Salary" >
         </mat-form-field>
-  </p>
+      </p>
+      <app-error-messages [propertyName]="'Salary'" [control]="this.employeeForm.get('position').get('salary')"></app-error-messages>
+
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Start date</mat-label>
+          <input matInput [matDatepicker]="startDatepicker" formControlName="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatepicker></mat-datepicker>
+        </mat-form-field>
+      </p>
+      <app-error-messages [propertyName]="'Start date'" [control]="this.employeeForm.get('position').get('startDate')"></app-error-messages>
+
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>End date</mat-label>
+          <input matInput [matDatepicker]="endDatepicker" formControlName="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatepicker></mat-datepicker>
+        </mat-form-field>
+      </p>
+      <app-error-messages [propertyName]="'End date'" [control]="this.employeeForm.get('position').get('endDate')"></app-error-messages>
+    </div>
   </div>
   <div class="navigation">
     <button class="float-right"  mat-stroked-button color="basic" (click)="changePosition()">Change position</button>
@@ -107,7 +137,8 @@
               </mat-select>
             </mat-form-field>
       </p>
-        <button mat-stroked-button color="primary" (click)="assignToProject()">Assign to project</button>
+      <!-- <app-error-messages [propertyName]="'Project'" [control]="this.project"></app-error-messages> -->
+        <button mat-stroked-button color="primary" (click)="assignToProject()" [disabled]="this.project.invalid">Assign to project</button>
         <mat-list>
             <mat-list-item *ngFor="let project of employeeProjects"> 
                 {{project.name}}

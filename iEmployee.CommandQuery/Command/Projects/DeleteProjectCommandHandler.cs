@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Command.Projects
 {
+    /// <summary>
+    /// Command handler for <see cref="DeleteProjectCommand"/> implementing <see cref="ICommandHandler{TCommand, TResult}"/>
+    /// </summary>
     public class DeleteProjectCommandHandler : ICommandHandler<DeleteProjectCommand, bool>
     {
         public IProjectsRepository projectsRepository;
@@ -15,6 +18,13 @@ namespace iEmployee.CommandQuery.Command.Projects
         {
             this.projectsRepository = projectsRepository;
         }
+        /// <summary>
+        /// Handler for command 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <seealso cref="DeleteProjectCommand"/>
+        /// <returns></returns>
         public async Task<bool> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
         {
             return await this.projectsRepository.DeleteProject(request.Id);

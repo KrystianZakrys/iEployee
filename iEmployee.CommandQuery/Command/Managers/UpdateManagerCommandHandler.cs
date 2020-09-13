@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Command
 {
+    /// <summary>
+    /// Command handler for <see cref="UpdateManagerCommand"/> implementing <see cref="ICommandHandler{TCommand, TResult}"/>
+    /// </summary>
     public class UpdateManagerCommandHandler : ICommandHandler<UpdateManagerCommand, bool>
     {
         private readonly IManagersRepository managersRepository;
@@ -18,6 +21,13 @@ namespace iEmployee.CommandQuery.Command
             this.managersRepository = managersRepository;
             this.employeesRepository = employeesRepository;
         }
+        /// <summary>
+        /// Handler for command 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <seealso cref="UpdateManagerCommand"/>
+        /// <returns></returns>
         public async Task<bool> Handle(UpdateManagerCommand request, CancellationToken cancellationToken)
         {
             var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);

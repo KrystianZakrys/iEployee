@@ -6,8 +6,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetNotAssignedPositionsQuery : IQuery<ICollection<PositionSaveModel>>
+    /// <summary>
+    /// Query for not actual position for employee implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetNotAssignedPositionsQuery : IQuery<ICollection<PositionDTO>>
     {
+        /// <summary>
+        /// Employee identifier
+        /// </summary>
         public Guid EmployeeId { get; set; }
     }
 }

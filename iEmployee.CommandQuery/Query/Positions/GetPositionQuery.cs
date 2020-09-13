@@ -7,8 +7,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetPositionQuery : IQuery<PositionSaveModel>
+    /// <summary>
+    /// Query for position implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetPositionQuery : IQuery<PositionDTO>
     {
+        /// <summary>
+        /// Position identifier
+        /// </summary>
         public Guid Id { get; set; }
     }
 }

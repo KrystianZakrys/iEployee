@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20200910172611_FixJobHistoryKey.Designer.cs" />
     <Compile Remove="Migrations\20200910173853_FixJobHistoryKey.cs" />
     <Compile Remove="Migrations\20200910173853_FixJobHistoryKey.Designer.cs" />
+    <Compile Remove="Migrations\20200912175307_InsertAlotOfTestingData.cs" />
+    <Compile Remove="Migrations\20200912175307_InsertAlotOfTestingData.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

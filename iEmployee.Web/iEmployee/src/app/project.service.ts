@@ -66,4 +66,10 @@ export class ProjectService {
       catchError(this.handleError<Project>(`updateProject id=${id}`))
     );
   }
+  deleteProject(id: string): Observable<Project>{
+    return this.http.delete<Project>(`${this.projectsUrl}/${id}`, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<Project>(`deleteProject id=${id}`))
+      );
+  }
 }

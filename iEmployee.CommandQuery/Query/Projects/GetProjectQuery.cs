@@ -7,8 +7,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query.Projects
 {
-    public class GetProjectQuery : IQuery<ProjectSaveModel>
+    /// <summary>
+    /// Query for project implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetProjectQuery : IQuery<ProjectDTO>
     {
+        /// <summary>
+        /// Project identifier
+        /// </summary>
         public Guid Id { get; set; }
     }
 }

@@ -6,7 +6,10 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetPositionsQuery : IQuery<IEnumerable<PositionSaveModel>>
+    /// <summary>
+    /// Query for projects implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetPositionsQuery : IQuery<IEnumerable<PositionDTO>>
     {
     }
 }

@@ -10,7 +10,10 @@ using System.Linq;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetPositionsQueryHandler : IQueryHandler<GetPositionsQuery, IEnumerable<PositionSaveModel>>
+    /// <summary>
+    /// Query handler for <see cref="GetPositionsQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetPositionsQueryHandler : IQueryHandler<GetPositionsQuery, IEnumerable<PositionDTO>>
     {
         private readonly IPositionsRepository positionsRepository;
 
@@ -18,11 +21,16 @@ namespace iEmployee.CommandQuery.Query
         {
             this.positionsRepository = positionsRepository;
         }
-
-        public async Task<IEnumerable<PositionSaveModel>> Handle(GetPositionsQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetPositionsQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>position DTO list</returns>
+        public async Task<IEnumerable<PositionDTO>> Handle(GetPositionsQuery request, CancellationToken cancellationToken)
         {
             var positions = await positionsRepository.GetPositions();
-            var positionsModels = positions.Select(x => new PositionSaveModel()
+            var positionsModels = positions.Select(x => new PositionDTO()
             {
                 Id = x.Id,
                 Name = x.Name,

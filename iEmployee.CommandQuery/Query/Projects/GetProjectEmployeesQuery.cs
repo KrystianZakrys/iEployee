@@ -7,8 +7,14 @@ using iEmployee.Contracts;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetProjectEmployeesQuery : IQuery<IEnumerable<EmployeeSaveModel>>
+    /// <summary>
+    /// Query for employees assigned to project <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetProjectEmployeesQuery : IQuery<IEnumerable<EmployeeDTO>>
     {
+        /// <summary>
+        /// Project identifier to get list of assigned employees
+        /// </summary>
         public Guid ProjectId { get; set; }
     }
 }

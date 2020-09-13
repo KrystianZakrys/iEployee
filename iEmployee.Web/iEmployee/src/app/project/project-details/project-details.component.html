@@ -1,7 +1,7 @@
 <div *ngIf="project; else elseBlock">
     <h1>Project details {{ project.projectName }}</h1>
     <button mat-stroked-button color="primary" (click)="goBack()">Back</button>
-    <button mat-stroked-button color="warn">Delete</button>
+    <button mat-stroked-button color="warn" (click)="deleteProject()">Delete</button>
    
     <p>
         <mat-form-field appearance="legacy">

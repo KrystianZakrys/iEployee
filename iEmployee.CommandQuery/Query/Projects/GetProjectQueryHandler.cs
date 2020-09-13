@@ -13,20 +13,28 @@ using System.Threading.Tasks;
 
 namespace iEmployee.CommandQuery.Query.Projects
 {
-    public class GetProjectQueryHandler : IQueryHandler<GetProjectQuery, ProjectSaveModel>
+    /// <summary>
+    /// Query handler for <see cref="GetProjectQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetProjectQueryHandler : IQueryHandler<GetProjectQuery, ProjectDTO>
     {
         private readonly IProjectsRepository projectsRepository;
         public GetProjectQueryHandler(IProjectsRepository projectsRepository)
         {
             this.projectsRepository = projectsRepository;
         }
-
-        public async Task<ProjectSaveModel> Handle(GetProjectQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetProjectQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>project DTO</returns>
+        public async Task<ProjectDTO> Handle(GetProjectQuery request, CancellationToken cancellationToken)
         {
             var project = await this.projectsRepository.GetProject(request.Id);
-            List<EmployeeSaveModel> employeeSaveModels = new List<EmployeeSaveModel>();
+            List<EmployeeDTO> employeeSaveModels = new List<EmployeeDTO>();
             project.Employees.ToList().ForEach(x => { 
-                    employeeSaveModels.Add(new EmployeeSaveModel() {
+                    employeeSaveModels.Add(new EmployeeDTO() {
                             FirstName = x.Employee.FirstName,
                             LastName = x.Employee.LastName,
                             Id = x.Employee.Id
@@ -34,7 +42,7 @@ namespace iEmployee.CommandQuery.Query.Projects
                     ); 
                 }
             );
-            return new ProjectSaveModel() { Id = project.Id, Name = project.Name, Employees = employeeSaveModels };
+            return new ProjectDTO() { Id = project.Id, Name = project.Name, Employees = employeeSaveModels };
         }
 
 

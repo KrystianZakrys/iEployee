@@ -4,7 +4,10 @@ using System.Text;
 
 namespace iEmployee.Contracts.Models
 {
-    public class ManagerSaveModel
+    /// <summary>
+    /// Manager entity data transfer object
+    /// </summary>
+    public class ManagerDTO
     {
         public Guid ManagerId { get; set; }
         public int RoomNumber { get; set; }

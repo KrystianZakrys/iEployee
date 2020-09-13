@@ -12,7 +12,10 @@ using iEmployee.Infrastructure.Repositories;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetEmployeeQueryHandler : IQueryHandler<GetEmployeeQuery, EmployeeSaveModel>
+    /// <summary>
+    /// Query handler for <see cref="GetEmployeeQuery"/> implements <seealso cref="IQueryHandler{TQuery, TResult}"/>
+    /// </summary>
+    public class GetEmployeeQueryHandler : IQueryHandler<GetEmployeeQuery, EmployeeDTO>
     {
         private readonly IEmployeesRepository employeesRepository;
 
@@ -20,14 +23,19 @@ namespace iEmployee.CommandQuery.Query
         {
             this.employeesRepository = employeesRepository;
         }
-
-        public async Task<EmployeeSaveModel> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Handler for query <see cref="GetEmployeeQuery"/>
+        /// </summary>
+        /// <param name="request">query</param>
+        /// <param name="cancellationToken"><seealso cref="System.Threading.CancellationToken"/></param>
+        /// <returns>employee DTO</returns>
+        public async Task<EmployeeDTO> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
             var employee = await this.employeesRepository.GetEmployee(request.Id);
-            return new EmployeeSaveModel()
+            return new EmployeeDTO()
             {
                 Id = employee.Id,
-                Address = new AddressSaveModel() {
+                Address = new AddressDTO() {
                     City = employee.Address?.City,
                     Country = employee.Address?.Country,
                     Street = employee.Address?.Street,
@@ -38,7 +46,7 @@ namespace iEmployee.CommandQuery.Query
                 Sex = employee.Sex.ToString(),
                 BirthDate = employee.BirthDate,
                 ManagerName = employee.Manager != null ? employee.Manager.Employee.FirstName + ' ' + employee.Manager.Employee.LastName : "",
-                Position = employee.JobHistories != null && employee.JobHistories.Any(j => j.EmployeeId == employee.Id && j.EndDate == null) ? new PositionSaveModel()
+                Position = employee.JobHistories != null && employee.JobHistories.Any(j => j.EmployeeId == employee.Id && j.EndDate == null) ? new PositionDTO()
                 {
                     Code = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Code,
                     Id = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Id,

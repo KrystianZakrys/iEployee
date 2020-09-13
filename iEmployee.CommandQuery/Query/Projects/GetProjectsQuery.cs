@@ -7,7 +7,10 @@ using iEmployee.Contracts;
 
 namespace iEmployee.CommandQuery.Query.Projects
 {
-    public class GetProjectsQuery : IQuery<IEnumerable<ProjectSaveModel>>
+    /// <summary>
+    /// Query for projects implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetProjectsQuery : IQuery<IEnumerable<ProjectDTO>>
     {
     }
 }

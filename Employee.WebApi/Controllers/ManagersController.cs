@@ -37,7 +37,7 @@ namespace iEmployee.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ManagerSaveModel>>> GetManagers()
+        public async Task<ActionResult<IEnumerable<ManagerDTO>>> GetManagers()
             => this.Ok(await this.mediator.Send(new GetManagersQuery(), CancellationToken.None));
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">manager identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<ManagerSaveModel>> GetManager(Guid id)
+        public async Task<ActionResult<ManagerDTO>> GetManager(Guid id)
             => this.Ok(await this.mediator.Send(new GetManagerQuery() { Id = id }, CancellationToken.None));
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="manager">manager data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ManagerSaveModel>> PostManager([FromBody] ManagerSaveModel manager)
+        public async Task<ActionResult<ManagerDTO>> PostManager([FromBody] ManagerDTO manager)
             => this.Ok(await this.mediator.Send(new AddManagerCommand(manager), CancellationToken.None));
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="manager">manager updated data model</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> PutManager(Guid id, ManagerSaveModel manager)
+        public async Task<ActionResult<bool>> PutManager(Guid id, ManagerDTO manager)
             => this.Ok(await this.mediator.Send(new UpdateManagerCommand(id, manager), CancellationToken.None));
 
         /// <summary>

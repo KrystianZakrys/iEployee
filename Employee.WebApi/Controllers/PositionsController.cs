@@ -37,7 +37,7 @@ namespace iEmployee.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetPositions()
+        public async Task<ActionResult<IEnumerable<PositionDTO>>> GetPositions()
             => this.Ok(await this.mediator.Send(new GetPositionsQuery(), CancellationToken.None));
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">project identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<PositionSaveModel>> GetPosition(Guid id)
+        public async Task<ActionResult<PositionDTO>> GetPosition(Guid id)
             => this.Ok(await this.mediator.Send(new GetPositionQuery() { Id = id }, CancellationToken.None));
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">project data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<PositionSaveModel>> PostPosition([FromBody] PositionSaveModel project)
+        public async Task<ActionResult<PositionDTO>> PostPosition([FromBody] PositionDTO project)
             => this.Ok(await this.mediator.Send(new AddPositionCommand(project), CancellationToken.None));
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">project updated data model</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> PutPosition(Guid id, PositionSaveModel project)
+        public async Task<ActionResult<bool>> PutPosition(Guid id, PositionDTO project)
             => this.Ok(await this.mediator.Send(new UpdatePositionCommand(id, project), CancellationToken.None));
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="id">employee identifier</param>
         /// <returns></returns>
         [HttpGet("NotAssigned/{id}")]
-        public async Task<ActionResult<IEnumerable<PositionSaveModel>>> GetNotAssignedPositions(Guid id)
+        public async Task<ActionResult<IEnumerable<PositionDTO>>> GetNotAssignedPositions(Guid id)
             => this.Ok(await this.mediator.Send(new GetNotAssignedPositionsQuery(){ EmployeeId = id }, CancellationToken.None));
     }
 }

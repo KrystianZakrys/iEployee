@@ -9,7 +9,7 @@
             </mat-select>
           </mat-form-field>
     </p>
-      <button mat-stroked-button color="primary" (click)="assignToProject()">Assign to project</button>
+      <button mat-stroked-button color="primary" (click)="assignToProject()"  [disabled]="this.project.invalid">Assign to project</button>
     <h1>{{employee.firstName | uppercase}}'s projects</h1>
     <mat-list>
         <mat-list-item *ngFor="let project of projects"> 

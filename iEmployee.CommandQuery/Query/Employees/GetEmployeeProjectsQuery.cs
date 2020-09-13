@@ -6,8 +6,14 @@ using System.Text;
 
 namespace iEmployee.CommandQuery.Query
 {
-    public class GetEmployeeProjectsQuery : IQuery<ICollection<ProjectSaveModel>>
+    /// <summary>
+    /// Query for getting employee's projects implementing <seealso cref="IQuery{TResult}"/>
+    /// </summary>
+    public class GetEmployeeProjectsQuery : IQuery<ICollection<ProjectDTO>>
     {
+        /// <summary>
+        /// Employee identifier
+        /// </summary>
         public Guid EmployeeId { get; set; }
     }
 }
