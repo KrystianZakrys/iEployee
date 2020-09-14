@@ -27,8 +27,9 @@ What's next? What can i do better?
 
 
 ## To-Do
+- [ ] Add classes to frontend angular app with methods
 - [ ] Add Toaster for messages to frontend
-- [ ] Refactor/ clear code to be somehow maintainable - weekend
+- [ ] Refactor/ clear code to be somehow maintainable
 - [ ] Repository should not use DTO only entities and simple types
 - [ ] Add repository methods example "GetEmployeesWithManager" etc.
 - [ ] Managers business logic
