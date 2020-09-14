@@ -74,9 +74,9 @@ namespace iEmployee.Infrastructure.Repositories
     /// <seealso cref="IEmployeesRepository"/>
     public class EmployeesRepository : IEmployeesRepository
     {
-        private readonly iEmployeeContext dbContext;
+        private readonly EmployeeContext dbContext;
 
-        public EmployeesRepository(iEmployeeContext dbContext)
+        public EmployeesRepository(EmployeeContext dbContext)
         {
             this.dbContext = dbContext;
         }

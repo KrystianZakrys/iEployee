@@ -1,3 +1,4 @@
+
 <div *ngIf="employee; else elseBlock">
     <h1>Employee details {{ employee.firstName }}</h1>
     <button mat-stroked-button color="primary" (click)="goBack()">Back</button>
@@ -77,8 +78,8 @@
     </div>   
     <div>
       <div formGroupName="position">
-        <h3>Position</h3>
-        <p>     {{this.employeeForm.get("position").get('name').value}}
+        <h3>Position:    {{this.employeeForm.get("position").get('name').value}}</h3>
+        <p> 
           <mat-form-field appearance="legacy">
               <mat-label >
                   Position
@@ -119,9 +120,19 @@
       </p>
       <app-error-messages [propertyName]="'End date'" [control]="this.employeeForm.get('position').get('endDate')"></app-error-messages>
     </div>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Room number</mat-label>
+        <input type="number" matInput [formControl]="managerRoomNumber" placeholder="Room number" >
+      </mat-form-field>
+    </p>
+    <app-error-messages [propertyName]="'Room number'" [control]="this.managerRoomNumber"></app-error-messages>
+
+    
   </div>
   <div class="navigation">
     <button class="float-right"  mat-stroked-button color="basic" (click)="changePosition()">Change position</button>
+    <button class="float-right"  mat-stroked-button color="basic" (click)="makeManager()">Make a manager</button>
   </div>
 </form>
     <div>

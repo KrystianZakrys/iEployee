@@ -11,7 +11,7 @@ import { ProjectAddComponent } from './project/project-add/project-add.component
 const routes: Routes = [
   {path: '', redirectTo: '/employees', pathMatch: 'full'},
   {path:'project', loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)},
-  {path:'employee',loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)},
+  {path:'employee',loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)}
 ];
 
 @NgModule({

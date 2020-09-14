@@ -8,7 +8,7 @@ using iEmployee.CommandQuery;
 
 namespace iEmployee.CommandQuery.Migrations
 {
-    [DbContext(typeof(iEmployeeContext))]
+    [DbContext(typeof(EmployeeContext))]
     partial class iEmployeeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -222,7 +222,7 @@ namespace iEmployee.CommandQuery.Migrations
             modelBuilder.Entity("iEmployee.Domain.Employees.Employee", b =>
                 {
                     b.HasOne("iEmployee.Domain.Employees.Manager", "Manager")
-                        .WithMany("Suboridnates")
+                        .WithMany("Subordinates")
                         .HasForeignKey("ManagerId");
 
                     b.OwnsOne("iEmployee.Domain.Address", "Address", b1 =>

@@ -29,10 +29,10 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <returns></returns>
         public async Task<bool> Handle(ChangeEmployeePositionCommand request, CancellationToken cancellationToken)
         {
-            var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);
-            var position = await this.positionsRepository.GetPosition(request.PositionId);
+            var employee = await employeesRepository.GetEmployee(request.EmployeeId);
+            var position = await positionsRepository.GetPosition(request.PositionId);
             employee.ChangePosition(position, request.StartDate,request.Salary);
-            return await this.employeesRepository.UpdateEmployee(request.EmployeeId, employee);
+            return await employeesRepository.UpdateEmployee(request.EmployeeId, employee);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-           return await this.employeesRepository.DeleteEmployee(request.Id);
+           return await employeesRepository.DeleteEmployee(request.Id);
         }
     }
 }

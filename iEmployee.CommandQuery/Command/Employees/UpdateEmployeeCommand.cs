@@ -22,13 +22,13 @@ namespace iEmployee.CommandQuery.Command
 
         public UpdateEmployeeCommand(Guid id, EmployeeDTO employee)
         {
-            this.EmployeeId = id;
-            this.FirstName = employee.FirstName;
-            this.LastName = employee.LastName;
-            this.Address = employee.Address;
-            this.BirthDate = employee.BirthDate;
-            Int32.TryParse(employee.Sex, out int sex);
-            this.Sex = (SexEnum)sex;
+            EmployeeId = id;
+            FirstName = employee.FirstName;
+            LastName = employee.LastName;
+            Address = employee.Address;
+            BirthDate = employee.BirthDate;
+            int.TryParse(employee.Sex, out int sex);
+            Sex = (SexEnum)sex;
         }
     }
 }

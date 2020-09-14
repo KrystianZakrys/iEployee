@@ -34,41 +34,41 @@ namespace iEmployee.Domain.Employees
 
         public void Update(Employee employeeData)
         {
-            this.FirstName = employeeData.FirstName;
-            this.LastName = employeeData.LastName;
-            this.BirthDate = employeeData.BirthDate;
-            this.Sex = employeeData.Sex;
-            this.Address = employeeData.Address;
-            this.Manager = employeeData.Manager;
-            this.Projects = employeeData.Projects;
-            this.JobHistories = employeeData.JobHistories;
+            FirstName = employeeData.FirstName;
+            LastName = employeeData.LastName;
+            BirthDate = employeeData.BirthDate;
+            Sex = employeeData.Sex;
+            Address = employeeData.Address;
+            Manager = employeeData.Manager;
+            Projects = employeeData.Projects;
+            JobHistories = employeeData.JobHistories;
         }
 
         public void AssignEmployeeProject(Project project)
         {
             var employeeProject = EmployeeProject.Create(this, project);
-            this.Projects.Add(employeeProject);
+            Projects.Add(employeeProject);
         }
 
         public void UnassignEmployeeProject(Project project)
         {
-            var employeeProject = this.Projects.Where(x => x.ProjectId == project.Id).FirstOrDefault();
-            this.Projects.Remove(employeeProject);
+            var employeeProject = Projects.FirstOrDefault(x => x.ProjectId == project.Id);
+            Projects.Remove(employeeProject);
         }
         public void ChangePosition(Position position, DateTime startDate, Decimal salary, DateTime? endDate = null)
         {
 
             var jobHistoryEntry = JobHistory.Create(startDate, salary, this, position, endDate);
-            if (this.JobHistories != null)
+            if (JobHistories != null)
             {
-                this.JobHistories.Where(x => x.EndDate.HasValue == false).ToList().ForEach(x => x.AddEndDate(DateTime.Now));
+                JobHistories.Where(x => x.EndDate.HasValue == false).ToList().ForEach(x => x.AddEndDate(DateTime.Now));
             }
             else
             {
-                this.JobHistories = new List<JobHistory>();
+                JobHistories = new List<JobHistory>();
             }
                
-            this.JobHistories.Add(jobHistoryEntry);
+            JobHistories.Add(jobHistoryEntry);
         }
     }
 }

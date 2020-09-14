@@ -32,10 +32,12 @@ namespace iEmployee.CommandQuery.Command
         {
             var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);
             var subordinates = new List<Employee>();
+
             foreach (var subordinate in request.Subordinates)
             {
                 subordinates.Add(await this.employeesRepository.GetEmployee(subordinate));
             }
+
             var manager = Manager.Create(request.RoomNumber, employee, subordinates);
             return await this.managersRepository.AddManagerAsync(manager);
         }

@@ -38,11 +38,11 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <param name="jobHistorySaveModel">job history entry linking employee with position</param>
         public ChangeEmployeePositionCommand(Guid employeeId, JobHistoryDTO jobHistorySaveModel)
         {
-            this.EmployeeId = employeeId;
-            this.PositionId = jobHistorySaveModel.PositionId;
-            this.StartDate = jobHistorySaveModel.StartDate;
-            this.Salary = jobHistorySaveModel.Salary;
-            this.EndDate = jobHistorySaveModel.EndDate;
+            EmployeeId = employeeId;
+            PositionId = jobHistorySaveModel.PositionId;
+            StartDate = jobHistorySaveModel.StartDate;
+            Salary = jobHistorySaveModel.Salary;
+            EndDate = jobHistorySaveModel.EndDate;
         }
     }
 }

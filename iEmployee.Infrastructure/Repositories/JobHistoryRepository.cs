@@ -45,8 +45,8 @@ namespace iEmployee.Infrastructure.Repositories
     /// <seealso cref="IJobHistoryRepository"/>
     public class JobHistoryRepository : IJobHistoryRepository
     {
-        private readonly iEmployeeContext dbContext;
-        public JobHistoryRepository(iEmployeeContext dbContext)
+        private readonly EmployeeContext dbContext;
+        public JobHistoryRepository(EmployeeContext dbContext)
         {
             this.dbContext = dbContext;
         }

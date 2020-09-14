@@ -44,12 +44,12 @@ namespace iEmployee.CommandQuery.Command
         /// <param name="employee">Employee data transfer object </param>
         public AddEmployeeCommand(EmployeeDTO employee)
         {
-            this.FirstName = employee.FirstName;
-            this.LastName = employee.LastName;
-            this.Address = employee.Address;
-            this.BirthDate = employee.BirthDate;
+            FirstName = employee.FirstName;
+            LastName = employee.LastName;
+            Address = employee.Address;
+            BirthDate = employee.BirthDate;
             Int32.TryParse(employee.Sex, out int sex);
-            this.Sex = (SexEnum)sex;
+            Sex = (SexEnum)sex;
         }
     }
 }

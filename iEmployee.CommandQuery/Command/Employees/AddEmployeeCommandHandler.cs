@@ -33,7 +33,7 @@ namespace iEmployee.CommandQuery.Command
         {
             var employee = Employee.Create(request.FirstName, request.LastName, request.Sex, request.BirthDate, 
                 Address.CreateFromModel(request.Address));
-            return await this.employeesRepository.AddEmployeeAsync(employee);
+            return await employeesRepository.AddEmployeeAsync(employee);
         }
     }
 }

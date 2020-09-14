@@ -14,7 +14,7 @@ namespace iEmployee.CommandQuery.Command
         public Guid ManagerId { get; set; }
         public int RoomNumber { get; set; }
         public Guid EmployeeId { get; set; }
-        public List<Guid> Suboridnates { get; set; }
+        public List<Guid> Subordinates { get; set; }
         /// <summary>
         /// Creates instance of class <see cref="UpdateManagerCommand"/>
         /// </summary>
@@ -26,7 +26,7 @@ namespace iEmployee.CommandQuery.Command
             this.ManagerId = id;
             this.RoomNumber = manager.RoomNumber;
             this.EmployeeId = manager.EmployeeId;
-            this.Suboridnates = manager.Suboridnates;
+            this.Subordinates = manager.Subordinates;
         }
     }
 }

@@ -63,8 +63,8 @@ namespace iEmployee.Infrastructure.Repositories
     /// <seealso cref="IProjectsRepository"/>
     public class ProjectsRepository : IProjectsRepository
     {
-        private readonly iEmployeeContext dbContext;
-        public ProjectsRepository(iEmployeeContext dbContext)
+        private readonly EmployeeContext dbContext;
+        public ProjectsRepository(EmployeeContext dbContext)
         {
             this.dbContext = dbContext;
         }

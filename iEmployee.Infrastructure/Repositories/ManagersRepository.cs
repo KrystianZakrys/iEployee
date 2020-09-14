@@ -52,9 +52,9 @@ namespace iEmployee.Infrastructure.Repositories
     /// <seealso cref="IManagersRepository"/>
     public class ManagersRepository : IManagersRepository
     {
-        private readonly iEmployeeContext dbContext;
+        private readonly EmployeeContext dbContext;
 
-        public ManagersRepository(iEmployeeContext dbContext)
+        public ManagersRepository(EmployeeContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -76,7 +76,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> DeleteManager(Guid managerId)
         {
-            Manager manager = this.dbContext.Managers.Include(x => x.Suboridnates).Include(x => x.Employee).FirstOrDefault(x => x.Id.Equals(managerId));
+            Manager manager = this.dbContext.Managers.Include(x => x.Subordinates).Include(x => x.Employee).FirstOrDefault(x => x.Id.Equals(managerId));
             manager.ClearSubordinates();
             this.dbContext.SaveChanges();
             this.dbContext.Managers.Remove(manager);
@@ -90,7 +90,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Manager> GetManager(Guid managerId)
         {
-            return await this.dbContext.Managers.FindAsync(managerId);
+            return await this.dbContext.Managers.Include(x => x.Subordinates).Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == managerId);
         }
         /// <summary>
         /// Gets list of managers
@@ -98,7 +98,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Manager>> GetManagers()
         {
-            return await this.dbContext.Managers.Include(x => x.Employee).Include(x => x.Suboridnates).ToListAsync();
+            return await this.dbContext.Managers.Include(x => x.Employee).Include(x => x.Subordinates).ToListAsync();
         }
         /// <summary>
         /// Updates manager entity data

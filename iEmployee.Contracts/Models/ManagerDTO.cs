@@ -13,6 +13,6 @@ namespace iEmployee.Contracts.Models
         public int RoomNumber { get; set; }
         public Guid EmployeeId { get; set; }
 
-        public List<Guid> Suboridnates { get; set; }
+        public List<Guid> Subordinates { get; set; }
     }
 }

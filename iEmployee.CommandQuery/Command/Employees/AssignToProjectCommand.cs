@@ -25,8 +25,8 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <param name="projectId">Project identifier</param>
         public AssignToProjectCommand(Guid employeeId, Guid projectId)
         {
-            this.EmployeeId = employeeId;
-            this.ProjectId = projectId;
+            EmployeeId = employeeId;
+            ProjectId = projectId;
         }    
     }
 }

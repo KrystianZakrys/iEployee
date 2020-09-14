@@ -11,7 +11,7 @@ using System.Reflection.Metadata;
 
 namespace iEmployee.CommandQuery
 {
-    public class iEmployeeContext : DbContext
+    public class EmployeeContext : DbContext
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -19,7 +19,7 @@ namespace iEmployee.CommandQuery
         public DbSet<JobHistory> JobHistories { get; set; }
         public DbSet<Manager> Managers { get; set; }
 
-        public iEmployeeContext(DbContextOptions options): base(options)
+        public EmployeeContext(DbContextOptions options): base(options)
         {
             
         }
@@ -32,7 +32,7 @@ namespace iEmployee.CommandQuery
         {
             modelBuilder.Entity<Employee>().OwnsOne(x => x.Address);
             modelBuilder.Entity<Manager>().ToTable("Managers");
-            modelBuilder.Entity<Manager>().HasMany(x => x.Suboridnates).WithOne(x => x.Manager);
+            modelBuilder.Entity<Manager>().HasMany(x => x.Subordinates).WithOne(x => x.Manager);
 
             modelBuilder.Entity<EmployeeProject>().HasKey(x => new {x.EmployeeId, x.ProjectId });
             modelBuilder.Entity<EmployeeProject>().HasOne(x => x.Project).WithMany(p => p.Employees).HasForeignKey(x => x.ProjectId);

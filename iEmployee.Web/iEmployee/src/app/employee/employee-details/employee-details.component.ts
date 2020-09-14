@@ -6,8 +6,10 @@ import { FormControl, FormGroup, FormBuilder, Validators, ValidatorFn, AbstractC
 import { ProjectService } from 'src/app/project.service';
 import { PositionService } from '../../position.service'
 import { Project } from '../../project';
+import { ManagerService } from '../../manager.service';
 import { EmployeeService } from '../../employee.service';
 import { Employee, JobHistory, Position} from '../../employee';
+import { _CoalescedStyleScheduler } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-employee-details',
@@ -24,6 +26,7 @@ export class EmployeeDetailsComponent implements OnInit {
 
   zipCodePattern = "^[0-9]{2}(-[0-9]{3})?$";
   project: FormControl;
+  managerRoomNumber: FormControl;
 
   employeeProjects: Project[];
 
@@ -33,6 +36,7 @@ export class EmployeeDetailsComponent implements OnInit {
       private datePipe: DatePipe,
       private positionService: PositionService,
       private projectService: ProjectService,
+      private managerService: ManagerService,
       private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -66,6 +70,8 @@ export class EmployeeDetailsComponent implements OnInit {
 
     this.project = new FormControl('');
     this.project.setValidators(Validators.required);
+
+    this.managerRoomNumber = new FormControl('');
 
     if(this.employee.position == null){
       var position: Position = {name:"", code:"",salary:0,startDate: new Date(),endDate:new Date(),id:""};

@@ -10,6 +10,8 @@ It's educational project for learning purposes to obtain knowledge about
 * Angular CLI & RXJS
 * Specification Pattern
 * Angular Material
+* Angular Http Interceptor
+* Value Object Pattern
 
 Basically it's simple crud project that imitates real commercial user architecture.
 
@@ -25,10 +27,15 @@ What's next? What can i do better?
 
 
 ## To-Do
-- [ ] Modify position changing form NEED REBUILDING
+- [ ] Add Toaster for messages to frontend
 - [ ] Refactor/ clear code to be somehow maintainable - weekend
-- [ ] ??? Separate Form Model from Data Model in Angular
+- [ ] Repository should not use DTO only entities and simple types
+- [ ] Add repository methods example "GetEmployeesWithManager" etc.
+- [ ] Managers business logic
+- [ ] Frontend - **Http Interceptor** and "Resolver" to lazy load instead of ngInit()
 - [ ] Write some unit tests Backend/Frontend - weekend
+- [x] Fix manager crud API operations.
+- [x] Modify position changing form 
 - [x] Add comments and documentation
 - [x] Add Forms Validation and Messages/Popups what eva
 - [x] Make Angular Component for validation errors and messages

@@ -31,7 +31,7 @@ namespace iEmployee.CommandQuery.Query
         {
             var manager = await this.managersRepository.GetManager(request.Id);
             return new ManagerDTO() { EmployeeId = manager.Employee.Id, RoomNumber = manager.RoomNumber,
-                ManagerId = manager.Id, Suboridnates = manager.Suboridnates.Select(x => x.Id).ToList() };
+                ManagerId = manager.Id, Subordinates = manager.Subordinates.Select(x => x.Id).ToList() };
         }
     }
 }

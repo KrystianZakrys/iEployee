@@ -35,7 +35,7 @@ namespace iEmployee.CommandQuery.Query
                 ManagerId = x.Id,
                 EmployeeId = x.Employee.Id,
                 RoomNumber = x.RoomNumber,
-                Suboridnates = x.Suboridnates.Select(y => y.Id).ToList()
+                Subordinates = x.Subordinates.Select(y => y.Id).ToList()
             }
             ); ;
             return managerModels;

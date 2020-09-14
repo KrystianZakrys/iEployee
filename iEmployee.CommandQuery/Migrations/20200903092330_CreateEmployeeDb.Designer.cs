@@ -9,7 +9,7 @@ using iEmployee.CommandQuery;
 
 namespace iEmployee.CommandQuery.Migrations
 {
-    [DbContext(typeof(iEmployeeContext))]
+    [DbContext(typeof(EmployeeContext))]
     [Migration("20200903092330_CreateEmployeeDb")]
     partial class CreateEmployeeDb
     {
@@ -193,7 +193,7 @@ namespace iEmployee.CommandQuery.Migrations
                         .HasForeignKey("AddressId");
 
                     b.HasOne("iEmployee.Domain.Employees.Manager", "Manager")
-                        .WithMany("Suboridnates")
+                        .WithMany("Subordinates")
                         .HasForeignKey("ManagerId");
                 });
 

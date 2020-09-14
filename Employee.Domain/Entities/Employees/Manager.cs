@@ -11,7 +11,7 @@ namespace iEmployee.Domain.Employees
         public int RoomNumber { get; protected set; }
         public Employee Employee { get; protected set; }
 
-        public ICollection<Employee> Suboridnates { get; protected set; }
+        public ICollection<Employee> Subordinates { get; protected set; }
 
         public static Manager Create(int RoomNumber, Employee employee, List<Employee> subordinates)
         {
@@ -19,19 +19,19 @@ namespace iEmployee.Domain.Employees
             {
                 RoomNumber = RoomNumber,
                 Employee = employee,
-                Suboridnates = subordinates
+                Subordinates = subordinates
             };
         }
         public void Update(Manager manager)
         {
             this.Employee = manager.Employee;
             this.RoomNumber = manager.RoomNumber;
-            this.Suboridnates = manager.Suboridnates;
+            this.Subordinates = manager.Subordinates;
         }
 
         public void ClearSubordinates()
         {
-            this.Suboridnates.Clear();
+            this.Subordinates.Clear();
         }
     }
 }

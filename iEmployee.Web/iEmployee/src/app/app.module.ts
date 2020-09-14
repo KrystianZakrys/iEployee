@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { HttpRequestInterceptor } from './http-request.interceptor';
 
 import { EmployeeModule } from './employee/employee.module';
 import { ProjectModule } from './project/project.module';
 import { MessagesModule } from './messages/messages.module';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,16 @@ import { MessagesModule } from './messages/messages.module';
     HttpClientModule,
     EmployeeModule,
     ProjectModule,
-    MessagesModule
+    MessagesModule,
+    MatProgressSpinnerModule
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,
+    {
+       provide: HTTP_INTERCEPTORS,
+       useClass: HttpRequestInterceptor,
+       multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,7 +19,7 @@ namespace iEmployee.CommandQuery.Command
         {
             this.RoomNumber = manager.RoomNumber;
             this.EmployeeId = manager.EmployeeId;
-            this.Subordinates = manager.Suboridnates;
+            this.Subordinates = manager.Subordinates;
         }
     }
 }

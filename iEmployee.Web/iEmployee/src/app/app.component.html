@@ -298,7 +298,29 @@
       visibility: hidden;
     }
   }
+
+  .loading-container {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+}
+.flex-content-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
+<!-- Spinner -->
+<div *ngIf="loading"  class="loading-container flex-content-center"> 
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">

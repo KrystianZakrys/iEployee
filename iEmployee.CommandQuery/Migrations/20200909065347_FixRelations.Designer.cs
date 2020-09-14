@@ -9,7 +9,7 @@ using iEmployee.CommandQuery;
 
 namespace iEmployee.CommandQuery.Migrations
 {
-    [DbContext(typeof(iEmployeeContext))]
+    [DbContext(typeof(EmployeeContext))]
     [Migration("20200909065347_FixRelations")]
     partial class FixRelations
     {
@@ -162,7 +162,7 @@ namespace iEmployee.CommandQuery.Migrations
             modelBuilder.Entity("iEmployee.Domain.Employees.Employee", b =>
                 {
                     b.HasOne("iEmployee.Domain.Employees.Manager", "Manager")
-                        .WithMany("Suboridnates")
+                        .WithMany("Subordinates")
                         .HasForeignKey("ManagerId");
 
                     b.OwnsOne("iEmployee.Domain.Address", "Address", b1 =>

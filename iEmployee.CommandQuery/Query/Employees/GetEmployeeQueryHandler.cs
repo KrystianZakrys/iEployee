@@ -50,7 +50,11 @@ namespace iEmployee.CommandQuery.Query
                 {
                     Code = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Code,
                     Id = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Id,
-                    Name = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Name
+                    Name = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Position.Name,
+                    EndDate = employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.EndDate,
+                    Salary = (decimal)(employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Salary),
+                    StartDate = (DateTime)(employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.StartDate)
+
                 } : null
             };
         }

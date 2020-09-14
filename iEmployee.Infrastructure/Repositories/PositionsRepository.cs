@@ -57,8 +57,8 @@ namespace iEmployee.Infrastructure.Repositories
     /// <seealso cref="IPositionsRepository"/>
     public class PositionsRepository : IPositionsRepository
     {
-        private readonly iEmployeeContext dbContext;
-        public PositionsRepository(iEmployeeContext dbContext)
+        private readonly EmployeeContext dbContext;
+        public PositionsRepository(EmployeeContext dbContext)
         {
             this.dbContext = dbContext;
         }
