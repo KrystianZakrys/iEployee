@@ -28,7 +28,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>position DTO</returns>
         public async Task<PositionDTO> Handle(GetPositionQuery request, CancellationToken cancellationToken)
         {
-            var positon = await this.positionsRepository.GetPosition(request.Id);
+            var positon = await positionsRepository.GetPosition(request.Id);
             return new PositionDTO() { Id = positon.Id, Name = positon.Name, Code = positon.Code};
         }
     }

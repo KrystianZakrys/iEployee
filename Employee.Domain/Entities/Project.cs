@@ -16,16 +16,16 @@ namespace iEmployee.Domain
 
         public Project(String name)
         {
-            this.Name = name;
+            Name = name;
         }
 
         public static Project Create(string name)
         {
             return new Project(name);
         }
-        public void Update(Project projectData)
+        public void Update(string name)
         {
-            this.Name = projectData.Name;
+            Name = name;
         }
     }
 }

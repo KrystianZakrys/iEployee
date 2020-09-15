@@ -38,7 +38,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PositionDTO>>> GetPositions()
-            => this.Ok(await this.mediator.Send(new GetPositionsQuery(), CancellationToken.None));
+            => Ok(await mediator.Send(new GetPositionsQuery(), CancellationToken.None));
 
         /// <summary>
         /// Gets project 
@@ -47,7 +47,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<PositionDTO>> GetPosition(Guid id)
-            => this.Ok(await this.mediator.Send(new GetPositionQuery() { Id = id }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetPositionQuery() { Id = id }, CancellationToken.None));
 
         /// <summary>
         /// Adds project
@@ -55,8 +55,8 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">project data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<PositionDTO>> PostPosition([FromBody] PositionDTO project)
-            => this.Ok(await this.mediator.Send(new AddPositionCommand(project), CancellationToken.None));
+        public async Task<ActionResult<PositionDTO>> PostPosition(PositionDTO project)
+            => Ok(await mediator.Send(new AddPositionCommand(project), CancellationToken.None));
 
         /// <summary>
         /// Updates project
@@ -66,7 +66,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> PutPosition(Guid id, PositionDTO project)
-            => this.Ok(await this.mediator.Send(new UpdatePositionCommand(id, project), CancellationToken.None));
+            => Ok(await mediator.Send(new UpdatePositionCommand(id, project), CancellationToken.None));
 
         /// <summary>
         /// Deletes project
@@ -75,7 +75,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeletePosition(Guid id)
-            => this.Ok(await this.mediator.Send(new DeletePositionCommand(id), CancellationToken.None));
+            => Ok(await mediator.Send(new DeletePositionCommand(id), CancellationToken.None));
         
         /// <summary>
         /// Gets positions actually not assigned to specified employee
@@ -84,6 +84,6 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("NotAssigned/{id}")]
         public async Task<ActionResult<IEnumerable<PositionDTO>>> GetNotAssignedPositions(Guid id)
-            => this.Ok(await this.mediator.Send(new GetNotAssignedPositionsQuery(){ EmployeeId = id }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetNotAssignedPositionsQuery(){ EmployeeId = id }, CancellationToken.None));
     }
 }

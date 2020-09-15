@@ -14,10 +14,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, bool>
     {
-        public IEmployeesRepository employeesRepository;
-        public DeleteEmployeeCommandHandler(IEmployeesRepository employeesRepository)
+        private IUnitOfWork unitOfWork;
+        public DeleteEmployeeCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -28,7 +28,17 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-           return await employeesRepository.DeleteEmployee(request.Id);
+            try
+            {
+                var result = await unitOfWork.EmployeesRepository.DeleteEmployee(request.Id);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

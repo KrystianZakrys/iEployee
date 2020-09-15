@@ -17,9 +17,9 @@ namespace iEmployee.CommandQuery.Command
 
         public AddManagerCommand(ManagerDTO manager)
         {
-            this.RoomNumber = manager.RoomNumber;
-            this.EmployeeId = manager.EmployeeId;
-            this.Subordinates = manager.Subordinates;
+            RoomNumber = manager.RoomNumber;
+            EmployeeId = manager.EmployeeId;
+            Subordinates = manager.Subordinates;
         }
     }
 }

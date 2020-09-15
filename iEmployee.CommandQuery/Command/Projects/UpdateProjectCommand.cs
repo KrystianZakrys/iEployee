@@ -20,8 +20,8 @@ namespace iEmployee.CommandQuery.Command.Projects
         /// <param name="project">project data transfer object</param>
         public UpdateProjectCommand(Guid id, ProjectDTO project)
         {
-            this.ProjectId = id;
-            this.Name = project.Name;
+            ProjectId = id;
+            Name = project.Name;
         }
     }
 }

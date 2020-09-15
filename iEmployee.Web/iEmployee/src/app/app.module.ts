@@ -11,6 +11,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { ProjectModule } from './project/project.module';
 import { MessagesModule } from './messages/messages.module';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ToasterModule} from 'angular2-toaster';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     EmployeeModule,
     ProjectModule,
     MessagesModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ToasterModule.forRoot()
   ],
   providers: [HttpClientModule,
     {

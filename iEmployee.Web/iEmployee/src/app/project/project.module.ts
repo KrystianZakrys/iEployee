@@ -24,6 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule }  from '@angular/forms';
 import { MessagesModule } from '../messages/messages.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectService } from '../project.service';
+import { ProjectResolver }  from './project-resolver';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,6 @@ import { HttpClientModule } from '@angular/common/http';
     MessagesModule,
     HttpClientModule
   ],
-  providers: [HttpClientModule]
+  providers: [HttpClientModule, ProjectService, ProjectResolver]
 })
 export class ProjectModule { }

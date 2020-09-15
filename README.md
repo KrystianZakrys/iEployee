@@ -27,26 +27,28 @@ What's next? What can i do better?
 
 
 ## To-Do
-- [ ] Add classes to frontend angular app with methods
-- [ ] Add Toaster for messages to frontend
-- [ ] Refactor/ clear code to be somehow maintainable
-- [ ] Repository should not use DTO only entities and simple types
-- [ ] Add repository methods example "GetEmployeesWithManager" etc.
+- [ ] Resolver handle no server response
 - [ ] Managers business logic
-- [ ] Frontend - **Http Interceptor** and "Resolver" to lazy load instead of ngInit()
-- [ ] Write some unit tests Backend/Frontend - weekend
+- [ ] Refactor/ clear code to be somehow maintainable
+- [ ] Add classes to frontend angular app with methods
+- [ ] Write some unit tests Backend/Frontend
+- [x] **Unit of Work Pattern**
+- [x] Frontend - **Http Interceptor** and **"Resolver"** to lazy load instead of ngInit() - added for details of employee and project
+- [x] Add **Toaster** for messages to frontend
+- [x] Add repository methods example "GetEmployeesWithManager" etc.
+- [x] Repository should not use DTO only entities and simple types
 - [x] Fix manager crud API operations.
 - [x] Modify position changing form 
 - [x] Add comments and documentation
-- [x] Add Forms Validation and Messages/Popups what eva
-- [x] Make Angular Component for validation errors and messages
+- [x] Add **Forms Validation** and Messages/Popups what eva
+- [x] Make Angular Component for **validation** errors and messages
 - [x] Change all forms to reactive forms
-- [x] Add Repository pattern to database access
-- [x] Fix Specification pattern issue on "Select in select" thingy = Workaround by just creating wheres
+- [x] Add **Repository pattern** to database access
+- [x] Fix **Specification pattern** issue on "Select in select" thingy = Workaround by just creating wheres
 - [x] Implement business logic in Entities (for example Assigning Employee to Project)
-- [x] Create ViewModel for each Entity that it could be used in CQRS and Web API
+- [x] Create **DTO** for each Entity that it could be used in **CQRS** and **Web API**
 - [x] In Web part separate components for modules
-- [x] Use Reactive Forms in Angular
+- [x] Use **Reactive Forms** in Angular
 - [x] Turn off complex primary key on job histories because cannot add multiple ...
 - [x] Fix angular model mapping from json to interfaces/classes
 

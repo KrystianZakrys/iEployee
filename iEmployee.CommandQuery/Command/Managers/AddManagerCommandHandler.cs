@@ -14,12 +14,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class AddManagerCommandHandler : ICommandHandler<AddManagerCommand, bool>
     {
-        private readonly IManagersRepository managersRepository;
-        private readonly IEmployeesRepository employeesRepository;
-        public AddManagerCommandHandler(IManagersRepository managersRepository, IEmployeesRepository employeesRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public AddManagerCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.managersRepository = managersRepository;
-            this.employeesRepository = employeesRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -30,16 +28,26 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(AddManagerCommand request, CancellationToken cancellationToken)
         {
-            var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);
-            var subordinates = new List<Employee>();
-
-            foreach (var subordinate in request.Subordinates)
+            try
             {
-                subordinates.Add(await this.employeesRepository.GetEmployee(subordinate));
-            }
+                var employee = await unitOfWork.EmployeesRepository.GetEmployee(request.EmployeeId);
+                var subordinates = new List<Employee>();
 
-            var manager = Manager.Create(request.RoomNumber, employee, subordinates);
-            return await this.managersRepository.AddManagerAsync(manager);
+                foreach (var subordinate in request.Subordinates)
+                {
+                    subordinates.Add(await unitOfWork.EmployeesRepository.GetEmployee(subordinate));
+                }
+
+                var manager = Manager.Create(request.RoomNumber, employee, subordinates);
+                var result = await unitOfWork.ManagersRepository.AddManagerAsync(manager);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

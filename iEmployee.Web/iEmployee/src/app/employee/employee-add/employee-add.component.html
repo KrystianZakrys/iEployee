@@ -69,7 +69,8 @@
         </p>
         <app-error-messages [propertyFormat]="'00-000'" [propertyName]="'ZipCode'" [control]="this.employeeForm.get('address').get('zipCode')"></app-error-messages>  
         
-      </div>   
+      </div>  
+      
     <div class="navigation">
       <button mat-stroked-button color="primary" (click)="submit()"  [disabled]="!this.employeeForm.valid">Save</button> 
     </div>

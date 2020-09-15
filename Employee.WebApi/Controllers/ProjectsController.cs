@@ -40,7 +40,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjects()
-            => this.Ok(await this.mediator.Send(new GetProjectsQuery(), CancellationToken.None));
+            => Ok(await mediator.Send(new GetProjectsQuery(), CancellationToken.None));
 
         /// <summary>
         /// Get project
@@ -49,7 +49,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectDTO>> GetProject(Guid id)
-            => this.Ok(await this.mediator.Send(new GetProjectQuery() { Id = id }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetProjectQuery() { Id = id }, CancellationToken.None));
 
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("NotAssigned/{id}")]
         public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetNotAssignedProjects(Guid id)
-            => this.Ok(await this.mediator.Send(new GetNotAssignedProjectQuery() { EmployeeId = id }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetNotAssignedProjectQuery() { EmployeeId = id }, CancellationToken.None));
 
         /// <summary>
         /// Gets employees list for specified project
@@ -68,7 +68,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("Employees/{projectId}")]
         public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetProjectEmployees(Guid projectId)
-            => this.Ok(await this.mediator.Send(new GetProjectEmployeesQuery() { ProjectId = projectId }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetProjectEmployeesQuery() { ProjectId = projectId }, CancellationToken.None));
 
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="project">Project data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ProjectDTO>> PostProject([FromBody] ProjectDTO project)
-            => this.Ok(await this.mediator.Send(new AddProjectCommand(project), CancellationToken.None));
+        public async Task<ActionResult<ProjectDTO>> PostProject(ProjectDTO project)
+            => Ok(await mediator.Send(new AddProjectCommand(project), CancellationToken.None));
 
         /// <summary>
         /// Updates project
@@ -88,7 +88,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> PutProject(Guid id, ProjectDTO project)
-            => this.Ok(await this.mediator.Send(new UpdateProjectCommand(id, project), CancellationToken.None));
+            => Ok(await mediator.Send(new UpdateProjectCommand(id, project), CancellationToken.None));
         
         /// <summary>
         /// Deletes project
@@ -97,6 +97,6 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteProject(Guid id)
-            => this.Ok(await this.mediator.Send(new DeleteProjectCommand(id), CancellationToken.None));
+            => Ok(await mediator.Send(new DeleteProjectCommand(id), CancellationToken.None));
     }
 }

@@ -31,17 +31,21 @@ namespace iEmployee.Domain.Employees
             };            
             return employee;
         }
-
-        public void Update(Employee employeeData)
+        /// <summary>
+        /// Updates employee data
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="birthDate"></param>
+        /// <param name="sex"></param>
+        /// <param name="address"></param>
+        public void Update(string firstName, string lastName, DateTime birthDate, SexEnum sex, Address address)
         {
-            FirstName = employeeData.FirstName;
-            LastName = employeeData.LastName;
-            BirthDate = employeeData.BirthDate;
-            Sex = employeeData.Sex;
-            Address = employeeData.Address;
-            Manager = employeeData.Manager;
-            Projects = employeeData.Projects;
-            JobHistories = employeeData.JobHistories;
+            FirstName = firstName;
+            LastName = lastName;
+            BirthDate = birthDate;
+            Sex = sex;
+            Address = address;
         }
 
         public void AssignEmployeeProject(Project project)

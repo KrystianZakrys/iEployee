@@ -29,7 +29,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>position DTO list</returns>
         public async Task<ICollection<PositionDTO>> Handle(GetNotAssignedPositionsQuery request, CancellationToken cancellationToken)
         {
-            var positions = await this.positionsRepository.GetNotAssignedPosition(request.EmployeeId);
+            var positions = await positionsRepository.GetNotAssignedPosition(request.EmployeeId);
             var positionsSaveModels = new List<PositionDTO>();
             positions.ToList().ForEach(p => {
                 positionsSaveModels.Add(new PositionDTO()

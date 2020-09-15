@@ -17,10 +17,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class UpdateEmployeeCommandHandler : ICommandHandler<UpdateEmployeeCommand, bool>
     {
-        private readonly IEmployeesRepository employeesRepository;
-        public UpdateEmployeeCommandHandler(IEmployeesRepository employeesRepository)
+        private IUnitOfWork unitOfWork;
+        public UpdateEmployeeCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -31,9 +31,20 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = Employee.Create(request.FirstName, request.LastName, request.Sex, request.BirthDate
-                , Address.CreateFromModel(request.Address));
-            return  await employeesRepository.UpdateEmployee(request.EmployeeId, employee);
+            try
+            {
+                var employee = await unitOfWork.EmployeesRepository.GetEmployee(request.EmployeeId);
+                employee.Update(request.FirstName, request.LastName, request.BirthDate, request.Sex, Address.CreateFromModel(request.Address));
+
+                var result = await unitOfWork.EmployeesRepository.UpdateEmployee(employee);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

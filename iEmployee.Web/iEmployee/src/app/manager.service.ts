@@ -38,25 +38,25 @@ export class ManagerService {
       );
   }
 
-  addManager(manager: Manager): Observable<Manager>{
-    return this.http.post<Manager>(this.managersUrl, manager, this.httpOptions)
+  addManager(manager: Manager): Observable<boolean>{
+    return this.http.post<boolean>(this.managersUrl, manager, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Manager>('addManager'))
+      catchError(this.handleError<boolean>('addManager'))
     );
   }
 
-  updateManager(manager: Manager, id: string): Observable<Manager>{
-    return this.http.put<Manager>(`${this.managersUrl}/${id}`, manager,this.httpOptions)
+  updateManager(manager: Manager, id: string): Observable<boolean>{
+    return this.http.put<boolean>(`${this.managersUrl}/${id}`, manager,this.httpOptions)
       .pipe(
-        catchError(this.handleError<Manager>(`updateManager id=${id}`))
+        catchError(this.handleError<boolean>(`updateManager id=${id}`))
       )
   }
 
-  deleteManager(manager: Manager | string): Observable<Manager>{
+  deleteManager(manager: Manager | string): Observable<boolean>{
     const id = typeof manager === 'string'? manager : manager.managerId;
     const url = `${this.managersUrl}/${id}`;
-    return this.http.delete<Manager>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Manager>('deleteManager'))
+    return this.http.delete<boolean>(url, this.httpOptions).pipe(
+      catchError(this.handleError<boolean>('deleteManager'))
     );
   }
 

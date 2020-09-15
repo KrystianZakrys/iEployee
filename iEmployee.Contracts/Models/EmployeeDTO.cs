@@ -20,7 +20,7 @@ namespace iEmployee.Contracts
         public AddressDTO Address { get; set; }
         public String ManagerName { get; set; }
         public PositionDTO? Position { get; set; }
-        public List<ProjectDTO> Projects { get; set; }
+        public List<ProjectDTO>? Projects { get; set; }
 
     }
 }

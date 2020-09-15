@@ -14,12 +14,10 @@ namespace iEmployee.CommandQuery.Command.Employees
     /// </summary>
     public class AssignToProjectCommandHandler : ICommandHandler<AssignToProjectCommand, bool>
     {
-        public IEmployeesRepository employeesRepository;
-        public IProjectsRepository projectsRepository;
-        public AssignToProjectCommandHandler(IEmployeesRepository employeesRepository, IProjectsRepository projectsRepository)
+        private IUnitOfWork unitOfWork;
+        public AssignToProjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
-            this.projectsRepository = projectsRepository;
+            this.unitOfWork = unitOfWork;          
         }
         /// <summary>
         /// Handler for command 
@@ -30,10 +28,21 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <returns></returns>
         public async Task<bool> Handle(AssignToProjectCommand request, CancellationToken cancellationToken)
         {
-            var employee = await employeesRepository.GetEmployee(request.EmployeeId);
-            var project = await projectsRepository.GetProject(request.ProjectId);
-            employee.AssignEmployeeProject(project);            
-            return await employeesRepository.UpdateEmployee(request.EmployeeId, employee);
+            try
+            {
+                var employee = await unitOfWork.EmployeesRepository.GetEmployee(request.EmployeeId);
+                var project = await unitOfWork.ProjectsRepository.GetProject(request.ProjectId);
+                employee.AssignEmployeeProject(project);
+                var result = await unitOfWork.EmployeesRepository.UpdateEmployee(employee);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
+
         }
     }
 }

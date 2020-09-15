@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Employee, JobHistory } from './employee';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Project } from './project';
+import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -64,10 +65,10 @@ export class EmployeeService {
    * @param employee 
    * @returns employee 
    */
-  addEmployee(employee: Employee): Observable<Employee>{
-    return this.http.post<Employee>(this.employeesUrl, employee, this.httpOptions)
+  addEmployee(employee: Employee): Observable<boolean>{
+    return this.http.post<boolean>(this.employeesUrl, employee, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Employee>('addEmployee'))
+      catchError(this.handleError<boolean>('addEmployee'))
     );
   }
 
@@ -77,10 +78,10 @@ export class EmployeeService {
    * @param id 
    * @returns employee 
    */
-  updateEmployee(employee: Employee, id: string): Observable<Employee>{
-    return this.http.put<Employee>(`${this.employeesUrl}/${id}`, employee,this.httpOptions)
+  updateEmployee(employee: Employee, id: string): Observable<boolean>{
+    return this.http.put<boolean>(`${this.employeesUrl}/${id}`, employee,this.httpOptions)      
       .pipe(
-        catchError(this.handleError<Employee>(`updateEmployee id=${id}`))
+        catchError(this.handleError<boolean>(`updateEmployee id=${id}`))
       )
   }
 
@@ -89,11 +90,11 @@ export class EmployeeService {
    * @param employee 
    * @returns employee 
    */
-  deleteEmployee(employee: Employee | string): Observable<Employee>{
+  deleteEmployee(employee: Employee | string): Observable<boolean>{
     const id = typeof employee === 'string'? employee : employee.id;
     const url = `${this.employeesUrl}/${id}`;
-    return this.http.delete<Employee>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Employee>('deleteEmployee'))
+    return this.http.delete<boolean>(url, this.httpOptions).pipe(
+      catchError(this.handleError<boolean>('deleteEmployee'))
     );
   }
 
@@ -115,10 +116,10 @@ export class EmployeeService {
    * @param jobHistoryEntry 
    * @returns position 
    */
-  changePosition(employeeId: string, jobHistoryEntry: JobHistory): Observable<Employee>{
-    return this.http.post<Employee>(`${this.employeesUrl}/changePos/${employeeId}`,jobHistoryEntry, this.httpOptions)
+  changePosition(employeeId: string, jobHistoryEntry: JobHistory): Observable<boolean>{
+    return this.http.post<boolean>(`${this.employeesUrl}/changePos/${employeeId}`,jobHistoryEntry, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Employee>('changePosition'))
+      catchError(this.handleError<boolean>('changePosition'))
     );
   }
 

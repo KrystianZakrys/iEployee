@@ -14,12 +14,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class UpdateManagerCommandHandler : ICommandHandler<UpdateManagerCommand, bool>
     {
-        private readonly IManagersRepository managersRepository;
-        private readonly IEmployeesRepository employeesRepository;
-        public UpdateManagerCommandHandler(IManagersRepository managersRepository, IEmployeesRepository employeesRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public UpdateManagerCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.managersRepository = managersRepository;
-            this.employeesRepository = employeesRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -30,14 +28,25 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(UpdateManagerCommand request, CancellationToken cancellationToken)
         {
-            var employee = await this.employeesRepository.GetEmployee(request.EmployeeId);
-            var subordinates = new List<Employee>();
-            foreach (var subordinate in request.Subordinates)
+            try
             {
-                subordinates.Add(await this.employeesRepository.GetEmployee(subordinate));
+                var subordinates = new List<Employee>();
+                foreach (var subordinate in request.Subordinates)
+                {
+                    subordinates.Add(await unitOfWork.EmployeesRepository.GetEmployee(subordinate));
+                }
+                var manager = await unitOfWork.ManagersRepository.GetManager(request.ManagerId);
+
+                manager.Update(request.RoomNumber, subordinates);
+                var result = await unitOfWork.ManagersRepository.UpdateManager(manager);
+                unitOfWork.Commit();
+                return result;
             }
-            var manager = Manager.Create(request.RoomNumber,employee,subordinates);
-            return await this.managersRepository.UpdateManager(request.ManagerId, manager);
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

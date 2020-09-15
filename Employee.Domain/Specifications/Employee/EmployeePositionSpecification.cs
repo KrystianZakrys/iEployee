@@ -17,7 +17,7 @@ namespace iEmployee.Domain.Specifications
         }
         public override Expression<Func<Employee, bool>> ToExpression()
         {
-            return e => e.JobHistories.Where(x => x.EndDate == null).Select(x => x.PositionId).Contains(this.positionId);
+            return e => e.JobHistories.Where(x => x.EndDate == null).Select(x => x.PositionId).Contains(positionId);
         }
     }
 }

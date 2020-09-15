@@ -16,7 +16,7 @@ namespace iEmployee.Domain.Specifications
         }
         public override Expression<Func<Employee, bool>> ToExpression()
         {
-            return e => e.FirstName == this.firstName;
+            return e => e.FirstName == firstName;
         }
     }
 }

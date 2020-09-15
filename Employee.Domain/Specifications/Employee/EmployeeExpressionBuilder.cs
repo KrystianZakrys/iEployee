@@ -16,15 +16,15 @@ namespace iEmployee.Domain.Specifications
         public EmployeeExpressionBuilder(EmployeeCriteria employeeCriteria)
         {
             this.employeeCriteria = employeeCriteria;
-            this.employeeSpecifications = new List<Specification<Employee>>();
+            employeeSpecifications = new List<Specification<Employee>>();
         }
         public  Expression<Func<Employee,bool>> GetExpression()
         {
             Expression<Func<Employee, bool>> result = x => true;
-            if (this.employeeSpecifications.Count <= 0) return result;
-            Specification<Employee> startSpecification = this.employeeSpecifications?.FirstOrDefault();
-            this.employeeSpecifications.Remove(startSpecification);
-            this.employeeSpecifications.ForEach(x => {
+            if (employeeSpecifications.Count <= 0) return result;
+            Specification<Employee> startSpecification = employeeSpecifications?.FirstOrDefault();
+            employeeSpecifications.Remove(startSpecification);
+            employeeSpecifications.ForEach(x => {
                 startSpecification = startSpecification.And(x);
             });
             result = startSpecification.ToExpression();            
@@ -33,29 +33,29 @@ namespace iEmployee.Domain.Specifications
 
         public EmployeeExpressionBuilder AddFirstNameSpecification()
         {
-            if (!String.IsNullOrEmpty(this.employeeCriteria.FirstName))
+            if (!String.IsNullOrEmpty(employeeCriteria.FirstName))
             {
-                var specification = new EmployeeFirstNameSpecification(this.employeeCriteria.FirstName);
-                this.employeeSpecifications.Add(specification);                
+                var specification = new EmployeeFirstNameSpecification(employeeCriteria.FirstName);
+                employeeSpecifications.Add(specification);                
             }
             return this;
         }
         public EmployeeExpressionBuilder AddLastNameSpecification()
         {
-            if (!String.IsNullOrEmpty(this.employeeCriteria.LastName))
+            if (!String.IsNullOrEmpty(employeeCriteria.LastName))
             {
-                var specification = new EmployeeLastNameSpecification(this.employeeCriteria.LastName);
-                this.employeeSpecifications.Add(specification);
+                var specification = new EmployeeLastNameSpecification(employeeCriteria.LastName);
+                employeeSpecifications.Add(specification);
             } 
             return this;
         }
 
         public EmployeeExpressionBuilder AddBirtDateSpecification()
         {
-            if (this.employeeCriteria.MaxBirthDate.HasValue && this.employeeCriteria.MinBirthDate.HasValue)
+            if (employeeCriteria.MaxBirthDate.HasValue && employeeCriteria.MinBirthDate.HasValue)
             {
-                var specification = new EmployeeBirthDateSpecification(this.employeeCriteria.MinBirthDate.Value, this.employeeCriteria.MaxBirthDate.Value);
-                this.employeeSpecifications.Add(specification);
+                var specification = new EmployeeBirthDateSpecification(employeeCriteria.MinBirthDate.Value, employeeCriteria.MaxBirthDate.Value);
+                employeeSpecifications.Add(specification);
             }
             return this;
         }
@@ -64,7 +64,7 @@ namespace iEmployee.Domain.Specifications
             if (employeeCriteria.ProjectId.HasValue)
             {
                 var specification = new EmployeeProjectSpecification(employeeCriteria.ProjectId.Value);
-                this.employeeSpecifications.Add(specification);
+                employeeSpecifications.Add(specification);
             }
             return this;
         }
@@ -75,7 +75,7 @@ namespace iEmployee.Domain.Specifications
             {
                 var specification = new EmployeePositionSpecification(employeeCriteria.PositionId.Value);
                 var exp = specification.ToExpression();
-                this.employeeSpecifications.Add(specification);
+                employeeSpecifications.Add(specification);
             }
             return this;
         }

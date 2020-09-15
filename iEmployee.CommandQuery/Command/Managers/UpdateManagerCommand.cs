@@ -23,10 +23,10 @@ namespace iEmployee.CommandQuery.Command
         /// <param name="manager">manager data transfer object</param>
         public UpdateManagerCommand(Guid id, ManagerDTO manager)
         {
-            this.ManagerId = id;
-            this.RoomNumber = manager.RoomNumber;
-            this.EmployeeId = manager.EmployeeId;
-            this.Subordinates = manager.Subordinates;
+            ManagerId = id;
+            RoomNumber = manager.RoomNumber;
+            EmployeeId = manager.EmployeeId;
+            Subordinates = manager.Subordinates;
         }
     }
 }

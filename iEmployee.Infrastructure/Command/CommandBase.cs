@@ -16,7 +16,7 @@ namespace iEmployee.Infrastructure.Command
         /// </summary>
         public CommandBase()
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
 
@@ -26,7 +26,7 @@ namespace iEmployee.Infrastructure.Command
         /// <param name="id">identifier</param>
         protected CommandBase(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
     /// <summary>
@@ -41,7 +41,7 @@ namespace iEmployee.Infrastructure.Command
         /// </summary>
         protected CommandBase()
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandBase{TResult}"/> class with id.
@@ -49,7 +49,7 @@ namespace iEmployee.Infrastructure.Command
         /// <param name="id">identifier</param>
         protected CommandBase(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

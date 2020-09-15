@@ -29,7 +29,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>project DTO list</returns>
         public async Task<ICollection<ProjectDTO>> Handle(GetNotAssignedProjectQuery request, CancellationToken cancellationToken)
         {
-            var projects = await this.projectsRepository.GetNotAssignedProjects(request.EmployeeId);
+            var projects = await projectsRepository.GetNotAssignedProjects(request.EmployeeId);
             var projectSaveModels = new List<ProjectDTO>();
             projects.ToList().ForEach(p => {
                 projectSaveModels.Add(new ProjectDTO()

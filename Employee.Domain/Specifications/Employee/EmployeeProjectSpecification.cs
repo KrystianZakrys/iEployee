@@ -20,7 +20,7 @@ namespace iEmployee.Domain.Specifications
         }
         public override Expression<Func<Employee, bool>> ToExpression()
         {
-            return e => e.Projects.Where(p => p.ProjectId == this.employeeProjectId).Any();
+            return e => e.Projects.Where(p => p.ProjectId == employeeProjectId).Any();
         }
     }
 }

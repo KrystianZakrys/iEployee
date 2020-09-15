@@ -33,8 +33,8 @@ namespace iEmployee.Domain.Specifications
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = this.left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = this.right.ToExpression();
+            Expression<Func<T, bool>> leftExpression = left.ToExpression();
+            Expression<Func<T, bool>> rightExpression = right.ToExpression();
 
             var parameter = Expression.Parameter(typeof(T));
             var expressionBody = Expression.AndAlso(leftExpression.Body, rightExpression.Body);

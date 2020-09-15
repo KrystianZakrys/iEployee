@@ -20,7 +20,7 @@ namespace iEmployee.CommandQuery.Command
         /// <param name="id">Manager identifier</param>
         public DeleteManagerCommand(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

@@ -13,12 +13,10 @@ namespace iEmployee.CommandQuery.Command.Employees
     /// </summary>
     public class ChangeEmployeePositionCommandHandler : ICommandHandler<ChangeEmployeePositionCommand, bool>
     {
-        public IEmployeesRepository employeesRepository;
-        public IPositionsRepository positionsRepository;
-        public ChangeEmployeePositionCommandHandler(IEmployeesRepository employeesRepository, IPositionsRepository positionsRepository)
+        private IUnitOfWork unitOfWork;
+        public ChangeEmployeePositionCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
-            this.positionsRepository = positionsRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -29,10 +27,22 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <returns></returns>
         public async Task<bool> Handle(ChangeEmployeePositionCommand request, CancellationToken cancellationToken)
         {
-            var employee = await employeesRepository.GetEmployee(request.EmployeeId);
-            var position = await positionsRepository.GetPosition(request.PositionId);
-            employee.ChangePosition(position, request.StartDate,request.Salary);
-            return await employeesRepository.UpdateEmployee(request.EmployeeId, employee);
+            try
+            {
+                var employee = await unitOfWork.EmployeesRepository.GetEmployee(request.EmployeeId);
+                var position = await unitOfWork.PositionsRepository.GetPosition(request.PositionId);
+
+                employee.ChangePosition(position, request.StartDate, request.Salary);
+                var result = await unitOfWork.EmployeesRepository.UpdateEmployee(employee);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
+
         }
     }
 }

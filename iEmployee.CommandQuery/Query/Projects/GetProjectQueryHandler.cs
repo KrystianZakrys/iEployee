@@ -31,7 +31,7 @@ namespace iEmployee.CommandQuery.Query.Projects
         /// <returns>project DTO</returns>
         public async Task<ProjectDTO> Handle(GetProjectQuery request, CancellationToken cancellationToken)
         {
-            var project = await this.projectsRepository.GetProject(request.Id);
+            var project = await projectsRepository.GetProjectWithEmployees(request.Id);
             List<EmployeeDTO> employeeSaveModels = new List<EmployeeDTO>();
             project.Employees.ToList().ForEach(x => { 
                     employeeSaveModels.Add(new EmployeeDTO() {

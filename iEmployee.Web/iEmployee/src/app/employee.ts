@@ -19,10 +19,10 @@ export interface Address{
 
 export interface Position{
     id? : string;
-    code: string;
-    name: string;
-    salary: number;
-    startDate: Date;
+    code?: string;
+    name?: string;
+    salary?: number;
+    startDate?: Date;
     endDate?:Date;
 }
 

@@ -13,10 +13,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class DeleteManagerCommandHandler : ICommandHandler<DeleteManagerCommand, bool>
     {
-        public IManagersRepository managersRepository;
-        public DeleteManagerCommandHandler(IManagersRepository managersRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public DeleteManagerCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.managersRepository = managersRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -27,7 +27,17 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(DeleteManagerCommand request, CancellationToken cancellationToken)
         {
-            return await this.managersRepository.DeleteManager(request.Id);
+            try
+            {
+                var result = await unitOfWork.ManagersRepository.DeleteManager(request.Id);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

@@ -14,10 +14,10 @@ namespace iEmployee.CommandQuery.Command.Projects
     /// </summary>
     public class UpdateProjectCommandHandler : ICommandHandler<UpdateProjectCommand, bool>
     {
-        private readonly IProjectsRepository projectsRepository;
-        public UpdateProjectCommandHandler(IProjectsRepository projectsRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public UpdateProjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.projectsRepository = projectsRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -28,8 +28,20 @@ namespace iEmployee.CommandQuery.Command.Projects
         /// <returns></returns>
         public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var project = Project.Create(request.Name);
-            return await this.projectsRepository.UpdateProject(request.ProjectId, project);
+            try
+            {
+                var project = await unitOfWork.ProjectsRepository.GetProject(request.ProjectId);
+                project.Update(request.Name);
+                var result = await unitOfWork.ProjectsRepository.UpdateProject(project);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
+          
         }
     }
 }

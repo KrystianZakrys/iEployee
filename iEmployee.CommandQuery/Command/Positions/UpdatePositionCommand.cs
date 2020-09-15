@@ -21,9 +21,9 @@ namespace iEmployee.CommandQuery.Command
         /// <param name="position">position data transfer object</param>
         public UpdatePositionCommand(Guid id, PositionDTO position)
         {
-            this.PositionId = id;
-            this.Name = position.Name;
-            this.Code = position.Code;
+            PositionId = id;
+            Name = position.Name;
+            Code = position.Code;
         }
     }
 }

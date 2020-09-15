@@ -25,13 +25,16 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule }  from '@angular/forms';
 import { MessagesModule } from '../messages/messages.module';
-
+import { EmployeeService } from '../employee.service';
+import { EmployeeResolver }  from './employee-resolver';
+import { ManagerFormDialog } from './employee-details/manager-form-dialog'
 @NgModule({
   declarations: [
     EmployeesComponent,
     EmployeeAddComponent,
     EmployeeDetailsComponent,
-    EmployeeProjectsComponent    
+    EmployeeProjectsComponent,
+    ManagerFormDialog    
   ],
   imports: [
     RouterModule,
@@ -53,6 +56,9 @@ import { MessagesModule } from '../messages/messages.module';
     RouterModule.forChild(employeeRoutes),
     ReactiveFormsModule,
     MessagesModule
+  ],
+  providers:[
+    EmployeeService, EmployeeResolver
   ]
 })
 export class EmployeeModule { }

@@ -37,10 +37,10 @@ export class ProjectService {
       );
   }
 
-  addProject(project: Project): Observable<Project>{
-    return this.http.post<Project>(this.projectsUrl, project, this.httpOptions)
+  addProject(project: Project): Observable<boolean>{
+    return this.http.post<boolean>(this.projectsUrl, project, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Project>('addProject'))
+      catchError(this.handleError<boolean>('addProject'))
     );
   }
 
@@ -60,16 +60,16 @@ export class ProjectService {
     );
   }
 
-  updateProject(id: string, project: Project): Observable<Project>{
-    return this.http.put<Project>(`${this.projectsUrl}/${id}`, project, this.httpOptions)
+  updateProject(id: string, project: Project): Observable<boolean>{
+    return this.http.put<boolean>(`${this.projectsUrl}/${id}`, project, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Project>(`updateProject id=${id}`))
+      catchError(this.handleError<boolean>(`updateProject id=${id}`))
     );
   }
-  deleteProject(id: string): Observable<Project>{
-    return this.http.delete<Project>(`${this.projectsUrl}/${id}`, this.httpOptions)
+  deleteProject(id: string): Observable<boolean>{
+    return this.http.delete<boolean>(`${this.projectsUrl}/${id}`, this.httpOptions)
     .pipe(
-      catchError(this.handleError<Project>(`deleteProject id=${id}`))
+      catchError(this.handleError<boolean>(`deleteProject id=${id}`))
       );
   }
 }

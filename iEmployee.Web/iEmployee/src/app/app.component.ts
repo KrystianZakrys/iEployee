@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { SpinnerService } from './spinner.service';
+import { ToasterService } from 'angular2-toaster';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,7 +16,7 @@ export class AppComponent implements OnInit{
    * Creates an instance of app component.
    * @param spinner 
    */
-  constructor(private spinnerService: SpinnerService){}
+  constructor(private spinnerService: SpinnerService, private toasterService: ToasterService){}
 
   ngOnInit(): void {
     this.listenToLoading();
@@ -29,5 +31,12 @@ export class AppComponent implements OnInit{
     .subscribe((loading)=> {
       this.loading = loading;
     });
+  }
+
+  /**
+   * Shows toaster
+   */
+  showToaster(){
+    this.toasterService.pop('success','Tak','Arrgs');
   }
 }

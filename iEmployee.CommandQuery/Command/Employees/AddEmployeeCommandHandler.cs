@@ -17,10 +17,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class AddEmployeeCommandHandler : ICommandHandler<AddEmployeeCommand, bool>
     {
-        private readonly IEmployeesRepository employeesRepository;
-        public AddEmployeeCommandHandler(IEmployeesRepository employeesRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public AddEmployeeCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -33,7 +33,17 @@ namespace iEmployee.CommandQuery.Command
         {
             var employee = Employee.Create(request.FirstName, request.LastName, request.Sex, request.BirthDate, 
                 Address.CreateFromModel(request.Address));
-            return await employeesRepository.AddEmployeeAsync(employee);
+            try
+            {
+                var result = await unitOfWork.EmployeesRepository.AddEmployeeAsync(employee);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

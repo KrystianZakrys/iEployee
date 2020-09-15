@@ -16,10 +16,10 @@ namespace iEmployee.Domain
         {
             return new Position() { Name = name, Code = code };
         }
-        public void Update(Position position)
+        public void Update(string name, string code)
         {
-            this.Name = position.Name;
-            this.Code = position.Code;
+            Name = name;
+            Code = code;
         }
     }
 }

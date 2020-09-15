@@ -29,7 +29,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>manager DTO</returns>
         public async Task<ManagerDTO> Handle(GetManagerQuery request, CancellationToken cancellationToken)
         {
-            var manager = await this.managersRepository.GetManager(request.Id);
+            var manager = await managersRepository.GetManagerWithSubordinates(request.Id);
             return new ManagerDTO() { EmployeeId = manager.Employee.Id, RoomNumber = manager.RoomNumber,
                 ManagerId = manager.Id, Subordinates = manager.Subordinates.Select(x => x.Id).ToList() };
         }

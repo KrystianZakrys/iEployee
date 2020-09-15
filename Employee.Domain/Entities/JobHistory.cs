@@ -33,7 +33,7 @@ namespace iEmployee.Domain
 
         public void AddEndDate(DateTime endDate)
         {
-            this.EndDate = endDate;
+            EndDate = endDate;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace iEmployee.CommandQuery.Command
         public String Name { get; set; }
         public AddProjectCommand(ProjectDTO project)
         {
-            this.Name = project.Name;
+            Name = project.Name;
         }
     }
 }

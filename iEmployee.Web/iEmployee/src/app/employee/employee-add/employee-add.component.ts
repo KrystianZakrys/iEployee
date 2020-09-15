@@ -8,6 +8,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ProjectService } from 'src/app/project.service';
 import { PositionService } from '../../position.service'
 import { Project } from '../../project';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-employee-add',
@@ -29,9 +30,11 @@ export class EmployeeAddComponent implements OnInit {
      private datePipe: DatePipe,
      private positionService: PositionService,
      private projectService: ProjectService,
-     private formBuilder: FormBuilder) { }
+     private formBuilder: FormBuilder,
+     private toasterService: ToasterService) { }
 
   ngOnInit(): void {
+    this.getPositionsDictionary();
     this.buildForm();
   }
   buildForm(): void{
@@ -51,18 +54,27 @@ export class EmployeeAddComponent implements OnInit {
 
   }
 
+    
+  toastMessage(x: boolean, bodySuccess: string): void{
+    if(x)
+    {
+      this.toasterService.pop('success','Success',bodySuccess);
+    }
+    else{
+      this.toasterService.pop('error','Error','Something went wrong.');
+    }
+  }
   goBack(): void{
     this.location.back();
   }
   getPositionsDictionary(): void{
     this.positionService.getPositions().subscribe(x => {this.positions = x;});
   }
-  getProjectsDictionary(): void{
-    this.projectService.getProjects().subscribe(x => {this.projects = x}); 
-  }
 
   submit(): void{ 
     if(this.employeeForm.valid)
-      this.employeeService.addEmployee(this.employeeForm.getRawValue()).subscribe(x => this.location.back());
+      this.employeeService.addEmployee(this.employeeForm.getRawValue()).subscribe(x => {
+        this.toastMessage(x, 'Successfully added employee.')
+        this.location.back()});
   }
 }

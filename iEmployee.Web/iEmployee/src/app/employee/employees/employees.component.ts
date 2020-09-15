@@ -63,9 +63,6 @@ export class EmployeesComponent implements OnInit {
     this.employeeService.filterEmployees(query).subscribe(x => {this.dataSource = x;});
   }
 
-  deleteEmployee(id: string): void{
-    this.employeeService.deleteEmployee(id).subscribe(x => this.dataSource.filter(y => y.id !== x.id));
-  }
 
   clearFilters(): void{
     this.filterForm.reset();

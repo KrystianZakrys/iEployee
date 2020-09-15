@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
 namespace iEmployee.Infrastructure.Repositories
 {
     /// <summary>
@@ -43,7 +42,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <param name="positionId">position identifier</param>
         /// <param name="position">position updated entity</param>
         /// <returns></returns>
-        Task<bool> UpdatePosition(Guid positionId, Position position);
+        Task<bool> UpdatePosition(Position position);
         /// <summary>
         /// Gets positions not assigned to specified employee
         /// </summary>
@@ -69,8 +68,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> AddPositionAsync(Position position)
         {
-            await this.dbContext.Positions.AddAsync(position);
-            await this.dbContext.SaveChangesAsync();
+            await dbContext.Positions.AddAsync(position);
             return true;
         }
         /// <summary>
@@ -80,9 +78,8 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> DeletePosition(Guid positionId)
         {
-            Position position = this.dbContext.Positions.Find(positionId);
-            this.dbContext.Positions.Remove(position);
-            await this.dbContext.SaveChangesAsync();
+            Position position = dbContext.Positions.Find(positionId);
+            dbContext.Positions.Remove(position);
             return true;
         }
         /// <summary>
@@ -92,8 +89,8 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Position>> GetNotAssignedPosition(Guid employeeId)
         {
-            var except = this.dbContext.Positions.Include(x => x.JobHistories).Where(x => x.JobHistories.Where(j => j.EmployeeId == employeeId && j.EndDate == null).Any());
-            return await this.dbContext.Positions.Include(x => x.JobHistories).Except(except).ToListAsync();
+            var except = dbContext.Positions.Include(x => x.JobHistories).Where(x => x.JobHistories.Where(j => j.EmployeeId == employeeId && j.EndDate == null).Any());
+            return await dbContext.Positions.Include(x => x.JobHistories).Except(except).ToListAsync();
         }
         /// <summary>
         /// Gets position
@@ -102,7 +99,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Position> GetPosition(Guid positionId)
         {
-            return await this.dbContext.Positions.FindAsync(positionId);
+            return await dbContext.Positions.FindAsync(positionId);
         }
         /// <summary>
         /// Gets list of positions
@@ -110,20 +107,16 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Position>> GetPositions()
         {
-            return await this.dbContext.Positions.ToListAsync();
+            return await dbContext.Positions.ToListAsync();
         }
         /// <summary>
         /// Updates position
         /// </summary>
-        /// <param name="positionId">position identifier</param>
         /// <param name="position">position updated entity</param>
         /// <returns></returns>
-        public async Task<bool> UpdatePosition(Guid positionId, Position positionModel)
+        public async Task<bool> UpdatePosition(Position position)
         {
-            var position = this.dbContext.Positions.Find(positionId);
-            position.Update(positionModel);
-            this.dbContext.Positions.Update(position);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.Positions.Update(position);
             return true;
         }
     }

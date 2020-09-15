@@ -38,7 +38,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManagerDTO>>> GetManagers()
-            => this.Ok(await this.mediator.Send(new GetManagersQuery(), CancellationToken.None));
+            => Ok(await mediator.Send(new GetManagersQuery(), CancellationToken.None));
 
         /// <summary>
         /// Get manager
@@ -47,7 +47,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ManagerDTO>> GetManager(Guid id)
-            => this.Ok(await this.mediator.Send(new GetManagerQuery() { Id = id }, CancellationToken.None));
+            => Ok(await mediator.Send(new GetManagerQuery() { Id = id }, CancellationToken.None));
 
         /// <summary>
         /// Adds manager
@@ -55,8 +55,8 @@ namespace iEmployee.WebApi.Controllers
         /// <param name="manager">manager data model</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ManagerDTO>> PostManager([FromBody] ManagerDTO manager)
-            => this.Ok(await this.mediator.Send(new AddManagerCommand(manager), CancellationToken.None));
+        public async Task<ActionResult<ManagerDTO>> PostManager(ManagerDTO manager)
+            => Ok(await mediator.Send(new AddManagerCommand(manager), CancellationToken.None));
 
         /// <summary>
         /// Updates manager
@@ -66,7 +66,7 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> PutManager(Guid id, ManagerDTO manager)
-            => this.Ok(await this.mediator.Send(new UpdateManagerCommand(id, manager), CancellationToken.None));
+            => Ok(await mediator.Send(new UpdateManagerCommand(id, manager), CancellationToken.None));
 
         /// <summary>
         /// Deletes manager
@@ -75,6 +75,6 @@ namespace iEmployee.WebApi.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteManager(Guid id)
-            => this.Ok(await this.mediator.Send(new DeleteManagerCommand(id), CancellationToken.None));
+            => Ok(await mediator.Send(new DeleteManagerCommand(id), CancellationToken.None));
     }
 }

@@ -74,7 +74,6 @@
     </div>
     <div class="navigation">
       <button class="float-right"  mat-stroked-button color="basic" (click)="updateEmployee()" [disabled]="!this.employeeForm.valid">Update employee</button>      
-      <!-- <button class="float-right"  mat-stroked-button color="basic" (click)="makeManager()">Make manager</button>       -->
     </div>   
     <div>
       <div formGroupName="position">
@@ -120,19 +119,19 @@
       </p>
       <app-error-messages [propertyName]="'End date'" [control]="this.employeeForm.get('position').get('endDate')"></app-error-messages>
     </div>
-    <p>
+    <!-- <p>
       <mat-form-field appearance="legacy">
         <mat-label>Room number</mat-label>
         <input type="number" matInput [formControl]="managerRoomNumber" placeholder="Room number" >
       </mat-form-field>
     </p>
-    <app-error-messages [propertyName]="'Room number'" [control]="this.managerRoomNumber"></app-error-messages>
+    <app-error-messages [propertyName]="'Room number'" [control]="this.managerRoomNumber"></app-error-messages> -->
 
     
   </div>
   <div class="navigation">
     <button class="float-right"  mat-stroked-button color="basic" (click)="changePosition()">Change position</button>
-    <button class="float-right"  mat-stroked-button color="basic" (click)="makeManager()">Make a manager</button>
+    <button class="float-right"  mat-stroked-button color="basic" (click)="openManagerForm()">Make a manager</button>
   </div>
 </form>
     <div>

@@ -5,7 +5,6 @@ using System.Text;
 
 namespace iEmployee.Domain.Employees
 {
-    [Table("Managers")]
     public class Manager : BaseEntity
     {
         public int RoomNumber { get; protected set; }
@@ -22,16 +21,15 @@ namespace iEmployee.Domain.Employees
                 Subordinates = subordinates
             };
         }
-        public void Update(Manager manager)
+        public void Update(int roomNumber, List<Employee> employees)
         {
-            this.Employee = manager.Employee;
-            this.RoomNumber = manager.RoomNumber;
-            this.Subordinates = manager.Subordinates;
+            RoomNumber = roomNumber;
+            Subordinates = employees;
         }
 
         public void ClearSubordinates()
         {
-            this.Subordinates.Clear();
+            Subordinates.Clear();
         }
     }
 }

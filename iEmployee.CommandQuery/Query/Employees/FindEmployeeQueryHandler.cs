@@ -29,7 +29,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>employee DTO list</returns>
         public async Task<IEnumerable<EmployeeDTO>> Handle(FindEmployeeQuery request, CancellationToken cancellationToken)
         {
-            var employees = await this.employeesRepository.GetEmployees(request.employeeCriteria);
+            var employees = await employeesRepository.GetEmployees(request.employeeCriteria);
             var employeeModels = employees.ToList().Select(x => new EmployeeDTO()
             {
                 Id = x.Id,

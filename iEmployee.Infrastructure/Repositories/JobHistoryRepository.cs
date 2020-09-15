@@ -21,6 +21,12 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         Task<JobHistory> GetJobHistory(Guid jobHistoryId);
         /// <summary>
+        /// Gets job history with positions and employees
+        /// </summary>
+        /// <param name="jobHistoryId">job history identifier</param>
+        /// <returns></returns>
+        Task<JobHistory> GetJobHistoryWithEmployeeAndPosition(Guid jobHistoryId);
+        /// <summary>
         /// Adds job history entry
         /// </summary>
         /// <param name="jobHistory">job history entry entity</param>
@@ -57,8 +63,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> AddJobHistory(JobHistory jobHistory)
         {
-            await this.dbContext.JobHistories.AddAsync(jobHistory);
-            await this.dbContext.SaveChangesAsync();
+            await dbContext.JobHistories.AddAsync(jobHistory);
             return true;
         }
         /// <summary>
@@ -68,10 +73,8 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> DeleteJobHistory(Guid jobHistoryId)
         {
-            JobHistory jobHistory = this.dbContext.JobHistories.Find(jobHistoryId);
-            this.dbContext.SaveChanges();
-            this.dbContext.JobHistories.Remove(jobHistory);
-            await this.dbContext.SaveChangesAsync();
+            JobHistory jobHistory = dbContext.JobHistories.Find(jobHistoryId);
+            dbContext.JobHistories.Remove(jobHistory);
             return true;
         }
         /// <summary>
@@ -81,7 +84,16 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<JobHistory> GetJobHistory(Guid jobHistoryId)
         {
-            return await this.dbContext.JobHistories.Include(x => x.Employee).Include(x => x.Position).FirstOrDefaultAsync(x => x.Id.Equals(jobHistoryId));
+            return await dbContext.JobHistories.FirstOrDefaultAsync(x => x.Id.Equals(jobHistoryId));
+        }
+        /// <summary>
+        /// Gets job history with positions and employees
+        /// </summary>
+        /// <param name="jobHistoryId">job history identifier</param>
+        /// <returns></returns>
+        public async Task<JobHistory> GetJobHistoryWithEmployeeAndPosition(Guid jobHistoryId)
+        {
+            return await dbContext.JobHistories.Include(x => x.Employee).Include(x => x.Position).FirstOrDefaultAsync(x => x.Id.Equals(jobHistoryId));
         }
         /// <summary>
         /// Gets job histories for employee
@@ -90,7 +102,7 @@ namespace iEmployee.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<JobHistory>> GetJobHistoryForEmployee(Guid employeeId)
         {
-            return await this.dbContext.JobHistories.Where(x => x.Employee.Id == employeeId).ToListAsync();
+            return await dbContext.JobHistories.Where(x => x.Employee.Id == employeeId).ToListAsync();
         }
 
     }

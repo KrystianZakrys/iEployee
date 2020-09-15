@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using iEmployee.Contracts;
 using iEmployee.Infrastructure.Repositories;
+using System.Net.Http.Headers;
 
 namespace iEmployee.CommandQuery.Query
 {
@@ -31,7 +32,7 @@ namespace iEmployee.CommandQuery.Query
         /// <returns>employee DTO</returns>
         public async Task<EmployeeDTO> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
-            var employee = await this.employeesRepository.GetEmployee(request.Id);
+            var employee = await employeesRepository.GetEmployee(request.Id);
             return new EmployeeDTO()
             {
                 Id = employee.Id,
@@ -55,7 +56,7 @@ namespace iEmployee.CommandQuery.Query
                     Salary = (decimal)(employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.Salary),
                     StartDate = (DateTime)(employee.JobHistories.Where(j => j.EndDate == null).FirstOrDefault()?.StartDate)
 
-                } : null
+                } : new PositionDTO()
             };
         }
     }

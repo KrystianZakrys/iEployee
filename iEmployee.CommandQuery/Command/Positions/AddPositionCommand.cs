@@ -15,8 +15,8 @@ namespace iEmployee.CommandQuery.Command
         public String Code { get; set; }
         public AddPositionCommand(PositionDTO position)
         {
-            this.Name = position.Name;
-            this.Code = position.Code;
+            Name = position.Name;
+            Code = position.Code;
         }
     }
 }

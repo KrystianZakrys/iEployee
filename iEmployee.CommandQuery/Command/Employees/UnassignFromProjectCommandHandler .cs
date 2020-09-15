@@ -14,12 +14,10 @@ namespace iEmployee.CommandQuery.Command.Employees
     /// </summary>
     public class UnassignFromProjectCommandHandler : ICommandHandler<UnassignFromProjectCommand, bool>
     {
-        public IEmployeesRepository employeesRepository;
-        public IProjectsRepository projectsRepository;
-        public UnassignFromProjectCommandHandler(IEmployeesRepository employeesRepository, IProjectsRepository projectsRepository)
+        private IUnitOfWork unitOfWork;
+        public UnassignFromProjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.employeesRepository = employeesRepository;
-            this.projectsRepository = projectsRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -30,10 +28,22 @@ namespace iEmployee.CommandQuery.Command.Employees
         /// <returns></returns>
         public async Task<bool> Handle(UnassignFromProjectCommand request, CancellationToken cancellationToken)
         {
-            var employee = await employeesRepository.GetEmployee(request.EmployeeId);
-            var project = await projectsRepository.GetProject(request.ProjectId);
-            employee.UnassignEmployeeProject(project);            
-            return await employeesRepository.UpdateEmployee(request.EmployeeId, employee);
+            try
+            {
+                var employee = await unitOfWork.EmployeesRepository.GetEmployee(request.EmployeeId);
+                var project = await unitOfWork.ProjectsRepository.GetProject(request.ProjectId);
+
+                employee.UnassignEmployeeProject(project);
+                var result = await unitOfWork.EmployeesRepository.UpdateEmployee(employee);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
+           
         }
     }
 }

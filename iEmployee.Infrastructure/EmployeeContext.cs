@@ -44,7 +44,6 @@ namespace iEmployee.CommandQuery
             modelBuilder.Entity<JobHistory>().HasOne(x => x.Employee).WithMany(e => e.JobHistories).HasForeignKey(x => x.EmployeeId);
 
             //Fill database with sample data
-
             modelBuilder.Entity<Position>().HasData(new Position[]
             {
                 Position.Create("Developer","D"),

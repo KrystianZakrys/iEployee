@@ -14,10 +14,10 @@ namespace iEmployee.CommandQuery.Command
     /// </summary>
     public class UpdatePositionCommandHandler : ICommandHandler<UpdatePositionCommand, bool>
     {
-        private readonly IPositionsRepository positionsRepository;
-        public UpdatePositionCommandHandler(IPositionsRepository positionsRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public UpdatePositionCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.positionsRepository = positionsRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -28,8 +28,19 @@ namespace iEmployee.CommandQuery.Command
         /// <returns></returns>
         public async Task<bool> Handle(UpdatePositionCommand request, CancellationToken cancellationToken)
         {
-            var position = Position.Create(request.Name,request.Code);
-            return await this.positionsRepository.UpdatePosition(request.PositionId, position);
+            try
+            {
+                var position = await unitOfWork.PositionsRepository.GetPosition(request.PositionId);
+                position.Update(request.Name, request.Code);
+                var result = await unitOfWork.PositionsRepository.UpdatePosition(position);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace iEmployee.CommandQuery.Command.Projects
         /// <param name="id">project identifier</param>
         public DeleteProjectCommand(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

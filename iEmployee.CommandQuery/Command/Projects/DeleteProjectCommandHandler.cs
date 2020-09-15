@@ -13,10 +13,10 @@ namespace iEmployee.CommandQuery.Command.Projects
     /// </summary>
     public class DeleteProjectCommandHandler : ICommandHandler<DeleteProjectCommand, bool>
     {
-        public IProjectsRepository projectsRepository;
-        public DeleteProjectCommandHandler(IProjectsRepository projectsRepository)
+        public IUnitOfWork unitOfWork;
+        public DeleteProjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.projectsRepository = projectsRepository;
+            this.unitOfWork = unitOfWork;
         }
         /// <summary>
         /// Handler for command 
@@ -27,7 +27,17 @@ namespace iEmployee.CommandQuery.Command.Projects
         /// <returns></returns>
         public async Task<bool> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
         {
-            return await this.projectsRepository.DeleteProject(request.Id);
+            try
+            {
+                var result = await unitOfWork.ProjectsRepository.DeleteProject(request.Id);
+                unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception)
+            {
+                unitOfWork.Rollback();
+                return false;
+            }
         }
     }
 }
